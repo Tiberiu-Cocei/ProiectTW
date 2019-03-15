@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Account creation</title>
+    <title>Export</title>
     <style>
 
         .outer {
@@ -104,24 +104,16 @@
 </head>
 <body>
 <div class="outer middle inner">
-    <h1 class="text-center"><u><b>Account creation</b> </u></h1>
+    <h1 class="text-center"><u><b>Export data</b> </u></h1>
     <div class="text-center">
     </div>
     <div class=" text-center center">
-        <div style="text-align: center;"><input class="form-control dataField" placeholder="first name" id="firstName" style="margin-top:60px;"
-        ></div>
-        <div style="text-align: center;"><input class="form-control dataField" placeholder="last name" id="lastName"
-        ></div>
-        <div style="text-align: center;"><input class="form-control dataField" placeholder="e-mail" id="email"
-        ></div>
-        <div style="text-align: center;"><input class="form-control dataField" placeholder="username" id="username"
-        ></div>
-        <div style="text-align: center;"><input class="form-control dataField" placeholder="password" id="password"
-        ></div>
-        <div style="text-align: center;"><input class="form-control dataField" placeholder="confirm password" id="confirmPassword"
-        ></div>
-        <button onclick="location.href = 'login.html';" id="finishCreation" type="button" style="margin-top:35px;"
-                class="button middle innerButton"><b>Create account</b></button>
+        <button onclick="location.href = 'exportCSV.html';" id="exportCSV" type="button" style="margin-top:135px;"
+                class="button middle innerButton"><b>Export data in CSV format</b></button>
+        <button onclick="location.href = 'exportJSON.html';" id="exportJSON" type="button"
+                class="button middle innerButton"><b>Export data in JSON format</b></button>
+        <button onclick="location.href = 'exportXML.html';" id="exportXML" type="button"
+                class="button middle innerButton"><b>Export data in XML format</b></button>
     </div>
     <ul id="output">
     </ul>
