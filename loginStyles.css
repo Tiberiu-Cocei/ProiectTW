@@ -1,0 +1,94 @@
+        .outer {
+            display: table;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .middle {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .inner {
+            margin-left: auto;
+            margin-right: auto;
+            width: 500px;
+
+        }
+
+        .innerButton {
+            margin-left: auto;
+            margin-right: auto;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        h1 {
+            color: #6b5b95;
+            font-size: 60px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #6b5b95;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        div {
+            font-size: 22px;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        body {
+            padding-top: 30px;
+            background: url("https://wallpaper-gallery.net/images/cool-modern-wallpaper/cool-modern-wallpaper-21.jpg") no-repeat center fixed;
+            background-size: cover;
+        }
+
+        .button {
+            background-color: black;
+            border: none;
+            color: #6b5b95;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            margin-top: 5px;
+        }
+
+        input {
+            text-align: center;
+            font-size: 50px;
+        }
+
+        .center {
+            margin: auto;
+            padding: 35px 10px 10px;
+        }
+
+        .dataField {
+            color: black;
+            background-color: white;
+            border: 4px solid #6b5b95;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 15px;
+            width: 250px;
+            height: 5px;
+            margin-top: 20px;
+        }
