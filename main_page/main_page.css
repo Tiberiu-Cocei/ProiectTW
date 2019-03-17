@@ -1,0 +1,79 @@
+body{
+    padding-top: 30px;
+    background-size: cover;
+	font-family: arial; 
+    border-radius: 5px;
+    box-shadow: 5px 55px 50px -20px #b6b6b6; 
+}
+
+html{
+	background: url("https://wallpaper-gallery.net/images/cool-modern-wallpaper/cool-modern-wallpaper-21.jpg") no-repeat center fixed;
+    
+}
+
+/*
+ .ierarhie {
+ 	float:none;
+ 	width:33%;
+ 	height:80%;
+}
+
+.categorie {
+	float:left;
+	width:33%;
+	height:80%;
+}
+
+.conturi_site {
+	float:left;
+	width:33%;
+	height:0%;
+}*/
+
+
+.upMenuBar {
+	font-family: arial; 
+	color: green; 
+}
+
+.menuBar{
+	display: flex;
+}
+
+
+.myAccount {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.generatePassword{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.exportData{  
+  margin-left: auto;
+  margin-right: auto;
+
+}
+.sortedView{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.settings{
+  margin-left: auto;
+  margin-right: auto
+}
+
+ul{	
+	padding: 0; 
+    justify-content: center;
+    align-items: center;
+}
+
+ul li{
+	list-style: none; /* scapam de bulinele de la lista */
+}
+
+<!-- -->
