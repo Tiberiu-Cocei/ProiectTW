@@ -1,5 +1,5 @@
 body{
-    padding-top: 30px;
+
     background-size: cover;
 	font-family: arial; 
     border-radius: 5px;
@@ -7,8 +7,9 @@ body{
 }
 
 html{
-	background: url("https://wallpaper-gallery.net/images/cool-modern-wallpaper/cool-modern-wallpaper-21.jpg") no-repeat center fixed;
-    
+	background-size: cover;
+	background: url("http://www.northropgrumman.com/Careers/Resources/PublishingImages/siteImgs/SecuritClearances.jpg?fbclid=IwAR31SQ7pLyLJG6jExZRj71itUNfsbs1hvCK_dAn5QGGOrmhL2SjhNEAXA3I") 
+		no-repeat center fixed;
 }
 
 /*
@@ -66,14 +67,23 @@ html{
   margin-right: auto
 }
 
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: ##606060;
+}
+
+
 ul{	
-	padding: 0; 
+	background-color: #333;
+	padding: 10px; 
+	border: 1px solid #555;
     justify-content: center;
     align-items: center;
 }
 
 ul li{
 	list-style: none; /* scapam de bulinele de la lista */
+	/*border: 2px solid #555; -- de ce nu merge?! -- ca sa fie separate de ceva */
 }
 
 <!-- -->
