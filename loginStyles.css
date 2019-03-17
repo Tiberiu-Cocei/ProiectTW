@@ -1,128 +1,128 @@
 .outer {
-    display: table;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-}
+            display: table;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
 
-.middle {
-    display: table-cell;
-    vertical-align: middle;
-}
+        .middle {
+            display: table-cell;
+            vertical-align: middle;
+        }
 
-.inner {
-     margin-left: auto;
-     margin-right: auto;
-     width: 500px;
+        .inner {
+            margin-left: auto;
+            margin-right: auto;
+            width: 500px;
 
-}
+        }
 
- .innerButton {
-    margin-left: auto;
-    margin-right: auto;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-}
+        .innerButton {
+            margin-left: auto;
+            margin-right: auto;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
 
-h1 {
-     color: #6b5b95;
-    font-size: 60px;
-    text-align: center;
-}
+        h1 {
+            color: #f6cd61;
+            font-size: 60px;
+            text-align: center;
+        }
 
- h2 {
-    color: #6b5b95;
-    font-size: 20px;
-    text-align: center;
-}
+        h2 {
+            color: #f6cd61;
+            font-size: 20px;
+            text-align: center;
+        }
 
-div {
-    font-size: 22px;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-     margin: auto;
- }
+        div {
+            font-size: 22px;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
 
-body {
-    padding-top: 30px;
-    background: url("https://wallpaper-gallery.net/images/cool-modern-wallpaper/cool-modern-wallpaper-21.jpg") no-repeat center fixed;
-    background-size: cover;
-}
+        body {
+            padding-top: 30px;
+            background: url("https://proactiveitsolutions.com.au/wp-content/uploads/2018/08/blue-security-fb.jpg") no-repeat center fixed;
+            background-size: cover;
+        }
 
-.button {
-    background-color: black;
-    border: none;
-    color: #6b5b95;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 15px;
-    margin-bottom: 10px;
-    margin-top: 5px;
-}
+        .button {
+            background-color: black;
+            border: none;
+            color: #f6cd61;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            margin-top: 5px;
+        }
 
-input {
-    text-align: center;
-    font-size: 50px;
-}
+        input {
+            text-align: center;
+            font-size: 50px;
+        }
 
-.center {
-    margin: auto;
-    padding: 35px 10px 10px;
-}
+        .center {
+            margin: auto;
+            padding: 35px 10px 10px;
+        }
 
-::placeholder {
-    color: #6b5b95;
-}
+        ::placeholder {
+            color: #f6cd61;
+        }
 
-.dataField {
-    color: #6b5b95;
-    background-color: rgba(255, 255, 255, .0);
-    border: 4px solid #6b5b95;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 15px;
-    width: 250px;
-    height: 5px;
-    margin-top: 20px;
-}
+        .dataField {
+            color: #f6cd61;
+            background-color: rgba(255, 255, 255, .0);
+            border: 4px solid #f6cd61;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 15px;
+            width: 250px;
+            height: 5px;
+            margin-top: 20px;
+        }
 
- @media screen and (max-width: 800px) {
-    .dataField, .inner, .innerButton {
-           width: 100%;
-    }
-    h1 {
-         font-size: 12vw;
-    }
-    h2 {
-        font-size: 5vw;
-    }
-    .button {
-        width: 100%;
-        background-color: black;
-        border: none;
-        color: #6b5b95;
-        padding: 12px 26px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 14px;
-        border-radius: 8px;
-        margin-bottom: 2vw;
-        margin-top: 1vw;
-    }
-    .dataField {
-        width: 60vw;
-        padding: 15px 32px;
-    }
-}
+        @media screen and (max-width: 800px) {
+            .dataField, .inner, .innerButton {
+                width: 100%;
+            }
+            h1 {
+                font-size: 12vw;
+            }
+            h2 {
+                font-size: 5vw;
+            }
+            .button {
+                width: 100%;
+                background-color: black;
+                border: none;
+                color: ##f6cd61;
+                padding: 12px 26px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 14px;
+                border-radius: 8px;
+                margin-bottom: 2vw;
+                margin-top: 1vw;
+            }
+            .dataField {
+                width: 60vw;
+                padding: 15px 32px;
+            }
+        }

@@ -3,13 +3,17 @@ body{
     background-size: cover;
 	font-family: arial; 
     border-radius: 5px;
-    box-shadow: 5px 55px 50px -20px #b6b6b6; 
+    box-shadow: 5px 55px 50px -20px #b6b6b6;
+    padding-top: 30px;
+    background: url("https://proactiveitsolutions.com.au/wp-content/uploads/2018/08/blue-security-fb.jpg")
+    no-repeat center fixed;
+    background-size: cover;
 }
 
+
 html{
-	background-size: cover;
-	background: url("http://www.northropgrumman.com/Careers/Resources/PublishingImages/siteImgs/SecuritClearances.jpg?fbclid=IwAR31SQ7pLyLJG6jExZRj71itUNfsbs1hvCK_dAn5QGGOrmhL2SjhNEAXA3I") 
-		no-repeat center fixed;
+
+
 }
 
 /*
