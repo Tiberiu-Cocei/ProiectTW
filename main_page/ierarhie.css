@@ -1,0 +1,62 @@
+.button {
+    background-color: black;
+    border: none;
+    color: #f6cd61;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.buttonReversed {
+    background-color: #f6cd61;
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.outer {
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.inner {
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+
+}
+
+.innerButton {
+    margin-left: auto;
+    margin-right: auto;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.buttonWrapper {
+    word-wrap: normal;
+    white-space: normal;
+}
