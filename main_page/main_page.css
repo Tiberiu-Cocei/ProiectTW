@@ -1,93 +1,129 @@
-body{
+body {
 
     background-size: cover;
-	font-family: arial; 
+    font-family: arial;
     border-radius: 5px;
-    box-shadow: 5px 55px 50px -20px #b6b6b6;
+    /*box-shadow: 5px 55px 50px -20px #b6b6b6;*/
     padding-top: 30px;
-    background: url("https://proactiveitsolutions.com.au/wp-content/uploads/2018/08/blue-security-fb.jpg")
-    no-repeat center fixed;
+    background: url("blue-security-fb.jpg") no-repeat center fixed;
     background-size: cover;
 }
 
-
-html{
-
-
-}
-
-/*
- .ierarhie {
- 	float:none;
- 	width:33%;
- 	height:80%;
+.ierarhie {
+    float: none;
+    width: 95%;
+    height: 650px;
 }
 
 .categorie {
-	float:left;
-	width:33%;
-	height:80%;
+    float: left;
+    width: 95%;
+    height: 650px;
 }
 
 .conturi_site {
-	float:left;
-	width:33%;
-	height:0%;
-}*/
+    float: left;
+    width: 95%;
+    height: 650px;
+}
 
 
 .upMenuBar {
-	font-family: arial; 
-	color: green; 
+    font-family: arial;
+    color: rgb(246, 205, 97);
 }
 
-.menuBar{
-	display: flex;
+.menuBar {
+    display: flex;
+    margin-top: -37px;
 }
 
 
 .myAccount {
-  margin-left: auto;
-  margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.generatePassword{
-  margin-left: auto;
-  margin-right: auto;
+.generatePassword {
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.exportData{  
-  margin-left: auto;
-  margin-right: auto;
+.exportData {
+    margin-left: auto;
+    margin-right: auto;
 
 }
-.sortedView{
-  margin-left: auto;
-  margin-right: auto;
+
+.sortedView {
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.settings{
-  margin-left: auto;
-  margin-right: auto
+.settings {
+    margin-left: auto;
+    margin-right: auto
+}
+
+.logout {
+    margin-left: auto;
+    margin-right: auto
 }
 
 /* Change the link color to #111 (black) on hover */
 li a:hover {
-  background-color: ##606060;
+    /*background-color: #f6cd61;*/
 }
 
+.flexview {
+    display: inline-flex;
+    flex-direction: column;
+}
 
-ul{	
-	background-color: #333;
-	padding: 10px; 
-	border: 1px solid #555;
+ul {
+    background-color: rgb(246, 205, 97, 0.15);
+    padding: 10px;
+    border: 1px solid rgb(246, 205, 97);
     justify-content: center;
     align-items: center;
 }
 
-ul li{
-	list-style: none; /* scapam de bulinele de la lista */
-	/*border: 2px solid #555; -- de ce nu merge?! -- ca sa fie separate de ceva */
+ul li {
+    list-style: none; /* scapam de bulinele de la lista */
+    /*border: 2px solid #555; -- de ce nu merge?! -- ca sa fie separate de ceva */
 }
 
-<!-- -->
+.center {
+    margin: auto;
+    padding: 35px 10px 10px;
+}
+
+iframe {
+    border: 2px solid #f6cd61;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    font-size: 30px;
+    text-align: center;
+}
+
+a {
+    color: #f6cd61;
+}
+
+a:link {
+    color: #f6cd61;
+}
+
+a:visited {
+    color: #f6cd61;
+}
