@@ -1,9 +1,0 @@
-sa putem da scroll in jos daca e prea mult 
-
-grid si flexbox pot fi utile
-
-niste butoane ca placeholdere: gen steam/epicgames -> numai asta putem face cu html/css
-
-3 coloane jos , iar sus 1 meniu(care ramane acolo) cu butoane la toate celelalte pagini
-
-

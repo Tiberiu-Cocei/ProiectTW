@@ -1,4 +1,4 @@
-.outer {
+        .outer {
             display: table;
             position: absolute;
             top: 0;
@@ -51,7 +51,7 @@
 
         body {
             padding-top: 30px;
-            background: url("https://proactiveitsolutions.com.au/wp-content/uploads/2018/08/blue-security-fb.jpg") no-repeat center fixed;
+            background: url("blue-security-fb.jpg") no-repeat center fixed;
             background-size: cover;
         }
 
@@ -97,6 +97,10 @@
             margin-top: 20px;
         }
 
+        .removeTopSpace {
+            margin-top: -10px;
+        }
+
         @media screen and (max-width: 800px) {
             .dataField, .inner, .innerButton {
                 width: 100%;
@@ -111,7 +115,7 @@
                 width: 100%;
                 background-color: black;
                 border: none;
-                color: ##f6cd61;
+                color: #f6cd61;
                 padding: 12px 26px;
                 text-align: center;
                 text-decoration: none;

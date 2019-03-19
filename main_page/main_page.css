@@ -3,7 +3,7 @@ body {
     background-size: cover;
     font-family: arial;
     border-radius: 5px;
-    /*box-shadow: 5px 55px 50px -20px #b6b6b6;*/
+    box-shadow: 1px 5px 50px -20px #b6b6b6;
     padding-top: 30px;
     background: url("blue-security-fb.jpg") no-repeat center fixed;
     background-size: cover;
