@@ -23,6 +23,7 @@ body {
 
 .conturi_site {
     float: left;
+
     width: 95%;
     height: 650px;
 }
@@ -36,6 +37,7 @@ body {
 .menuBar {
     display: flex;
     margin-top: -37px;
+    height: 125%; 
 }
 
 
@@ -147,6 +149,33 @@ a:visited {
 
 ::-webkit-scrollbar-thumb:hover {
     background: rgb(246, 205, 97);
+}
+
+@media screen and (min-width: 1200px) {
+    
+.ierarhie {
+    float: none;
+    width: 95%;
+    height: 700px;
+}
+
+.categorie {
+    float: left;
+    width: 95%;
+    height: 700px;
+}
+
+.conturi_site {
+    float: left;
+
+    width: 95%;
+    height: 700px;
+}
+body{
+    padding-top: 50px;
+}
+
+
 }
 
 @media screen and (max-width: 800px) {

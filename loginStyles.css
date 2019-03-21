@@ -122,21 +122,30 @@ output {
     background: rgb(246, 205, 97);
 }
 
+.password-generated{
+    text-align: center; 
+    margin-left:75px; 
+    margin-top: 125px;
+}
+
 @media screen and (max-width: 800px) {
     .dataField, .inner, .innerButton {
-        width: 100%;
+        width: 95%;
     }
 
     h1 {
         font-size: 12vw;
+        text-align: center;
     }
 
     h2 {
         font-size: 5vw;
+        text-align: center;
+        margin-right: 2px; 
     }
 
-    .button {
-        width: 100%;
+    .button{
+        width: 95%;
         background-color: black;
         border: none;
         color: #f6cd61;
@@ -154,7 +163,14 @@ output {
         width: 60vw;
         padding: 15px 32px;
     }
+
+    .password-generated{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto; 
 }
+}
+
 
 h3 {
     text-align: center;
