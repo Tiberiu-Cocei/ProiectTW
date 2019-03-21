@@ -104,11 +104,6 @@ a:visited {
 }
 
 .buttonMargin {
-    margin-left:6px;
-}
-
-@media screen and (max-width: 1300px) {
-    .buttonMargin {
-        margin-left:0px;
-    }
+    margin-left: auto;
+    margin-right: auto;
 }
