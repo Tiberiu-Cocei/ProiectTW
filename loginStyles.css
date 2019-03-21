@@ -50,7 +50,7 @@ div {
 }
 
 body {
-    padding-top: 30px;
+    padding-top:5%;
     background: url("blue-security-fb.jpg") no-repeat center fixed;
     background-size: cover;
 }
@@ -67,6 +67,7 @@ body {
     border-radius: 15px;
     margin-bottom: 10px;
     margin-top: 5px;
+    cursor: pointer;
 }
 
 input {
@@ -126,6 +127,7 @@ output {
     text-align: center; 
     margin-left: auto;
     margin-right: auto; 
+    margin-top: 41%; 
 }
 
 @media screen and (max-width: 800px) {
@@ -164,16 +166,16 @@ output {
     .dataField {
         width: 60vw;
         margin-left: auto;
-        margin-right: auto; 
+        margin-right: auto;
+        margin-top: 20%;  
     }
 
     .password-generated{
     text-align: center;
     margin-left: auto;
     margin-right: auto; 
+    }
 }
-}
-
 
 h3 {
     text-align: center;
