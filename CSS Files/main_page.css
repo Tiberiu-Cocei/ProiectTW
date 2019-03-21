@@ -5,7 +5,7 @@ body {
     border-radius: 5px;
     box-shadow: 1px 5px 50px -20px rgb(246, 205, 97);
     padding-top: 30px;
-    background: url("blue-security-fb.jpg") no-repeat center fixed;
+    background: url("../Resources/blue-security-fb.jpg") no-repeat center fixed;
     background-size: cover;
 }
 
