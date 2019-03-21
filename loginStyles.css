@@ -100,7 +100,7 @@ output {
     border-radius: 15px;
     width: 250px;
     height: 5px;
-    margin-top: 20px;
+    margin-top: 18px;
 }
 
 .removeTopSpace {
@@ -127,7 +127,7 @@ output {
     text-align: center; 
     margin-left: auto;
     margin-right: auto; 
-    margin-top: 41%; 
+    margin-top: 32%;
 }
 
 @media screen and (max-width: 800px) {
@@ -167,7 +167,7 @@ output {
         width: 60vw;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 20%;  
+
     }
 
     .password-generated{
