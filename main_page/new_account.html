@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Category</title>
+    <link rel="stylesheet" href="../loginStyles.css">
+    <style>
+        body {
+            background: rgba(255, 255, 255, 0);
+        }
+    </style>
+    <script>
+        function returnPage() {
+            window.history.back();
+        }
+    </script>
+</head>
+<body>
+<div class="outer middle inner">
+    <div class="text-center">
+    </div>
+    <div class=" text-center center">
+        <div style="text-align: center;"><input class="form-control dataField" placeholder="site/application name"
+                                                id="siteName" style="margin-top:-70px;"
+        ></div>
+        <div style="text-align: center;"><input class="form-control dataField" placeholder="title"
+                                                id="title"
+        ></div>
+        <div style="text-align: center;"><input class="form-control dataField" placeholder="username"
+                                                id="username"
+        ></div>
+        <div style="text-align: center;"><input type="password" class="form-control dataField" placeholder="password"
+                                                id="password"
+        ></div>
+        <div style="text-align: center;"><input class="form-control dataField" placeholder="address"
+                                                id="address"
+        ></div>
+        <div style="text-align: center;"><input class="form-control dataField" placeholder="comments"
+                                                id="comments"
+        ></div>
+        <h3>Reset reminder date:</h3>
+        <div style="text-align: center; margin-top:-40px;"><input type="date" class="form-control dataField" placeholder="reset reminder"
+                                                id="resetReminder"
+        ></div>
+        <button onclick="returnPage();" id="newAccount" type="button" style="margin-top:35px;"
+                class="button middle innerButton"><b>Create new account</b></button>
+        <button onclick="returnPage();" id="resetPassword" type="button"
+                class="button middle innerButton"><b>Cancel</b></button>
+    </div>
+</div>
+
+</body>
+</html>
