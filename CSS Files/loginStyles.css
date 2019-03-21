@@ -51,7 +51,7 @@ div {
 
 body {
     padding-top:5%;
-    background: url("blue-security-fb.jpg") no-repeat center fixed;
+    background: url("../Resources/blue-security-fb.jpg") no-repeat center fixed;
     background-size: cover;
 }
 
