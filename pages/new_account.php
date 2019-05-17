@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>New Category</title>
-    <link rel="stylesheet" href="../../CSS Files/loginStyles.css">
+    <link rel="stylesheet" href="../public/css/loginStyles.css">
     <style>
         body {
             background: rgba(255, 255, 255, 0);

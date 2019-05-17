@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Reset password</title>
-    <link rel="stylesheet" href="../../CSS Files/loginStyles.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="../../Resources/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="../../Resources/favicon/favicon-96x96.png">
+    <link rel="stylesheet" href="../../public/css/loginStyles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../public/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../../public/images/favicon/favicon-96x96.png">
 </head>
 <body>
 <div class="outer middle inner">
@@ -22,7 +22,7 @@
         <div><input type="password" class="form-control dataField" placeholder="confirm new password"
                     id="confirmPassword"
         ></div>
-        <button onclick="location.href = 'login.html';" id="resetPassword" type="button" style="margin-top:35px;"
+        <button onclick="location.href = 'login.php';" id="resetPassword" type="button" style="margin-top:35px;"
                 class="button middle innerButton"><b>Confirm reset password</b></button>
     </div>
 </div>
