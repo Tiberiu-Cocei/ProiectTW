@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Generate safe password</title>
-    <link rel="stylesheet" href="../../CSS Files/generate_password_page.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="../../Resources/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="../../Resources/favicon/favicon-96x96.png">
+    <link rel="stylesheet" href="../public/css/generate_password_page.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../public/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../public/images/favicon/favicon-96x96.png">
   </head>
 
 <body>

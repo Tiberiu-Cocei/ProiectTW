@@ -51,7 +51,7 @@ div {
 
 body {
     padding-top:5%;
-    background: url("../Resources/blue-security-fb.jpg") no-repeat center fixed;
+    background: url("../images/blue-security-fb.jpg") no-repeat center fixed;
     background-size: cover;
 }
 
@@ -117,7 +117,7 @@ output {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgb(246, 205, 97, 0.8);
+    background: rgba(246, 205, 97, 0.8);
 }
 
 ::-webkit-scrollbar-thumb:hover {

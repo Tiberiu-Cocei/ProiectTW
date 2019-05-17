@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Generate safe password</title>
-    <link rel="stylesheet" href="../../CSS Files/loginStyles.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="../../Resources/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="../../Resources/favicon/favicon-96x96.png">
+    <link rel="stylesheet" href="../public/css/loginStyles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../public/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../public/images/favicon/favicon-96x96.png">
 </head>
 <body>
 <div class="outer middle inner">
@@ -24,7 +24,7 @@
                 class="button middle innerButton"><b>Generate safe password</b></button>
         <button onclick="location.href = '#copyToClipboard';" id="copyToClipboard" type="button"
                 class="button middle innerButton"><b>Copy password to clipboard</b></button>
-        <button onclick="location.href = 'main_page.html';" id="return" type="button"
+        <button onclick="location.href = 'index.php';" id="return" type="button"
                 class="button middle innerButton"><b>Return</b></button>
     </div>
 </div>

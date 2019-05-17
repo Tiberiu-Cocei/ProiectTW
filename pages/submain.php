@@ -3,15 +3,14 @@
 <head>
     <meta charset="utf-8">
     <title>Ierarhia de dosare cu categoriile</title>
-    <link rel="stylesheet" href="../../CSS Files/subpage_styles.css">
-    <!--<link rel="stylesheet" href="./resources/css/ierarhie.css">-->
+    <link rel="stylesheet" href="../public/css/subpage_styles.css">
 </head>
 
 <body>
 
-<button onclick="location.href = 'new_category.html';" id="addCategory" type="button"
+<button onclick="location.href = 'new_category.php';" id="addCategory" type="button"
         class="buttonReversed middle innerButton"><b>Add new category</b></button>
-<button onclick="location.href = 'new_account.html';" id="addSite" type="button"
+<button onclick="location.href = 'new_account.php';" id="addSite" type="button"
         class="buttonReversed middle innerButton"><b>Add new account without category</b></button>
 <button type="button" id="Frequency" style="margin-top:20px" class="buttonReversed middle innerButton"><b>Accounts by
     use frequency</b></button>
