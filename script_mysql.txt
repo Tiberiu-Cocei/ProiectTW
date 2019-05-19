@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `conturi` (
   `parola` varchar(64) NOT NULL,
   `adresa_site` varchar(128) NOT NULL,
   `nume_site` varchar(64) NOT NULL,
-  `comentarii` varchar(512) NOT NULL,
+  `comentarii` varchar(512),
   `data_adaugare` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `data_expirare` date,
   `contor_utilizari` int(11) NOT NULL DEFAULT 0,
