@@ -1,0 +1,66 @@
+CREATE TABLE IF NOT EXISTS `utilizator` (
+  `id_utilizator` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(64) NOT NULL,
+  `parola` varchar(64) NOT NULL,
+  `nume` varchar(64) NOT NULL,
+  `prenume` varchar(64) NOT NULL,
+  `email` varchar(64) NOT NULL,
+  `cod_resetare` varchar(64) NOT NULL,
+  `cheie_criptare` varchar(64) NOT NULL,
+  PRIMARY KEY (`id_utilizator`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+INSERT INTO `utilizator` (`id_utilizator`, `username`, `parola`, `nume`, `prenume`, `email`, `cod_resetare`, `cheie_criptare` ) VALUES
+(1, 'Test1', 'parola1', 'John', 'Doe', 'johndoe@gmail.com', 'aechrthsdrhsthrawe', 'recrawecrawecra'),
+(2, 'Test2', 'parola2', 'Jane', 'Doe', 'janedoe@gmail.com', 'aecrrrrrrrrrawe', 'rgggwecrawecra'),
+(3, 'Test3', 'parola3', 'Geon', 'Doe', 'geondoe@gmail.com', 'aecAAAAAAAArawe', 'rWAWAEecrawecra');
+
+CREATE TABLE IF NOT EXISTS `categorii` (
+  `id_categorie` int(11) NOT NULL AUTO_INCREMENT,
+  `id_utilizator` int(11) NOT NULL,
+  `nume_categorie` varchar(64) NOT NULL,
+  PRIMARY KEY (`id_categorie`),
+  FOREIGN KEY (id_utilizator)
+    REFERENCES utilizator(id_utilizator)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+INSERT INTO `categorii` (`id_categorie`, `id_utilizator`, `nume_categorie`) VALUES
+(1, 1, 'Categorie1'),
+(2, 2, 'Categorie2'),
+(3, 2, 'Categorie2.1'),
+(4, 3, 'Categorie3'),
+(5, 3, 'Categorie3.1'),
+(6, 3, 'Categorie3.2');
+
+CREATE TABLE IF NOT EXISTS `conturi` (
+  `id_cont` int(11) NOT NULL AUTO_INCREMENT,
+  `id_categorie` int(11) NOT NULL,
+  `id_utilizator` int(11) NOT NULL,
+  `username` varchar(64) NOT NULL,
+  `parola` varchar(64) NOT NULL,
+  `adresa_site` varchar(128) NOT NULL,
+  `nume_site` varchar(64) NOT NULL,
+  `comentarii` varchar(512) NOT NULL,
+  `data_adaugare` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `data_expirare` date,
+  `contor_utilizari` int(11) NOT NULL DEFAULT 0,
+  `putere_parola` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id_cont`),
+  FOREIGN KEY (id_utilizator)
+    REFERENCES utilizator(id_utilizator),
+  FOREIGN KEY (id_categorie)
+    REFERENCES categorii(id_categorie)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+INSERT INTO `conturi` (`id_cont`, `id_categorie`, `id_utilizator`, `username`, `parola`, `adresa_site`, `nume_site`, `comentarii`, `data_expirare`) VALUES
+(1, 1, 1, 'testname1', 'testpassword1', 'www.testsite1.com', 'nume site1', 'acesta este un test', '2020-09-01'),
+(2, 1, 1, 'testname2', 'testpassword2', 'www.testsite2.com', 'nume site2', 'acesta este un test', '2020-09-02'),
+(3, 2, 2, 'testname3', 'testpassword3', 'www.testsite3.com', 'nume site3', 'acesta este un test', '2020-09-03'),
+(4, 3, 2, 'testname4', 'testpassword4', 'www.testsite4.com', 'nume site4', 'acesta este un test', '2020-09-04'),
+(5, 3, 2, 'testname5', 'testpassword5', 'www.testsite5.com', 'nume site5', 'acesta este un test', '2020-09-05'),
+(6, 3, 2, 'testname6', 'testpassword6', 'www.testsite6.com', 'nume site6', 'acesta este un test', '2020-09-06'),
+(7, 4, 3, 'testname7', 'testpassword7', 'www.testsite7.com', 'nume site7', 'acesta este un test', '2020-09-07'),
+(8, 5, 3, 'testname8', 'testpassword8', 'www.testsite8.com', 'nume site8', 'acesta este un test', '2020-09-08'),
+(9, 5, 3, 'testname9', 'testpassword9', 'www.testsite9.com', 'nume site9', 'acesta este un test', '2020-09-09'),
+(10, 6, 3, 'testname10', 'testpassword10', 'www.testsite10.com', 'nume site10', 'acesta este un test', '2020-09-10');
+
