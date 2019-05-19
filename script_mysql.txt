@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS `utilizator` (
   `email` varchar(64) NOT NULL,
   `cod_resetare` varchar(64) NOT NULL,
   `cheie_criptare` varchar(64) NOT NULL,
-  PRIMARY KEY (`id_utilizator`)
+  PRIMARY KEY (`id_utilizator`),
+  UNIQUE(`username`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 INSERT INTO `utilizator` (`id_utilizator`, `username`, `parola`, `nume`, `prenume`, `email`, `cod_resetare`, `cheie_criptare` ) VALUES
