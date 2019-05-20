@@ -1,7 +1,6 @@
 <?php
 class Account{
-    private $conn;
-    private $table_name = "conturi";
+    private $connection;
 
     public $id_cont;
     public $id_categorie;
@@ -17,6 +16,6 @@ class Account{
     public $putere_parola
 
     public function __construct($db){
-        $this->conn = $db;
+        $this->connection = $db;
     }
 }

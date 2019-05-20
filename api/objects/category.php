@@ -1,13 +1,12 @@
 <?php
 class Category{
-    private $conn;
-    private $table_name = "categorii";
+    private $connection;
 
     public $id_categorie;
     public $id_utilizator;
     public $nume_categorie;
 
     public function __construct($db){
-        $this->conn = $db;
+        $this->connection = $db;
     }
 }

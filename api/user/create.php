@@ -1,4 +1,5 @@
 <?php
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -7,29 +8,36 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once '../config/database.php';
 include_once '../objects/user.php';
+include_once '../algorithms/reset_key.php';
+include_once '../algorithms/encryption_key.php';
+include_once '../algorithms/user_validation.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
 $user = new User($db);
 
-//the data from POST
 $data = json_decode(file_get_contents("php://input"));
 
-if( //TODO: VALIDARE DATE SI ALGORITM PENTRU COD SI CHEIE
-    !empty($data->username) &&
-    !empty($data->parola) &&
-    !empty($data->nume) &&
-    !empty($data->prenume) &&
-    !empty($data->email)
-){
+$mesaj = isValid($data);
+
+$userAux = new User($db);
+$userAux->username = $data->username;
+$userAux->getByName();
+if($userAux->parola != null) {
+    http_response_code(400);
+    echo json_encode(array("message" => "Username already in use."));
+    die();
+}
+
+if($mesaj === "Valid"){
     $user->username = $data->username;
     $user->parola = $data->parola;
     $user->nume = $data->nume;
     $user->prenume = $data->prenume;
     $user->email = $data->email;
-    $user->cod_resetare = "PLACEHOLDER CODE";
-    $user->cheie_criptare = "PLACEHOLDER KEY";
+    $user->cod_resetare = generateResetKey();
+    $user->cheie_criptare = generateEncryptionKey($data->username);
 
     if($user->create()){
         http_response_code(201);
@@ -40,6 +48,6 @@ if( //TODO: VALIDARE DATE SI ALGORITM PENTRU COD SI CHEIE
     }
 } else {
     http_response_code(400);
-    echo json_encode(array("message" => "Missing or invalid data detected."));
+    echo json_encode(array("message" => $mesaj));
 }
 ?>

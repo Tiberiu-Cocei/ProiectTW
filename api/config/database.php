@@ -4,19 +4,19 @@ class Database{
     private $db_name = "passer";
     private $username = "root";
     private $password = "";
-    public $conn;
+    public $connection;
 
     public function getConnection(){
-        $this->conn = null;
+        $this->connection = null;
 
         try{
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
-            $this->conn->exec("set names utf8");
+            $this->connection = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+            $this->connection->exec("set names utf8");
         }catch(PDOException $exception){
-            echo "Connection excepton: " . $exception->getMessage();
+            echo "Connection exception: " . $exception->getMessage();
         }
 
-        return $this->conn;
+        return $this->connection;
     }
 }
 ?>

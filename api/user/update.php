@@ -7,6 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once '../config/database.php';
 include_once '../objects/user.php';
+include_once '../algorithms/user_validation.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -16,12 +17,31 @@ $data = json_decode(file_get_contents("php://input"));
 if(!empty($data->username)){
   $user->username = $data->username;
 
-  //TODO: validare + cand lipsesc campuri + daca user-ul nu exista
+  $userAux = new User($db);
+  $userAux->username = $data->username;
+  $userAux->getByName();
 
-  $user->parola = $data->parola;
-  $user->nume = $data->nume;
-  $user->prenume = $data->prenume;
-  $user->email = $data->email;
+  if($userAux->username === null) {
+    http_response_code(404);
+    echo json_encode(array("message" => "User does not exist"));
+    die();
+  }
+
+  if($data->parola !== null) $user->parola = $data->parola;
+  else $user->parola = $userAux->parola;
+  if($data->nume !== null) $user->nume = $data->nume;
+  else $user->nume = $userAux->nume;
+  if($data->prenume !== null) $user->prenume = $data->prenume;
+  else $user->prenume = $userAux->prenume;
+  if($data->email !== null) $user->email = $data->email;
+  else $user->email = $userAux->email;
+
+  $mesaj = isValid($user);
+  if($mesaj !== "Valid") {
+    http_response_code(400);
+    echo json_encode(array("message" => $mesaj));
+    die();
+  }
 
   if($user->update()){
       http_response_code(200);
@@ -32,6 +52,6 @@ if(!empty($data->username)){
     }
 } else {
     http_response_code(400);
-    echo json_encode(array("message" => "Missing or invalid data detected."));
+    echo json_encode(array("message" => "Missing username."));
 }
 ?>

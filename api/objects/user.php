@@ -1,6 +1,7 @@
 <?php
 class User{
-    private $conn;
+    private $connection;
+
     public $id_utilizator;
     public $username;
     public $parola;
@@ -11,22 +12,23 @@ class User{
     public $cheie_criptare;
 
     public function __construct($db){
-        $this->conn = $db;
+        $this->connection = $db;
     }
 
     //functia asta face un get all, este pentru testare
     function read(){
-        $query = "SELECT id_utilizator, username, parola, nume, prenume, email, cod_resetare, cheie_criptare FROM utilizator";
+        $sqlQuery = "SELECT id_utilizator, username, parola, nume, prenume, email, cod_resetare, cheie_criptare FROM utilizator";
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt;
+        $statement = $this->connection->prepare($sqlQuery);
+        $statement->execute();
+
+        return $statement;
     }
 
     function create(){
-    $query = "INSERT INTO utilizator SET username=:username, parola=:parola, nume=:nume, prenume=:prenume, email=:email, cod_resetare=:cod_resetare, cheie_criptare=:cheie_criptare";
+    $sqlQuery = "INSERT INTO utilizator SET username=:username, parola=:parola, nume=:nume, prenume=:prenume, email=:email, cod_resetare=:cod_resetare, cheie_criptare=:cheie_criptare";
 
-    $stmt = $this->conn->prepare($query);
+    $statement = $this->connection->prepare($sqlQuery);
 
     $this->username=htmlspecialchars(strip_tags($this->username));
     $this->parola=htmlspecialchars(strip_tags($this->parola));
@@ -36,27 +38,28 @@ class User{
     $this->cod_resetare=htmlspecialchars(strip_tags($this->cod_resetare));
     $this->cheie_criptare=htmlspecialchars(strip_tags($this->cheie_criptare));
 
-    $stmt->bindParam(":username", $this->username);
-    $stmt->bindParam(":parola", $this->parola);
-    $stmt->bindParam(":nume", $this->nume);
-    $stmt->bindParam(":prenume", $this->prenume);
-    $stmt->bindParam(":email", $this->email);
-    $stmt->bindParam(":cod_resetare", $this->cod_resetare);
-    $stmt->bindParam(":cheie_criptare", $this->cheie_criptare);
+    $statement->bindParam(":username", $this->username);
+    $statement->bindParam(":parola", $this->parola);
+    $statement->bindParam(":nume", $this->nume);
+    $statement->bindParam(":prenume", $this->prenume);
+    $statement->bindParam(":email", $this->email);
+    $statement->bindParam(":cod_resetare", $this->cod_resetare);
+    $statement->bindParam(":cheie_criptare", $this->cheie_criptare);
 
-    if($stmt->execute()){
+    if($statement->execute()){
         return true;
     }
     return false;
   }
 
   function getByName(){
-    $query = "SELECT username, parola, nume, prenume, email FROM utilizator WHERE username = ?";
+    $sqlQuery = "SELECT username, parola, nume, prenume, email FROM utilizator WHERE username = ?";
 
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(1, $this->username);
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $statement = $this->connection->prepare($sqlQuery);
+
+    $statement->bindParam(1, $this->username);
+    $statement->execute();
+    $row = $statement->fetch(PDO::FETCH_ASSOC);
 
     $this->username = $row['username'];
     $this->parola = $row['parola'];
@@ -66,9 +69,9 @@ class User{
   }
 
 function update(){
-    $query = "UPDATE utilizator SET parola =:parola, nume =:nume, prenume =:prenume, email =:email WHERE username = :username";
+    $sqlQuery = "UPDATE utilizator SET parola =:parola, nume =:nume, prenume =:prenume, email =:email WHERE username = :username";
 
-    $stmt = $this->conn->prepare($query);
+    $statement = $this->connection->prepare($sqlQuery);
 
     $this->username=htmlspecialchars(strip_tags($this->username));
     $this->parola=htmlspecialchars(strip_tags($this->parola));
@@ -76,13 +79,13 @@ function update(){
     $this->prenume=htmlspecialchars(strip_tags($this->prenume));
     $this->email=htmlspecialchars(strip_tags($this->email));
 
-    $stmt->bindParam(':username', $this->username);
-    $stmt->bindParam(':parola', $this->parola);
-    $stmt->bindParam(':nume', $this->nume);
-    $stmt->bindParam(':prenume', $this->prenume);
-    $stmt->bindParam(':email', $this->email);
+    $statement->bindParam(':username', $this->username);
+    $statement->bindParam(':parola', $this->parola);
+    $statement->bindParam(':nume', $this->nume);
+    $statement->bindParam(':prenume', $this->prenume);
+    $statement->bindParam(':email', $this->email);
 
-    if($stmt->execute()){
+    if($statement->execute()){
         return true;
     }
     return false;
@@ -90,11 +93,14 @@ function update(){
 
   // pentru testare, nu ar trebui sa fie posibil
 function delete(){
-    $query = "DELETE FROM utilizator WHERE id_utilizator = ?";
-    $stmt = $this->conn->prepare($query);
-    $this->id=htmlspecialchars(strip_tags($this->id_utilizator));
-    $stmt->bindParam(1, $this->id_utilizator);
-    if($stmt->execute()){
+    $sqlQuery = "DELETE FROM utilizator WHERE username = ?";
+
+    $statement = $this->connection->prepare($sqlQuery);
+
+    $this->username=htmlspecialchars(strip_tags($this->username));
+    $statement->bindParam(1, $this->username);
+
+    if($statement->execute()){
         return true;
     }
     return false;
