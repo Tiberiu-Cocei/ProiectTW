@@ -68,7 +68,7 @@ class User{
     $this->email = $row['email'];
   }
 
-function update(){
+  function update(){
     $sqlQuery = "UPDATE utilizator SET parola =:parola, nume =:nume, prenume =:prenume, email =:email WHERE username = :username";
 
     $statement = $this->connection->prepare($sqlQuery);
@@ -92,7 +92,7 @@ function update(){
   }
 
   // pentru testare, nu ar trebui sa fie posibil
-function delete(){
+  function delete(){
     $sqlQuery = "DELETE FROM utilizator WHERE username = ?";
 
     $statement = $this->connection->prepare($sqlQuery);
@@ -104,5 +104,20 @@ function delete(){
         return true;
     }
     return false;
+  }
+
+  function login(){
+    $sqlQuery = "SELECT email FROM utilizator WHERE LOWER(username) =:username AND parola =:parola";
+
+    $statement = $this->connection->prepare($sqlQuery);
+
+    $this->username=htmlspecialchars(strip_tags($this->username));
+    $this->parola=htmlspecialchars(strip_tags($this->parola));
+    $statement->bindParam(':username', $this->username);
+    $statement->bindParam(':parola', $this->parola);
+
+    $statement->execute();
+    $row = $statement->fetch(PDO::FETCH_ASSOC);
+    $this->email = $row['email'];
   }
 }
