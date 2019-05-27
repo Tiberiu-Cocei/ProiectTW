@@ -22,12 +22,12 @@ $db = $database->getConnection();
 
 $category = new Category($db);
 $data = json_decode(file_get_contents("php://input"));
-if(!empty($data->nume_categorie)){
+if(!empty($data->nume_categorie) && !empty($data->id_categorie)){
   $category->nume_categorie = $data->nume_categorie;
   $category->id_categorie = $data->id_categorie;
 
   if($category->update()){
-      http_response_code(200);
+      http_response_code(204);
       echo json_encode(array("message" => "Successfully updated category name."));
     } else {
       http_response_code(503);
@@ -35,6 +35,6 @@ if(!empty($data->nume_categorie)){
     }
 } else {
     http_response_code(400);
-    echo json_encode(array("message" => "Missing category name."));
+    echo json_encode(array("message" => "Missing category name or category id."));
 }
 ?>

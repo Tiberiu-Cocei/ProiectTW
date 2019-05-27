@@ -42,6 +42,6 @@ if($nr > 0){
    http_response_code(404);
 
    echo json_encode(
-       array("message" => "No user found.")
+       array("message" => "No users found.")
    );
 }

@@ -30,4 +30,18 @@ class Account{
 
         return $statement;
     }
+
+    function delete(){
+        $sqlQuery = "DELETE FROM conturi WHERE id_cont = ?";
+  
+        $statement = $this->connection->prepare($sqlQuery);
+  
+        $this->id_cont=htmlspecialchars(strip_tags($this->id_cont));
+        $statement->bindParam(1, $this->id_cont);
+  
+        if($statement->execute()){
+            return true;
+        }
+        return false;
+      }
 }

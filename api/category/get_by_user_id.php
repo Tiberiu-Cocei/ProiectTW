@@ -21,6 +21,12 @@ if(isset($_GET['id_utilizator']))
   $category->id_utilizator = $_GET['id_utilizator'];
 else die();
 
+if(!ctype_digit($category->id_utilizator)) {
+  http_response_code(400);
+  echo json_encode(array("message" => "Invalid user id detected."));
+  die();
+}
+
 $stmt = $category->getByUserId();
 $nr = $stmt->rowCount();
 
@@ -43,7 +49,7 @@ if($nr > 0){
     echo json_encode($categories_arr);
 } else {
 
-   http_response_code(400);
+   http_response_code(404);
 
    echo json_encode(
        array("message" => "No categories found.")
