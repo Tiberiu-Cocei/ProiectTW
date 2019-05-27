@@ -1,5 +1,8 @@
 <?php
-//fisierul asta face un get all pentru user-ul autentificat; se obtine id-ul prin $_COOKIE["id_utilizator"] din pagina web respectiva
+//fisierul asta face un get all pentru user-ul autentificat; se obtine id-ul prin $_COOKIE(sau SESSION?)["id_utilizator"] din pagina web respectiva
+/*
+  Cum se foloseste api-ul asta: metoda GET, link-ul http://localhost/api/category/get_by_user_id.php?id_utilizator=aiciIdulDinCookie
+*/
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
 header("Access-Control-Allow-Methods: GET");
@@ -40,7 +43,7 @@ if($nr > 0){
     echo json_encode($categories_arr);
 } else {
 
-   http_response_code(404);
+   http_response_code(400);
 
    echo json_encode(
        array("message" => "No categories found.")

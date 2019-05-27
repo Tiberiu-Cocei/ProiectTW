@@ -1,5 +1,13 @@
 <?php
 //id_categorie va fi dat din pagina respectiva
+/*
+  Cum se foloseste api-ul asta: metoda POST, link-ul http://localhost/api/category/update.php
+  si corpul json:
+  {
+	 "id_categorie" : idCategorieDinObiectCRED,
+	 "nume_categorie" : "numeNou"
+  }
+*/
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
