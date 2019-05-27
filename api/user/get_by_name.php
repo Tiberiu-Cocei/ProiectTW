@@ -1,4 +1,8 @@
 <?php
+/*
+  Cum se foloseste api-ul asta: metoda GET, link-ul http://localhost/api/user/get_by_name.php?username=aiciUsernameul
+  Username-ul nu conteaza daca este cu litere mari sau nu
+*/
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
 header("Access-Control-Allow-Methods: GET");
@@ -32,6 +36,6 @@ if($user->parola!=null){
     echo json_encode($user_arr);
 } else {
     http_response_code(404);
-    echo json_encode(array("message" => "Invalid username."));
+    echo json_encode(array("message" => "Could not find any user with given username."));
 }
 ?>

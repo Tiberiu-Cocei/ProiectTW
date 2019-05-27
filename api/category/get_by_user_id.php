@@ -1,5 +1,8 @@
 <?php
-//fisierul asta face un get all pentru user-ul autentificat; se obtine id-ul prin $_COOKIE["id_utilizator"] din pagina web respectiva
+//fisierul asta face un get all pentru user-ul autentificat; se obtine id-ul prin $_COOKIE(sau SESSION?)["id_utilizator"] din pagina web respectiva
+/*
+  Cum se foloseste api-ul asta: metoda GET, link-ul http://localhost/api/category/get_by_user_id.php?id_utilizator=aiciIdulDinCookie
+*/
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
 header("Access-Control-Allow-Methods: GET");
@@ -17,6 +20,12 @@ $category = new Category($db);
 if(isset($_GET['id_utilizator']))
   $category->id_utilizator = $_GET['id_utilizator'];
 else die();
+
+if(!ctype_digit($category->id_utilizator)) {
+  http_response_code(400);
+  echo json_encode(array("message" => "Invalid user id detected."));
+  die();
+}
 
 $stmt = $category->getByUserId();
 $nr = $stmt->rowCount();

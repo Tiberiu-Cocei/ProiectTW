@@ -26,7 +26,7 @@ if($user->parola === null) {
 }
 else {
   if($user->delete()){
-      http_response_code(200);
+      http_response_code(204);
       echo json_encode(array("message" => "User was deleted."));
   } else {
       http_response_code(503);

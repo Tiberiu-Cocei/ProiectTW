@@ -1,5 +1,13 @@
 <?php
-//fisierul asta creaza o noua categorie; se obtine id-ul prin $_COOKIE["id_utilizator"] din pagina web respectiva
+//fisierul asta creaza o noua categorie; se obtine id-ul prin $_COOKIE(sau SESSION?)["id_utilizator"] din pagina web respectiva
+/*
+  Cum se foloseste api-ul asta: metoda POST, link-ul http://localhost/api/category/create.php
+  si corpul json:
+  {
+	 "id_utilizator" : idUtilizatorDinCookie,
+	 "nume_categorie" : "numeCategorie"
+  }
+*/
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
