@@ -26,31 +26,31 @@ class User{
     }
 
     function create(){
-    $sqlQuery = "INSERT INTO utilizator SET username=:username, parola=:parola, nume=:nume, prenume=:prenume, email=:email, cod_resetare=:cod_resetare, cheie_criptare=:cheie_criptare";
+      $sqlQuery = "INSERT INTO utilizator SET username=:username, parola=:parola, nume=:nume, prenume=:prenume, email=:email, cod_resetare=:cod_resetare, cheie_criptare=:cheie_criptare";
 
-    $statement = $this->connection->prepare($sqlQuery);
+      $statement = $this->connection->prepare($sqlQuery);
 
-    $this->username=htmlspecialchars(strip_tags($this->username));
-    $this->parola=htmlspecialchars(strip_tags($this->parola));
-    $this->nume=htmlspecialchars(strip_tags($this->nume));
-    $this->prenume=htmlspecialchars(strip_tags($this->prenume));
-    $this->email=htmlspecialchars(strip_tags($this->email));
-    $this->cod_resetare=htmlspecialchars(strip_tags($this->cod_resetare));
-    $this->cheie_criptare=htmlspecialchars(strip_tags($this->cheie_criptare));
+      $this->username=htmlspecialchars(strip_tags($this->username));
+      $this->parola=htmlspecialchars(strip_tags($this->parola));
+      $this->nume=htmlspecialchars(strip_tags($this->nume));
+      $this->prenume=htmlspecialchars(strip_tags($this->prenume));
+      $this->email=htmlspecialchars(strip_tags($this->email));
+      $this->cod_resetare=htmlspecialchars(strip_tags($this->cod_resetare));
+      $this->cheie_criptare=htmlspecialchars(strip_tags($this->cheie_criptare));
 
-    $statement->bindParam(":username", $this->username);
-    $statement->bindParam(":parola", $this->parola);
-    $statement->bindParam(":nume", $this->nume);
-    $statement->bindParam(":prenume", $this->prenume);
-    $statement->bindParam(":email", $this->email);
-    $statement->bindParam(":cod_resetare", $this->cod_resetare);
-    $statement->bindParam(":cheie_criptare", $this->cheie_criptare);
+      $statement->bindParam(":username", $this->username);
+      $statement->bindParam(":parola", $this->parola);
+      $statement->bindParam(":nume", $this->nume);
+      $statement->bindParam(":prenume", $this->prenume);
+      $statement->bindParam(":email", $this->email);
+      $statement->bindParam(":cod_resetare", $this->cod_resetare);
+      $statement->bindParam(":cheie_criptare", $this->cheie_criptare);
 
-    if($statement->execute()){
-        return true;
+      if($statement->execute()){
+          return true;
+      }
+      return false;
     }
-    return false;
-  }
 
   function getByName(){
     $sqlQuery = "SELECT username, parola, nume, prenume, email FROM utilizator WHERE username = ?";

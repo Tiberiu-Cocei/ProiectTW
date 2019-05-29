@@ -57,12 +57,24 @@ class Category{
       return false;
     }
 
-    function delete(){
-      $sqlQuery = "DELETE FROM categorii WHERE id_categorie = ?";
-
+    function deleteAccounts(){
+      $sqlQuery = "DELETE FROM conturi WHERE id_categorie = ?";
       $statement = $this->connection->prepare($sqlQuery);
 
       $this->id_categorie=htmlspecialchars(strip_tags($this->id_categorie));
+
+      $statement->bindParam(1, $this->id_categorie);
+
+      if($statement->execute()){
+          return true;
+      }
+      return false;
+    }
+
+    function delete(){
+      $sqlQuery = "DELETE FROM categorii WHERE id_categorie = ?";
+      $statement = $this->connection->prepare($sqlQuery);
+
       $statement->bindParam(1, $this->id_categorie);
 
       if($statement->execute()){
