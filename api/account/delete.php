@@ -25,12 +25,6 @@ $data = json_decode(file_get_contents("php://input"));
 
 $account->id_cont = $data->id_cont;
 
-if(!ctype_digit($account->id_cont)) {
-    http_response_code(400);
-    echo json_encode(array("message" => "Invalid account id detected."));
-    die();
-}
-
 if($account->delete()){
     http_response_code(204);
     echo json_encode(array("message" => "Account was deleted."));
