@@ -1,18 +1,3 @@
-<?php
-    // session_start();
-    // if(!isset($_SESSION['username']))
-    //     header('Location: ../includes/login.inc.php');  
-
-    if(!isset($_POST['username']) || !isset($_POST['password']) )
-        {
-            echo "<p>unset</p>"; 
-            header ("location: ./account/Login.php");
-            exit(); 
-        }
-    else 
-        echo $_POST['username'];
-?>
-
 <!DOCTYPE html>
 <html lang="en-US">
 

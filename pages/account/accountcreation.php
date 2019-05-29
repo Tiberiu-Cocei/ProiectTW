@@ -1,29 +1,29 @@
 <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST')
-    {
-        $fname = $_POST['fname'];
-        $lname = $_POST['lname'];
-        $email = $_POST['email'];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $passwordConfirm = $_POST['passwordConfirm'];
+    // if ($_SERVER['REQUEST_METHOD'] === 'POST')
+    // {
+    //     $fname = $_POST['fname'];
+    //     $lname = $_POST['lname'];
+    //     $email = $_POST['email'];
+    //     $username = $_POST['username'];
+    //     $password = $_POST['password'];
+    //     $passwordConfirm = $_POST['passwordConfirm'];
 
-        require_once("../../api/config/database.php"); 
+    //     require_once("../../api/config/database.php"); 
 
-        $query = "INSERT into users (  email, password, username)
-                    VALUES ('$email', '".md5($password)."', '$username')";
-        $result = mysqli_query($connection,$query);
+    //     $query = "INSERT into users (  email, password, username)
+    //                 VALUES ('$email', '".md5($password)."', '$username')";
+    //     $result = mysqli_query($connection,$query);
 
-        if($result)
-        {
-            session_start();
-            $_SESSION['email'] = $email;
-            $_SESSION['name'] = $fname." ".$lname;
+    //     if($result)
+    //     {
+    //         session_start();
+    //         $_SESSION['email'] = $email;
+    //         $_SESSION['name'] = $fname." ".$lname;
 
-            header("Location:../index.php");
+    //         header("Location:../index.php");
 
-        }
-    }
+    //     }
+    // }
 ?>
 
 <!DOCTYPE html>
