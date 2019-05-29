@@ -1,7 +1,4 @@
 <?php
   header("Location:pages");  
-
   
-
-
 ?>
