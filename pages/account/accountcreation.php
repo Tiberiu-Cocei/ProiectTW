@@ -20,7 +20,7 @@
             "email" => $email
           );
 
-          $make_call = ApiCall('POST', 'http://localhost/api/user/register.php', json_encode($data_array));
+          $make_call = ApiCall('POST', 'http://localhost/TWPM/api/user/register.php', json_encode($data_array));
 
           $response = json_decode($make_call, true);
           $data     = $response['message'];
