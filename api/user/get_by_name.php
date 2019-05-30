@@ -25,8 +25,8 @@ $user->getByName();
 
 if($user->parola!=null){
     $user_arr = array(
+        "id_utilizator" => $user->id_utilizator,
         "username" => $user->username,
-        "parola" => $user->parola,
         "nume" => $user->nume,
         "prenume" => $user->prenume,
         "email" => $user->email

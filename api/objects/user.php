@@ -53,7 +53,7 @@ class User{
     }
 
   function getByName(){
-    $sqlQuery = "SELECT username, parola, nume, prenume, email FROM utilizator WHERE username = ?";
+    $sqlQuery = "SELECT username, parola, id_utilizator, nume, prenume, email FROM utilizator WHERE username = ?";
 
     $statement = $this->connection->prepare($sqlQuery);
 
@@ -62,6 +62,7 @@ class User{
     $row = $statement->fetch(PDO::FETCH_ASSOC);
 
     $this->username = $row['username'];
+    $this->id_utilizator = $row['id_utilizator'];
     $this->parola = $row['parola'];
     $this->nume = $row['nume'];
     $this->prenume = $row['prenume'];

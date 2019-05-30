@@ -188,4 +188,16 @@ class Account{
           }
           return false;
       }
+
+      function getForExport(){
+          $sqlQuery = "SELECT nume_categorie, nume_site, adresa_site, username, parola, comentarii, data_adaugare, data_expirare
+                              FROM categorii NATURAL JOIN conturi WHERE conturi.id_utilizator = ?";
+
+          $statement = $this->connection->prepare($sqlQuery);
+          $this->id_utilizator = htmlspecialchars(strip_tags($this->id_utilizator));
+          $statement->bindParam(1, $this->id_utilizator);
+          $statement->execute();
+
+          return $statement;
+      }
 }
