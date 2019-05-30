@@ -29,10 +29,13 @@
 
 <div class="grid-container">
     <div class="center column" src="submain.php">
-      <button onclick="location.href = 'new_category.php';" id="addCategory" type="button" class="buttonReversed middle innerButton"><b>Add new category</b></button>
-      <button type="button" id="Frequency" style="margin-top:20px" class="buttonReversed middle innerButton">                        <b>Accounts by use frequency</b></button>
-      <button type="button" id="Strength" class="buttonReversed middle innerButton"><b>Accounts by password strength</b></button>
-      <button type="button" class="buttonReversed middle innerButton">              <b>Categories</b></button>
+    <form action="main_page.php" method="post">
+        <button onclick="location.href = 'new_category.php';" id="addCategory" type="button" class="buttonReversed middle innerButton"><b>Add new category</b></button>
+        <button name="usageOrder"      type="submit" id="Usage"      class="buttonReversed middle innerButton"  style="margin-top:20px"><b>Accounts by usage</b></button>
+        <button name="strengthOrder"   type="submit" id="Strength"   class="buttonReversed middle innerButton">                         <b>Accounts by password strength</b></button>
+        <!-- <button name="usageOrder"      type="submit"                 class="buttonReversed middle innerButton">                         <b>Accounts by usage</b></button> -->
+        <button name="showCategories"  type="submit"                 class="buttonReversed middle innerButton">                         <b>Categories</b></button>
+      </form>
 
       <?php
       include_once '../includes/apiCall.php';
@@ -57,12 +60,7 @@
         echo $buttonSettings;
       }
 
-      function aloha($data)
-      {
-        echo $data;
-      }
-
-      $userApi = 'http://localhost/TWPM/api/user/get_by_name.php?username='.$_SESSION['username'];
+      $userApi = 'http://localhost/TWPM/api/user/get_by_name.php?username='.$_SESSION['username']; 
 
       $make_call = ApiCall('GET', $userApi, json_encode($_SESSION['username']));
 
@@ -79,8 +77,8 @@
       }
       else
       {
-        $_SESSION['id_utilizator'] = $data;
-        $categoriesApi = 'http://localhost/api/category/get_by_user_id.php?id_utilizator='.$data;
+        $_SESSION['id_utilizator'] = $data; 
+        $categoriesApi = 'http://localhost/api/category/get_by_user_id.php?id_utilizator='.$data; 
 
         $make_call = ApiCall('GET', $categoriesApi);
 
@@ -95,51 +93,77 @@
       ?>
 
       <!-- <button onclick="displayCategory()">Display all accounts</button> -->
-
-
-
-
-      <?php
-       echo $_SESSION['current_category']."<BR>";
-       ?>
-
     </div>
-
-    <!-- <script>
-    function displayCategory() {
-
-      var x= echoCategoryButton("mojoo joojooooo");  //echoCategoryButton //aloha
-
-      document.getElementById("demo").innerHTML = x;
-
-    }
-    </script> -->
-
-    <!-- <div class="center column" src="accounts.php">
-
-
-
-    </div>
-      <button onclick="location.href = 'new_account.php';" id="addSite" type="button" class="buttonReversed middle innerButton"><b>Add new account</b></button> -->
 
       <div class="center column" src="accounts.php">
-      <button onclick="location.href = 'new_account.php';" id="addSite" type="button" class="buttonReversed middle innerButton"><b>Add new account</b></button>
+        <?php 
+        if(isset($_SESSION['canAddAccount']) && $_SESSION['canAddAccount'] == true)
+        {
+        ?>
+        <button onclick="location.href = 'new_account.php';" id="addSite" type="button" class="buttonReversed middle innerButton"><b>Add new account</b></button>
+        <?php
+            ;}
+        
 
-      <div class="textWrapper">
-          <h2>Username: JohnDoe1990</h2>
-          <h2>Password: ********</h2>
-          <button onclick="location.href = '#showPassword';" id="showPassword1" type="button"
-                  class="button "><b>Show password</b></button>
-          <h2>Web address: <a href="#webLink">www.steam.com</a></h2>
-          <h2>Comments: Main steam game library</h2>
-          <h2>Password Safety Level: 1 - Very low</h2>
-          <h2>Reset reminder: None</h2>
-          <button onclick="location.href = 'edit_account.php';" id="edit1" type="button"
-                  class="button "><b>Edit account info</b></button>
-          <button onclick="location.href = '#delete';" id="delete1" type="button"
-                  class="button buttonMargin"><b>Delete entry</b></button>
-      </div>
-      <div class="textWrapper">
+            function echoAccount($account)
+          {
+            $details = "<div class=\"textWrapper\"> "; 
+            $details = "<h2>Username: ". $account['username'] . "</h2>";
+            $details = $details. "<h2>Password: ". $account['parola'] . "</h2>"; 
+            $details = $details. "<h2>Web adress: ". $account['adresa_site'] . "</h2>"; 
+            $details = $details. "<h2>Web adress: ". $account['nume_site'] . "</h2>"; 
+            $details = $details. "<h2>Comments: ". $account['comentarii'] . "</h2>"; 
+            $details = $details. "<h2>Password safety: ". $account['putere_parola'] . "</h2>"; 
+            $details = $details. "<h2>Reset reminder: None</h2>"; 
+            $details = $details. "<h2>Add date: ". $account['data_adaugare'] . "</h2>"; 
+            $details = $details. "<h2>Expire date: ". $account['data_expirare'] . "</h2>"; 
+
+            $details = $details. "<button onclick=\"location.href = 'edit_account.php';\" 
+                        id=\"edit1\" type=\"button\"
+                        class=\"button \"><b>Edit account info</b></button>"; 
+            $details = $details. "<button onclick=\"location.href = '#delete';\" id=\"delete1\" 
+                        type=\"button\"
+                        class=\"button buttonMargin\"><b>Delete entry</b></button>"; 
+            $details = $details. "</div>"; 
+            echo $details; 
+          }
+
+
+
+          function getAccounts($orderType)
+          {
+            if($orderType == 'strength' || $orderType == 'usage')
+            {
+              $accountsApi = 'http://localhost/TWPM/api/account/get_by_'.$orderType.'.php?id_utilizator='.$_SESSION['id_utilizator']."'"; 
+          
+              $make_call = ApiCall('GET', $accountsApi, json_encode($_SESSION['id_utilizator']));
+
+              //echo $make_call; 
+
+              $response = json_decode($make_call, true);
+
+              return $response; 
+            }
+          }
+          
+          if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['usageOrder']))
+          {
+              $accounts = getAccounts('usage');  
+          }
+          else if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['strengthOrder']))
+          {
+              $accounts = getAccounts('strength');
+          }
+
+          foreach($accounts['records'] as $account) {
+            //echo  "<BR>"."<BR>"."<BR>"."<BR>";
+            //print_r($account); 
+           // echo "HERE IT IS: <BR>"; 
+            echoAccount($account);; 
+          }
+        ?>
+
+        <div class="textWrapper">
           <h2>Username: JohnDoe1991</h2>
           <h2>Password: ***********</h2>
           <button onclick="location.href = '#showPassword';" id="showPassword2" type="button"
@@ -153,8 +177,11 @@
           <button onclick="location.href = '#delete';" id="delete2" type="button"
                   class="button buttonMargin"><b>Delete entry</b></button>
       </div>
-    </div>
-</div>
+
+
+         
+    </div> <!--accounts-->
+</div> <!-- grid container -->
 
 </body>
 </html>
