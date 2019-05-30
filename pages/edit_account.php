@@ -34,8 +34,8 @@
         <div style="margin-top:-40px;"><input type="date" class="form-control dataField"
                                               id="resetReminder"
         ></div>
-        <button onclick="returnPage();" id="newAccount" type="button" style="margin-top:35px;"
-                class="button middle innerButton"><b>Create new account</b></button>
+        <button onclick="returnPage();" id="editAccount" type="button" style="margin-top:35px;"
+                class="button middle innerButton"><b>Edit account</b></button>
         <button onclick="returnPage();" id="resetPassword" type="button"
                 class="button middle innerButton"><b>Cancel</b></button>
     </div>

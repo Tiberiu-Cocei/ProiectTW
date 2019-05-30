@@ -22,8 +22,6 @@
         <button onclick="location.href = '#generatePassword';" id="generatePassword" type="button"
                 style="margin-top:35px;"
                 class="button middle innerButton"><b>Generate safe password</b></button>
-        <button onclick="location.href = '#copyToClipboard';" id="copyToClipboard" type="button"
-                class="button middle innerButton"><b>Copy password to clipboard</b></button>
         <button onclick="location.href = 'main_page.php';" id="return" type="button"
                 class="button middle innerButton"><b>Return</b></button>
     </div>
