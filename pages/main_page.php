@@ -33,7 +33,6 @@
       
       <?php
       include_once '../../includes/apiCall.php';
-      //$categoriesApi = 'http://localhost/api/account/get_by_usage.php?id_utilizator=aiciIdul
 
       function echoCategoryButton($category_name)
       {
@@ -47,30 +46,35 @@
             ."<b>".$category_name."</b></button>";
       }
 
-        $userApi = 'http://localhost/TWPM/api/user/get_by_name.php?username='.$_SESSION['username']; 
+      $userApi = 'http://localhost/TWPM/api/user/get_by_name.php?username='.$_SESSION['username']; 
 
-        $make_call = ApiCall('GET', $userApi, json_encode($_SESSION['username']));
+      $make_call = ApiCall('GET', $userApi, json_encode($_SESSION['username']));
 
-        echo $make_call; 
+      //echo $make_call; 
+
+      $response = json_decode($make_call, true);
+
+      $data     = $response['id_utilizator'];
+
+      if($data == "Could not find any user with given username." || $data == null) 
+      {
+          header("Location: ./Login.php");
+      }
+      else 
+      {
+        $categoriesApi = 'http://localhost/api/category/get_by_user_id.php?id_utilizator='.$data; 
+
+        $make_call = ApiCall('GET', $categoriesApi);
 
         $response = json_decode($make_call, true);
 
-        $data     = $response['id_utilizator'];
-
-        if($data === "Could not find any user with given username." || $data === null) {
-            header("Location: ./Login.php");
+        foreach($response['records'] as $category) {
+          //print_r( $category['nume_categorie']."<br>" ) ; 
+          echoCategoryButton( $category['nume_categorie']."<br>" ); 
         }
-        else 
-        {
-          
-          echoCategoryButton("Social1"); 
-          echoCategoryButton("Social2"); 
-          echoCategoryButton("Social3"); 
-          echoCategoryButton("Social4"); 
-        }
+      }
 
       ?>  
-
     </div>
 
     <div class="center column" src="accounts.php">
