@@ -31,38 +31,27 @@
       <button type="button" id="Strength" class="buttonReversed middle innerButton"><b>Accounts by password strength</b></button>
       <button type="button" class="buttonReversed middle innerButton">              <b>Categories</b></button>
       
-
-
       <?php
       include_once '../../includes/apiCall.php';
       //$categoriesApi = 'http://localhost/api/account/get_by_usage.php?id_utilizator=aiciIdul
 
-      // function echoCategoryButton($category_name)
-      // {
-      //   echo "<button onclick=\"location.href = '#"
-      //       .$category_name
-      //       ."';\""
-      //       ."id=\""
-      //       .$category_name
-      //       ."\" "
-      //       ."type=\"button\" class=\"button middle innerButton\">"
-      //       ."<b>".$category_name."</b></button>";
-      // }
-
-      // function echoCategoryButtonHardcoded($category_name)
-      // {
-      //   echo "<button onclick=\"location.href = '#Social';\" id=\"Social\" 
-      //   type=\"button\" class=\"button middle innerButton\"><b>Social</b>
-      //   </button>"; 
-
-      // }
-
+      function echoCategoryButton($category_name)
+      {
+        echo "<button onclick=\"location.href = '#"
+            .$category_name
+            ."';\""
+            ."id=\""
+            .$category_name
+            ."\" "
+            ."type=\"button\" class=\"button middle innerButton\">"
+            ."<b>".$category_name."</b></button>";
+      }
 
         $userApi = 'http://localhost/TWPM/api/user/get_by_name.php?username='.$_SESSION['username']; 
 
         $make_call = ApiCall('GET', $userApi, json_encode($_SESSION['username']));
 
-        //echo $make_call; 
+        echo $make_call; 
 
         $response = json_decode($make_call, true);
 
@@ -73,30 +62,17 @@
         }
         else 
         {
-          echoCategoryButtonHardcoded("Social1"); 
-          echoCategoryButtonHardcoded("Social2"); 
-          echoCategoryButtonHardcoded("Social3"); 
-          echoCategoryButtonHardcoded("Social4"); 
-
           
+          echoCategoryButton("Social1"); 
+          echoCategoryButton("Social2"); 
+          echoCategoryButton("Social3"); 
+          echoCategoryButton("Social4"); 
         }
 
-?>
-
-
-      <!-- <?php 
-      function echoCategoryButtonHardcoded($category_name)
-      {
-      ?>
-        <button onclick="location.href = '#Social';" id="Social" type="button" class="button middle innerButton"><b>Social</b>
-        </button>
-        <?php
-      }
-      ?> -->
-      
+      ?>  
 
     </div>
-    
+
     <div class="center column" src="accounts.php">
       <button onclick="location.href = 'new_account.php';" id="addSite" type="button" class="buttonReversed middle innerButton"><b>Add new account</b></button>
 
