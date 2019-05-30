@@ -97,10 +97,12 @@ ul {
     border: 1px solid rgb(246, 205, 97);
     justify-content: center;
     align-items: center;
+    color: "red"; 
 }
 
 ul li {
     list-style: none; /* scapam de bulinele de la lista */
+    
     /*border: 2px solid #555; -- de ce nu merge?! -- ca sa fie separate de ceva */
 }
 
