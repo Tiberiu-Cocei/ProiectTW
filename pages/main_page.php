@@ -33,17 +33,30 @@
       
       <?php
       include_once '../../includes/apiCall.php';
+      $_SESSION['current_category'] = ""; 
 
       function echoCategoryButton($category_name)
       {
-        echo "<button onclick=\"location.href = '#"
-            .$category_name
-            ."';\""
-            ."id=\""
-            .$category_name
-            ."\" "
-            ."type=\"button\" class=\"button middle innerButton\">"
-            ."<b>".$category_name."</b></button>";
+        // $buttonSettings = "<button onclick=\" \$_SESSION['current_category'] = \"CURRENT\" ; location.href = '#"
+        //                   .$category_name
+        //                   ."';\""
+        //                   ."id=\""
+        //                   .$category_name
+        //                   ."\" "
+        //                   ."type=\"button\" class=\"button middle innerButton\">"
+        //                   ."<b>".$category_name."</b></button>"; 
+        $_SESSION['current_category'] = "CATEGORIA HARD"; 
+        
+        $buttonSettings = "<input type=\"button\" value=\".$category_name\" 
+        class=\"button middle innerButton\"
+        onClick=\"\$_SESSION['current_category'] = \"SELECT\" ; document.location.href='./main_page.php'\" </input><br>"; 
+
+        echo $buttonSettings;
+      }
+
+      function aloha($data)
+      {
+        echo $data;
       }
 
       $userApi = 'http://localhost/TWPM/api/user/get_by_name.php?username='.$_SESSION['username']; 
@@ -70,14 +83,41 @@
 
         foreach($response['records'] as $category) {
           //print_r( $category['nume_categorie']."<br>" ) ; 
-          echoCategoryButton( $category['nume_categorie']."<br>" ); 
+          echoCategoryButton( $category['nume_categorie'] ); 
         }
       }
 
-      ?>  
+      ?>
+      
+      <!-- <button onclick="displayCategory()">Display all accounts</button> -->
+
+
+
+
+      <?php 
+       echo $_SESSION['current_category']."<BR>"; 
+       ?>
+
     </div>
 
-    <div class="center column" src="accounts.php">
+    <!-- <script>
+    function displayCategory() {
+
+      var x= echoCategoryButton("mojoo joojooooo");  //echoCategoryButton //aloha
+
+      document.getElementById("demo").innerHTML = x;
+    
+    }
+    </script> -->
+
+    <!-- <div class="center column" src="accounts.php">
+
+      
+
+    </div>
+      <button onclick="location.href = 'new_account.php';" id="addSite" type="button" class="buttonReversed middle innerButton"><b>Add new account</b></button> -->
+
+      <div class="center column" src="accounts.php">
       <button onclick="location.href = 'new_account.php';" id="addSite" type="button" class="buttonReversed middle innerButton"><b>Add new account</b></button>
 
       <div class="textWrapper">
