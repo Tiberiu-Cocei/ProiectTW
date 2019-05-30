@@ -35,7 +35,7 @@
       <button type="button" class="buttonReversed middle innerButton">              <b>Categories</b></button>
 
       <?php
-      include_once '../../includes/apiCall.php';
+      include_once '../includes/apiCall.php';
       $_SESSION['current_category'] = "";
 
       function echoCategoryButton($category_name)

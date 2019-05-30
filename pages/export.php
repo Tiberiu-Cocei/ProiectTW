@@ -1,25 +1,43 @@
 <?php
     if(!isset($_SESSION))
     {
-    session_start();
-    } 
+        session_start();
+    }
     include_once '../includes/exportFile.php';
 
+    $data = null;
+    $extensie = null;
     if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['exportCSV']))
     {
         $data = export('csv');
-        var_dump($data);
+        $extensie = '.csv';
     }
     else if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['exportJSON']))
     {
         $data = export('json');
-        var_dump($data);
+        $extensie = '.json';
     }
     else if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['exportXML']))
     {
         $data = export('xml');
-        var_dump($data);
+        $extensie = '.xml';
     }
+    if($data !== null) {
+        $file = "exportfile".$_SESSION['username'].$extensie;
+        $myfile = fopen($file, "w");
+        fwrite($myfile, $data);
+        fclose($myfile);
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="'.basename($file).'"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($file));
+        readfile($file);
+        unlink($file);
+        exit;
+  }
 ?>
 
 <!DOCTYPE html>
