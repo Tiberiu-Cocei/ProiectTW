@@ -1,6 +1,6 @@
 <?php
 /*
-  Cum se foloseste api-ul asta: metoda GET, link-ul http://localhost/api/user/get_by_name.php?username=aiciUsernameul
+  Cum se foloseste api-ul asta: metoda GET, link-ul http://localhost/TWPM/api/user/get_by_name.php?username=aiciUsernameul
   Username-ul nu conteaza daca este cu litere mari sau nu
 */
 header("Access-Control-Allow-Origin: *");
