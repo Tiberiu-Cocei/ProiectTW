@@ -25,7 +25,7 @@ $stmt = $account->getForExport();
 $nr = $stmt->rowCount();
 
 if($nr > 0){
-    $return_string = "";
+    $return_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         extract($row);

@@ -9,7 +9,7 @@
         "parola" => $password
       );
 
-      $make_call = ApiCall('POST', 'http://localhost/api/user/login.php', json_encode($data_array));
+      $make_call = ApiCall('POST', 'http://localhost/TWPM/api/user/login.php', json_encode($data_array));
 
       $response = json_decode($make_call, true);
       $data     = $response['message'];
@@ -48,8 +48,6 @@
 
     <button onclick="location.href = 'accountCreation.php';" id="register" type="button"
             class="button middle innerButton"><b>Create account</b></button>
-    <button onclick="location.href = 'forgotPassword.php';" id="reset" type="button"
-            class="button middle innerButton"><b>Forgot password</b></button>
     </div>
 </div>
 </body>
