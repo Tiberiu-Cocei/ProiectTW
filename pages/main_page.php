@@ -52,7 +52,7 @@
 
         $buttonSettings = "<input type=\"button\" value=\".$category_name\"
         class=\"button middle innerButton\"
-        onClick=\"\$_SESSION['current_category'] = \"SELECT\" ; document.location.href='./main_page.php'\" </input><br>";
+        onClick=\"document.location.href='./main_page.php'\" </input><br>";
 
         echo $buttonSettings;
       }
