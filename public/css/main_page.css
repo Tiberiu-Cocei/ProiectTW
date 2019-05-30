@@ -9,6 +9,10 @@ body {
     background-size: cover;
 }
 
+h2 {
+  font-size: 17px;
+}
+
 .ierarhie {
     float: none;
     width: 95%;
@@ -37,7 +41,7 @@ body {
 .menuBar {
     display: flex;
     margin-top: -37px;
-    height: 125%; 
+    height: 125%;
 }
 
 
@@ -101,7 +105,10 @@ ul li {
 }
 
 .center {
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-top: 30px;
     padding: 35px 10px 10px;
 }
 
@@ -152,7 +159,7 @@ a:visited {
 }
 
 @media screen and (min-width: 1700px) {
-    
+
 .ierarhie {
     float: none;
     width: 95%;
@@ -176,11 +183,144 @@ body{
 
 }
 
+.column {
+  float: left;
+  width: 80%;
+  padding: 10px;
+  /*height: 300px;  Should be removed. Only for demonstration */
+}
+
+.button {
+    background-color: rgba(0, 0, 0, 0.85);
+    border: none;
+    color: #f6cd61;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.buttonReversed {
+    background-color: rgba(246, 205, 97, 0.85);
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.outer {
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.inner {
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+
+}
+
+.innerButton {
+    margin-left: auto;
+    margin-right: auto;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.buttonWrapper {
+    word-wrap: normal;
+    white-space: normal;
+}
+
+.textWrapper {
+    word-wrap: break-word;
+    background-color: rgba(246, 205, 97, 0.85);
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    padding-left: 150px;
+    margin-top: 5px;
+    width: 74%;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: black;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(246, 205, 97, 0.8);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(246, 205, 97);
+}
+
+a {
+    color: black;
+}
+
+a:link {
+    color: black;
+}
+
+a:visited {
+    color: black;
+}
+
+.buttonMargin {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
 @media screen and (max-width: 800px) {
     .grid-container {
         display: table-row;
     }
     .menuBar {
         display: table-row;
+    }
+    .textWrapper {
+        word-wrap: break-word;
+        background-color: rgba(246, 205, 97, 0.85);
+        border: none;
+        color: black;
+        padding: 15px 32px;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 15px;
+        margin-bottom: 10px;
+        margin-top: 5px;
     }
 }

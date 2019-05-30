@@ -19,7 +19,7 @@
                 class="button middle innerButton"><b>Export data in JSON format</b></button>
         <button onclick="location.href = '#exportXML.php';" id="exportXML" type="button"
                 class="button middle innerButton"><b>Export data in XML format</b></button>
-        <button onclick="location.href = 'index.php';" id="resetPassword" type="button"
+        <button onclick="location.href = 'main_page.php';" id="resetPassword" type="button"
                 class="button middle innerButton"><b>Return</b></button>
     </div>
 </div>

@@ -50,7 +50,7 @@ div {
 }
 
 body {
-    padding-top:5%;
+    padding-top:54%;
     background: url("../images/blue-security-fb.jpg") no-repeat center fixed;
     background-size: cover;
 }
@@ -125,15 +125,19 @@ output {
 }
 
 .password-generated{
-    text-align: center; 
+    text-align: center;
     margin-left: auto;
-    margin-right: auto; 
+    margin-right: auto;
     margin-top: 32%;
 }
 
 @media screen and (max-width: 800px) {
     .dataField, .inner, .innerButton {
         width: 95%;
+    }
+
+    body {
+      padding-top:200%;
     }
 
     h1 {
@@ -143,9 +147,9 @@ output {
 
     h2 {
         font-size: 5vw;
-        text-align: center;  
+        text-align: center;
         margin-left: auto;
-        margin-right: auto; 
+        margin-right: auto;
     }
 
     .button{
@@ -154,7 +158,7 @@ output {
         border: none;
         color: #f6cd61;
         margin-left: auto;
-        margin-right: auto; 
+        margin-right: auto;
         text-align: center;
         text-decoration: none;
         display: inline-block;
@@ -174,7 +178,7 @@ output {
     .password-generated{
     text-align: center;
     margin-left: auto;
-    margin-right: auto; 
+    margin-right: auto;
     }
 }
 
