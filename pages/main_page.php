@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <?php
-  session_start();
+  if(!isset($_SESSION)) 
+  {
+      session_start();
+  }
   if($_SESSION['username'] === null) header("Location:./Login.php");
 ?>
 <html lang="en-US">
@@ -30,7 +33,7 @@
       <button type="button" id="Frequency" style="margin-top:20px" class="buttonReversed middle innerButton">                        <b>Accounts by use frequency</b></button>
       <button type="button" id="Strength" class="buttonReversed middle innerButton"><b>Accounts by password strength</b></button>
       <button type="button" class="buttonReversed middle innerButton">              <b>Categories</b></button>
-      
+
       <?php
       include_once '../../includes/apiCall.php';
       //$categoriesApi = 'http://localhost/api/account/get_by_usage.php?id_utilizator=aiciIdul
@@ -47,11 +50,11 @@
             ."<b>".$category_name."</b></button>";
       }
 
-        $userApi = 'http://localhost/TWPM/api/user/get_by_name.php?username='.$_SESSION['username']; 
+        $userApi = 'http://localhost/TWPM/api/user/get_by_name.php?username='.$_SESSION['username'];
 
         $make_call = ApiCall('GET', $userApi, json_encode($_SESSION['username']));
 
-        echo $make_call; 
+        echo $make_call;
 
         $response = json_decode($make_call, true);
 
@@ -60,16 +63,16 @@
         if($data === "Could not find any user with given username." || $data === null) {
             header("Location: ./Login.php");
         }
-        else 
+        else
         {
-          
-          echoCategoryButton("Social1"); 
-          echoCategoryButton("Social2"); 
-          echoCategoryButton("Social3"); 
-          echoCategoryButton("Social4"); 
+
+          echoCategoryButton("Social1");
+          echoCategoryButton("Social2");
+          echoCategoryButton("Social3");
+          echoCategoryButton("Social4");
         }
 
-      ?>  
+      ?>
 
     </div>
 

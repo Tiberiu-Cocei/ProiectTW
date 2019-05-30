@@ -1,3 +1,27 @@
+<?php
+    if(!isset($_SESSION))
+    {
+    session_start();
+    } 
+    include_once '../includes/exportFile.php';
+
+    if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['exportCSV']))
+    {
+        $data = export('csv');
+        var_dump($data);
+    }
+    else if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['exportJSON']))
+    {
+        $data = export('json');
+        var_dump($data);
+    }
+    else if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['exportXML']))
+    {
+        $data = export('xml');
+        var_dump($data);
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,14 +37,16 @@
     <div class="text-center">
     </div>
     <div class=" text-center center">
-        <button onclick="location.href = '#exportCSV.php';" id="exportCSV" type="button" style="margin-top:135px;"
+      <form action="export.php" method="post">
+        <button name="exportCSV" type="submit" style="margin-top:135px;"
                 class="button middle innerButton"><b>Export data in CSV format</b></button>
-        <button onclick="location.href = '#exportJSON.php';" id="exportJSON" type="button"
+        <button name="exportJSON" type="submit"
                 class="button middle innerButton"><b>Export data in JSON format</b></button>
-        <button onclick="location.href = '#exportXML.php';" id="exportXML" type="button"
+        <button name="exportXML" type="submit"
                 class="button middle innerButton"><b>Export data in XML format</b></button>
         <button onclick="location.href = 'main_page.php';" id="resetPassword" type="button"
                 class="button middle innerButton"><b>Return</b></button>
+      </form>
     </div>
 </div>
 
