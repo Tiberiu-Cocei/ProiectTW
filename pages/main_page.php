@@ -16,34 +16,63 @@
 <body>
 <nav>
     <ul class="menuBar">
-        <li class="myAccount"><a>Signed in as: <?php echo $_SESSION['username']; ?></a></li>
-        <li class="changePassword"><a href="./account/changePassword.php">Change password</a></li>
-        <li class="exportData"><a href="export.php">Export data</a></li>
-        <li class="generatePassword"><a href="./generate_password.php">Generate safe password</a></li>
-        <li class="logout"><a href="./account/logout.php">Logout</a></li>
+        <li class="myAccount">       <a style="color:#f6cd61;">                                    Signed in as: <?php echo $_SESSION['username']; ?></a></li>
+        <li class="changePassword">  <a style="color:#f6cd61;" href="./account/changePassword.php">Change password                                   </a></li>
+        <li class="exportData">      <a style="color:#f6cd61;" href="export.php">                  Export data                                       </a></li>
+        <li class="generatePassword"><a style="color:#f6cd61;" href="./generate_password.php">     Generate safe password                            </a></li>
+        <li class="logout">          <a style="color:#f6cd61;" href="./account/logout.php">        Logout                                            </a></li>
     </ul>
 </nav>
 
 <div class="grid-container">
     <div class="center column" src="submain.php">
-      <button onclick="location.href = 'new_category.php';" id="addCategory" type="button"
-              class="buttonReversed middle innerButton"><b>Add new category</b></button>
-      <button type="button" id="Frequency" style="margin-top:20px" class="buttonReversed middle innerButton"><b>Accounts by
-          use frequency</b></button>
-      <button type="button" id="Strength" class="buttonReversed middle innerButton"><b>Accounts by password strength</b>
-      </button>
-      <button type="button" class="buttonReversed middle innerButton"><b>Categories</b></button>
-      <button onclick="location.href = '#Social';" id="Social" type="button" class="button middle innerButton"><b>Social</b>
-      </button>
-      <button onclick="location.href = '#Commercial';" id="Commercial" type="button" class="button middle innerButton"><b>Commerical</b>
-      </button>
-      <button onclick="location.href = '#Gaming';" id="Gaming" type="button" class="button middle innerButton"><b>Gaming</b>
-      </button>
-      <button onclick="location.href = '#E-mail';" id="E-mail" type="button" class="button middle innerButton"><b>E-mail</b>
-      </button>
-      <button onclick="location.href = '#Others';" id="Others" type="button" class="button middle innerButton"><b>Others</b>
-      </button>
+      <button onclick="location.href = 'new_category.php';" id="addCategory" type="button" class="buttonReversed middle innerButton"><b>Add new category</b></button>
+      <button type="button" id="Frequency" style="margin-top:20px" class="buttonReversed middle innerButton">                        <b>Accounts by use frequency</b></button>
+      <button type="button" id="Strength" class="buttonReversed middle innerButton"><b>Accounts by password strength</b></button>
+      <button type="button" class="buttonReversed middle innerButton">              <b>Categories</b></button>
+      
+      <?php
+      include_once '../../includes/apiCall.php';
+      //$categoriesApi = 'http://localhost/api/account/get_by_usage.php?id_utilizator=aiciIdul
+
+      function echoCategoryButton($category_name)
+      {
+        echo "<button onclick=\"location.href = '#"
+            .$category_name
+            ."';\""
+            ."id=\""
+            .$category_name
+            ."\" "
+            ."type=\"button\" class=\"button middle innerButton\">"
+            ."<b>".$category_name."</b></button>";
+      }
+
+        $userApi = 'http://localhost/TWPM/api/user/get_by_name.php?username='.$_SESSION['username']; 
+
+        $make_call = ApiCall('GET', $userApi, json_encode($_SESSION['username']));
+
+        echo $make_call; 
+
+        $response = json_decode($make_call, true);
+
+        $data     = $response['id_utilizator'];
+
+        if($data === "Could not find any user with given username." || $data === null) {
+            header("Location: ./Login.php");
+        }
+        else 
+        {
+          
+          echoCategoryButton("Social1"); 
+          echoCategoryButton("Social2"); 
+          echoCategoryButton("Social3"); 
+          echoCategoryButton("Social4"); 
+        }
+
+      ?>  
+
     </div>
+
     <div class="center column" src="accounts.php">
       <button onclick="location.href = 'new_account.php';" id="addSite" type="button" class="buttonReversed middle innerButton"><b>Add new account</b></button>
 

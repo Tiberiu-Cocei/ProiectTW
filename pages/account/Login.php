@@ -13,7 +13,7 @@
 
       $response = json_decode($make_call, true);
       $data     = $response['message'];
-      if($data === "Successfully logged in.") {
+      if($data === "Successfully logged in." || $data === null) {
           session_start();
           $_SESSION['username'] = $username;
           header("Location: ../main_page.php");
