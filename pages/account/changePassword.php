@@ -21,10 +21,10 @@
         <div><input type="password" class="form-control dataField" placeholder="confirm new password"
                     id="confirmPassword"
         ></div>
-        <button onclick="location.href = '../index.php';" id="resetPassword" type="button"
+        <button onclick="location.href = '../main_page.php';" id="resetPassword" type="button"
                 style="margin-top:35px;"
                 class="button middle innerButton"><b>Confirm new password</b></button>
-        <button onclick="location.href = '../index.php';" id="return" type="button"
+        <button onclick="location.href = '../main_page.php';" id="return" type="button"
                 class="button middle innerButton"><b>Cancel</b></button>
     </div>
 </div>

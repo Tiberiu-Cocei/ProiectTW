@@ -1,29 +1,36 @@
 <?php
-    // if ($_SERVER['REQUEST_METHOD'] === 'POST')
-    // {
-    //     $fname = $_POST['fname'];
-    //     $lname = $_POST['lname'];
-    //     $email = $_POST['email'];
-    //     $username = $_POST['username'];
-    //     $password = $_POST['password'];
-    //     $passwordConfirm = $_POST['passwordConfirm'];
+    include_once '../../includes/apiCall.php';
+    $data = null;
+    if ($_SERVER['REQUEST_METHOD'] === 'POST')
+    {
+        $fname = $_POST['fname'];
+        $lname = $_POST['lname'];
+        $email = $_POST['email'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $passwordConfirm = $_POST['passwordConfirm'];
 
-    //     require_once("../../api/config/database.php"); 
+        if($password != $passwordConfirm) $data = "Passwords do not match.";
+        else{
+            $data_array =  array(
+            "username" => $username,
+            "parola" => $password,
+            "nume" => $fname,
+            "prenume" => $lname,
+            "email" => $email
+          );
 
-    //     $query = "INSERT into users (  email, password, username)
-    //                 VALUES ('$email', '".md5($password)."', '$username')";
-    //     $result = mysqli_query($connection,$query);
+          $make_call = ApiCall('POST', 'http://localhost/api/user/register.php', json_encode($data_array));
 
-    //     if($result)
-    //     {
-    //         session_start();
-    //         $_SESSION['email'] = $email;
-    //         $_SESSION['name'] = $fname." ".$lname;
-
-    //         header("Location:../index.php");
-
-    //     }
-    // }
+          $response = json_decode($make_call, true);
+          $data     = $response['message'];
+          if($data === "User successfully created.") {
+              session_start();
+              $_SESSION['username'] = $username;
+              header("Location: ../main_page.php");
+          }
+      }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -55,6 +62,7 @@
             ></div>
             <div><input name="passwordConfirm" type="password" class="form-control dataField" placeholder="confirm password" id="confirmPassword"
             ></div>
+            <h3> <?php if($data !==null) echo $data; ?> </h3>
             <button id="finishCreation" type="submit" style="margin-top:35px;" class="button middle innerButton">
                     <b>Create account</b></button>
         </div>

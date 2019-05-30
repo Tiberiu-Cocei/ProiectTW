@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>New Account</title>
+    <title>Edit account</title>
     <link rel="stylesheet" href="../public/css/loginStyles.css">
     <script>
         function returnPage() {
