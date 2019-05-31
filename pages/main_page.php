@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <?php
-  session_start();
+  if(!isset($_SESSION))
+  {
+      session_start();
+  }
   if($_SESSION['username'] === null) header("Location:./Login.php");
 
   function echoCategoryButton($category_name)
@@ -90,7 +93,6 @@
 
 <div class="grid-container">
     <div class="center column" src="submain.php">
-
     <form action="main_page.php" method="post">
         <button onclick="location.href = 'new_category.php';" id="addCategory" type="button" class="buttonReversed middle innerButton"><b>Add new category</b></button>
         <button name="usageOrder"      type="submit" id="Usage"      class="buttonReversed middle innerButton"  style="margin-top:20px"><b>Accounts by usage</b></button>
@@ -100,24 +102,25 @@
       </form>
 
       <?php
-      include_once '../../includes/apiCall.php';
-      $_SESSION['current_category'] = ""; 
+      include_once '../includes/apiCall.php';
+      $_SESSION['current_category'] = "";
 
       $userApi = 'http://localhost/TWPM/api/user/get_by_name.php?username='.$_SESSION['username']; 
 
       $make_call = ApiCall('GET', $userApi, json_encode($_SESSION['username']));
 
-      //echo $make_call; 
+      //echo $make_call;
 
       $response = json_decode($make_call, true);
 
       $data     = $response['id_utilizator'];
 
-      if($data == "Could not find any user with given username." || $data == null) 
+
+      if($data == "Could not find any user with given username." || $data == null)
       {
           header("Location: ./Login.php");
       }
-      else 
+      else
       {
         $_SESSION['id_utilizator'] = $data; 
         $categoriesApi = 'http://localhost/api/category/get_by_user_id.php?id_utilizator='.$data; 
@@ -127,13 +130,13 @@
         $response = json_decode($make_call, true);
 
         foreach($response['records'] as $category) {
-          //print_r( $category['nume_categorie']."<br>" ) ; 
-          echoCategoryButton( $category['nume_categorie'] ); 
+          //print_r( $category['nume_categorie']."<br>" ) ;
+          echoCategoryButton( $category['nume_categorie'] );
         }
       }
 
       ?>
-      
+
       <!-- <button onclick="displayCategory()">Display all accounts</button> -->
     </div>
 
