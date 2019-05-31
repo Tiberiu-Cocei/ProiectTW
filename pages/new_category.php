@@ -1,3 +1,7 @@
+<?php 
+    session_start(); 
+    include_once '../includes/apiCall.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,25 +16,53 @@
     </div>
     <div class="text-center center">
         <BR><BR><BR><BR>
-        <form>
-            <h3><input type="text" placeholder="category name" class="form-control dataField" id="newCategory" style="margin-top:35px;"></h3>
-            
-            <button onclick="location.href = 'main_page.php';" id="return" type="button" class="button middle innerButton">
-                    <b>Create new category</b></button>
-            <button onclick="location.href = 'main_page.php';" type="button" class="button middle innerButton">
-                    <b>Cancel</b></button>
+        <form method="POST">
+            <h3>
+            <input type="text" name="newCategory" placeholder="category name" class="form-control dataField" style="margin-top:35px;"></h3>
+            <input type="submit" name="tryToCreate" value="Create new category" style="font-weight: bold;" type="button" class="button middle innerButton">
+            <button onclick="location.href = 'main_page.php';" type="button" class="button middle innerButton"><b>Cancel</b></button>
         </form>
 
-        <!-- <div>
-        <input class="form-control dataField" placeholder="category name"
-                    id="categoryName" style="margin-top:180px;"></div>
+    <?php
+        if(isset($_POST['newCategory']) && ($_POST['newCategory']) != null ){
+            $category_name = $_POST['newCategory']; 
 
-        <button onclick="location.href = 'main_page.php';" id="newCategory" type="button" style="margin-top:35px;"
-                class="button middle innerButton"><b>Create new category</b></button>
-        
-       
-    </div> -->
+            //scoatem toate categoriile existente din BD ( Aici poate ar fi mai bine sa avem o lista globala cu toate categoriile ca sa nu facem accesari asa dese la bd)
+            $categoriesApi = 'http://localhost/api/category/get_by_user_id.php?id_utilizator='.$_SESSION['id_utilizator']."'"; 
+
+            $make_call = ApiCall('GET', $categoriesApi, json_encode($_SESSION['id_utilizator']));
+
+            $response = json_decode($make_call, true);
+
+            //verificam daca a noastra e existenta in BD sau e noua
+            $inBD = false; 
+            foreach($response['records'] as $category) {
+                if ($category_name == $category['nume_categorie']){
+                    $inBD = true; 
+                }
+            }
+
+            if($inBD){
+                echo "<h3>Existent category name"; 
+            }//daca nu e in BD incercam sa o adaugam
+            else{
+                
+                $categoriesApi = 'http://localhost/api/category/create.php'; 
+                $arguments =  array(
+                    "id_utilizator"  => $_SESSION['id_utilizator'],
+                    "nume_categorie" => $category_name
+                  );
+                $make_call = ApiCall('POST', $categoriesApi, json_encode($arguments));
+
+                $response = json_decode($make_call, true);
+
+                echo "<h3>".$response['message']."</h3>"; 
+            }
+        }else{
+            if(isset($_POST['tryToCreate']))
+                echo "<h3>Enter a category name</h3>"; 
+        }
+    ?>
 </div>
-
 </body>
 </html>

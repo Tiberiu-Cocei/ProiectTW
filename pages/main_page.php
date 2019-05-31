@@ -18,7 +18,7 @@
     //                   ."<b>".$category_name."</b></button>"; 
     $_SESSION['current_category'] = "CATEGORIA HARD"; 
 
-    $buttonSettings = "<input type=\"button\" value=\".$category_name\" 
+    $buttonSettings = "<input type=\"button\" value=\"$category_name\" 
     class=\"button middle innerButton\"
     onClick=\"document.location.href='./main_page.php'\" </input><br>"; 
 
