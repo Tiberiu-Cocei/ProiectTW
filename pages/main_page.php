@@ -2,6 +2,70 @@
 <?php
   session_start();
   if($_SESSION['username'] === null) header("Location:./Login.php");
+
+  function echoCategoryButton($category_name)
+  {
+    // $buttonSettings = "<button onclick=\" \$_SESSION['current_category'] = \"CURRENT\" ; location.href = '#"
+    //                   .$category_name
+    //                   ."';\""
+    //                   ."id=\""
+    //                   .$category_name
+    //                   ."\" "
+    //                   ."type=\"button\" class=\"button middle innerButton\">"
+    //                   ."<b>".$category_name."</b></button>"; 
+    $_SESSION['current_category'] = "CATEGORIA HARD"; 
+
+    $buttonSettings = "<input type=\"button\" value=\".$category_name\" 
+    class=\"button middle innerButton\"
+    onClick=\"document.location.href='./main_page.php'\" </input><br>"; 
+
+    echo $buttonSettings;
+  }
+
+  function echoAccount($account)
+  {
+    $details = " <div class=\"textWrapper\">"; 
+    $details = $details. "<h2>Username: ". $account['username'] . "</h2>";
+    $details = $details. "<h2>Password: ". $account['parola'] . "</h2>"; 
+    $details = $details. "<h2>Web adress: ". $account['adresa_site'] . "</h2>"; 
+    $details = $details. "<h2>Web adress: ". $account['nume_site'] . "</h2>"; 
+    $details = $details. "<h2>Comments: ". $account['comentarii'] . "</h2>"; 
+    $details = $details. "<h2>Password safety: ". $account['putere_parola'] . "</h2>"; 
+    $details = $details. "<h2>Reset reminder: None</h2>"; 
+    $details = $details. "<h2>Add date: ". $account['data_adaugare'] . "</h2>"; 
+    $details = $details. "<h2>Expire date: ". $account['data_expirare'] . "</h2>"; 
+
+    $details = $details. "<button onclick=\"location.href = 'edit_account.php';\" 
+                id=\"edit1\" type=\"button\"
+                class=\"button \"><b>Edit account info</b></button>"; 
+    $details = $details. "<button onclick=\"location.href = '#delete';\" id=\"delete1\" 
+                type=\"button\"
+                class=\"button buttonMargin\"><b>Delete entry</b></button>"; 
+    $details = $details. "</div>"; 
+    echo $details; 
+  }
+
+  function getAccounts($orderType)
+  {
+    if($orderType == 'strength' || $orderType == 'usage')
+    {
+      $accountsApi = 'http://localhost/TWPM/api/account/get_by_'.$orderType.'.php?id_utilizator='.$_SESSION['id_utilizator']."'"; 
+  
+      $make_call = ApiCall('GET', $accountsApi, json_encode($_SESSION['id_utilizator']));
+
+      $response = json_decode($make_call, true);
+    }
+    else 
+    {
+      $response['records'] = array();
+    } 
+    return $response;
+  }
+
+
+
+
+
 ?>
 <html lang="en-US">
 
@@ -38,25 +102,6 @@
       <?php
       include_once '../../includes/apiCall.php';
       $_SESSION['current_category'] = ""; 
-
-      function echoCategoryButton($category_name)
-      {
-        // $buttonSettings = "<button onclick=\" \$_SESSION['current_category'] = \"CURRENT\" ; location.href = '#"
-        //                   .$category_name
-        //                   ."';\""
-        //                   ."id=\""
-        //                   .$category_name
-        //                   ."\" "
-        //                   ."type=\"button\" class=\"button middle innerButton\">"
-        //                   ."<b>".$category_name."</b></button>"; 
-        $_SESSION['current_category'] = "CATEGORIA HARD"; 
-
-        $buttonSettings = "<input type=\"button\" value=\".$category_name\" 
-        class=\"button middle innerButton\"
-        onClick=\"document.location.href='./main_page.php'\" </input><br>"; 
-
-        echo $buttonSettings;
-      }
 
       $userApi = 'http://localhost/TWPM/api/user/get_by_name.php?username='.$_SESSION['username']; 
 
@@ -98,85 +143,28 @@
         {
         ?>
         <button onclick="location.href = 'new_account.php';" id="addSite" type="button" class="buttonReversed middle innerButton"><b>Add new account</b></button>
+        
         <?php
             ;}
         
-
-            function echoAccount($account)
-          {
-            $details = "<div class=\"textWrapper\"> "; 
-            $details = "<h2>Username: ". $account['username'] . "</h2>";
-            $details = $details. "<h2>Password: ". $account['parola'] . "</h2>"; 
-            $details = $details. "<h2>Web adress: ". $account['adresa_site'] . "</h2>"; 
-            $details = $details. "<h2>Web adress: ". $account['nume_site'] . "</h2>"; 
-            $details = $details. "<h2>Comments: ". $account['comentarii'] . "</h2>"; 
-            $details = $details. "<h2>Password safety: ". $account['putere_parola'] . "</h2>"; 
-            $details = $details. "<h2>Reset reminder: None</h2>"; 
-            $details = $details. "<h2>Add date: ". $account['data_adaugare'] . "</h2>"; 
-            $details = $details. "<h2>Expire date: ". $account['data_expirare'] . "</h2>"; 
-
-            $details = $details. "<button onclick=\"location.href = 'edit_account.php';\" 
-                        id=\"edit1\" type=\"button\"
-                        class=\"button \"><b>Edit account info</b></button>"; 
-            $details = $details. "<button onclick=\"location.href = '#delete';\" id=\"delete1\" 
-                        type=\"button\"
-                        class=\"button buttonMargin\"><b>Delete entry</b></button>"; 
-            $details = $details. "</div>"; 
-            echo $details; 
-          }
-
-
-
-          function getAccounts($orderType)
-          {
-            if($orderType == 'strength' || $orderType == 'usage')
-            {
-              $accountsApi = 'http://localhost/TWPM/api/account/get_by_'.$orderType.'.php?id_utilizator='.$_SESSION['id_utilizator']."'"; 
-          
-              $make_call = ApiCall('GET', $accountsApi, json_encode($_SESSION['id_utilizator']));
-
-              //echo $make_call; 
-
-              $response = json_decode($make_call, true);
-
-              return $response; 
-            }
-          }
-          
           if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['usageOrder']))
           {
-              $accounts = getAccounts('usage');  
+            $accounts = getAccounts('usage');  
           }
           else if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['strengthOrder']))
           {
-              $accounts = getAccounts('strength');
+            $accounts = getAccounts('strength');
+          }
+          else
+          {
+            $accounts = getAccounts('none');
           }
 
-          foreach($accounts['records'] as $account) {
-            //echo  "<BR>"."<BR>"."<BR>"."<BR>";
-            //print_r($account); 
-           // echo "HERE IT IS: <BR>"; 
-            echoAccount($account);; 
+          foreach($accounts['records'] as $account) { 
+            echoAccount($account);
           }
         ?>
-
-        <div class="textWrapper">
-          <h2>Username: JohnDoe1991</h2>
-          <h2>Password: ***********</h2>
-          <button onclick="location.href = '#showPassword';" id="showPassword2" type="button"
-                  class="button "><b>Show password</b></button>
-          <h2>Web address: <a href="#webLink">www.steam.com</a></h2>
-          <h2>Comments: Secondary library</h2>
-          <h2>Password Safety Level: 3 - Medium</h2>
-          <h2>Reset reminder: 26 March 2019</h2>
-          <button onclick="location.href = 'edit_account.php';" id="edit2" type="button"
-                  class="button "><b>Edit account info</b></button>
-          <button onclick="location.href = '#delete';" id="delete2" type="button"
-                  class="button buttonMargin"><b>Delete entry</b></button>
-      </div>
-
-
-         
+       
     </div> <!--accounts-->
 </div> <!-- grid container -->
 

@@ -34,8 +34,8 @@
             echo  $generatedPassword; 
         $_SESSION['generatedPassword'] = generateSafePassword(); ?> 
      </h3>
-        <input type="button" value="Generate safe password" class="button middle innerButton" id="generatePassword" style="margin-top:35px;"
-            onClick="document.location.href='./generate_password.php'" />
+        <input type="button" value="Generate safe password" style="font-weight: bold; margin-top:35px;" class="button middle innerButton" id="generatePassword" 
+         onClick="document.location.href='./generate_password.php'" />
 
         <button onclick="location.href = 'main_page.php';" id="return" type="button"
                 class="button middle innerButton"><b>Return</b></button>
