@@ -10,11 +10,14 @@
         $password = $_POST['password'];
         $passwordConfirm = $_POST['passwordConfirm'];
 
-        if($password != $passwordConfirm) $data = "Passwords do not match.";
+        if($password != $passwordConfirm) 
+            $data = "Passwords do not match.";
         else{
+            $hashedePwd = password_hash($password, PASSWORD_DEFAULT);
+
             $data_array =  array(
             "username" => $username,
-            "parola" => $password,
+            "parola" => $hashedePwd,
             "nume" => $fname,
             "prenume" => $lname,
             "email" => $email
@@ -27,7 +30,7 @@
           if($data === "User successfully created.") {
               session_start();
               $_SESSION['username'] = $username;
-              header("Location: ../main_page.php");
+              header("Location: ./Login.php");
           }
       }
     }

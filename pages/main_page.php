@@ -10,8 +10,8 @@
 
   function echoCategoryButton($category_name)
   {
-    $buttonSettings = "<input type=\"submit\" name=\"$category_name\" value=\"$category_name\"
-    class=\"button middle innerButton\"><br>";
+    $buttonSettings = "<input type=\"submit\" name=\"$category_name\" value=\"$category_name\" class=\"button middle innerButton\"
+    onClick=\"document.location.href='./main_page.php'\"><br>";
     echo $buttonSettings;
   }
 
@@ -46,6 +46,7 @@
   {
     if($orderType == 'strength' || $orderType == 'usage')
     {
+      //TODO: de ce aici da connection failure?!!?  
       $accountsApi = 'http://localhost/TWPM/api/account/get_by_'.$orderType.'.php?id_utilizator='.$_SESSION['id_utilizator']."'"; 
   
       $make_call = ApiCall('GET', $accountsApi, json_encode($_SESSION['id_utilizator']));
@@ -158,7 +159,7 @@
   else
   {
     $_SESSION['id_utilizator'] = $data; 
-    $categoriesApi = 'http://localhost/api/category/get_by_user_id.php?id_utilizator='.$data; 
+    $categoriesApi = 'http://localhost/TWPM/api/category/get_by_user_id.php?id_utilizator='.$data; 
 
     $make_call = ApiCall('GET', $categoriesApi);
 
@@ -166,7 +167,8 @@
 
     $allCategories = array(); 
 
-    echo "<form method=\"POST\">";  
+
+    echo "<form method=\"POST\">";
     foreach($response['records'] as $category) {
       echoCategoryButton( $category['nume_categorie'] );                            //adaugam butonul categoriei 
       $allCategories += [$category['nume_categorie'] => $category['id_categorie']]; //punem numele ( categoriei + id ) intr-o variabila

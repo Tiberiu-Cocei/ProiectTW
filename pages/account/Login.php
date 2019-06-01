@@ -7,9 +7,9 @@
       $data_array =  array(
         "username" => $username,
         "parola" => $password
-      );
+      ); 
 
-      $make_call = ApiCall('POST', 'http://localhost/TWPM/api/user/login.php', json_encode($data_array));
+      $make_call = ApiCall('POST', 'http://localhost/TWPM/api/user/loginPentruParolaCriptata.php', json_encode($data_array));
 
       $response = json_decode($make_call, true);
       $data     = $response['message'];
@@ -17,7 +17,7 @@
         session_start();
         $_SESSION['username'] = $username;
         
-        //vom avea nevoie si de id
+        //vom avea nevoie si de id-ul userului
         $make_call = ApiCall('GET', 'http://localhost/TWPM/api/user/get_by_name.php?username='.$username);
         $response = json_decode($make_call, true);
         setcookie("userID", $response['id_utilizator'], time() + 3600, "/");
@@ -49,7 +49,7 @@
         <input type="text" name="username" placeholder="username" class="form-control dataField removeTopSpace">
         <input type="password" name="password" placeholder="password" class="form-control dataField">
         <h3> <?php if($data !==null) echo $data; ?> </h3>
-        <button type="submit" name="login" class="button middle innerButton" style="margin-top:25px;" > Login </button>
+        <button type="submit" name="login" class="button middle innerButton" style="margin-top:25px;" ><b> Login </b></button>
     </form>
 
     <button onclick="location.href = 'accountCreation.php';" id="register" type="button"

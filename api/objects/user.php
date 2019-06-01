@@ -121,4 +121,17 @@ class User{
     $row = $statement->fetch(PDO::FETCH_ASSOC);
     $this->email = $row['email'];
   }
+
+  function loginPentruParolaCriptata(){
+    $sqlQuery = "SELECT parola FROM utilizator WHERE LOWER(username) =:username";
+
+    $statement = $this->connection->prepare($sqlQuery);
+
+    $this->username=htmlspecialchars(strip_tags($this->username));
+    $statement->bindParam(':username', $this->username);
+
+    $statement->execute();
+    $row = $statement->fetch(PDO::FETCH_ASSOC);
+    $this->parola = $row['parola'];
+  }
 }

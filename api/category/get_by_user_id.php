@@ -1,7 +1,7 @@
 <?php
 //fisierul asta face un get all pentru user-ul autentificat; se obtine id-ul prin $_COOKIE(sau SESSION?)["id_utilizator"] din pagina web respectiva
 /*
-  Cum se foloseste api-ul asta: metoda GET, link-ul http://localhost/api/category/get_by_user_id.php?id_utilizator=aiciIdulDinCookie
+  Cum se foloseste api-ul asta: metoda GET, link-ul http://localhost/TWPM/api/category/get_by_user_id.php?id_utilizator=aiciIdulDinCookie
 */
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
@@ -25,9 +25,8 @@ $stmt = $category->getByUserId();
 $nr = $stmt->rowCount();
 
 if($nr > 0){
-    $categories_arr=array();
-    $categories_arr["records"]=array();
-
+  $categories_arr=array();
+  $categories_arr["records"]=array();
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         extract($row);
 
@@ -46,6 +45,8 @@ if($nr > 0){
    http_response_code(404);
 
    echo json_encode(
-       array("message" => "No categories found.")
+      array(
+        "records" => array(),
+        "message" => "No categories found.")
    );
 }
