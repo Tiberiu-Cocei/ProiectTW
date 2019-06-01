@@ -2,6 +2,7 @@
     session_start(); 
     include_once '../includes/apiCall.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,8 +23,11 @@
             <input type="submit" name="tryToCreate" value="Create new category" style="font-weight: bold;" class="button middle innerButton">
             <button onclick="location.href = 'main_page.php';" type="button" class="button middle innerButton"><b>Cancel</b></button>
         </form>
+</div>
+</body>
+</html>
 
-    <?php
+<?php
     if(isset($_POST['tryToCreate']))
     {
         if(!isset($_POST['newCategory']) || ($_POST['newCategory']) == null )
@@ -73,6 +77,3 @@
         }
     } 
     ?>
-</div>
-</body>
-</html>

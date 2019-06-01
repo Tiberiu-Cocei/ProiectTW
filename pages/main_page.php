@@ -18,7 +18,7 @@
 
   function echoAccount($account)
   {
-    $details = " <div class=\"textWrapper\">"; 
+    $details = "<div class=\"textWrapper\">"; 
     $details = $details. "<h2>Username: ". $account['username'] . "</h2>";
     $details = $details. "<h2>Password: ". $account['parola'] . "</h2>"; 
     $details = $details. "<h2>Web adress: ". $account['adresa_site'] . "</h2>"; 
@@ -30,11 +30,10 @@
     $details = $details. "<h2>Expire date: ". $account['data_expirare'] . "</h2>"; 
 
     $details = $details. "<button onclick=\"location.href = 'edit_account.php';\" 
-                id=\"edit1\" type=\"button\"
-                class=\"button \"><b>Edit account info</b></button>"; 
-    $details = $details. "<button onclick=\"location.href = '#delete';\" id=\"delete1\" 
-                type=\"button\"
-                class=\"button buttonMargin\"><b>Delete entry</b></button>"; 
+                id=\"edit1\" class=\"button \"><b>Edit account info</b></button>";
+
+    $details = $details."<form method=\"POST\"><input type=\"submit\" name=\"deleteId".$account['id_cont']."\" value=\"Delete entry\" 
+                style=\"font-weight: bold;\" class=\"button \">" ; 
     $details = $details. "</div>"; 
     echo $details; 
   }
@@ -74,16 +73,35 @@
     return json_decode($make_call, true);
   }
 
-  function isACategorySelected($allCategories)
+  function isACategorySelected($allCategories) //sub forma de vector asociativ
   {
     foreach($allCategories as $key_category_name => $value_category_id) 
     {
       if(isset($_POST[$key_category_name]))
       {
+        setcookie("selectedCategoryID", $value_category_id, time() + 3600, "/");
         return true;
       }
     }
     return false; 
+  }
+
+  function isAnAccountSelectedToDelete($allAccounts) //sub forma de id
+  {
+    foreach($allAccounts as $account)
+    {
+      //echo $account['id_cont']."<BR>"; 
+      $buttonName = "deleteId". $account['id_cont'];
+      echo $buttonName; 
+      if(isset($_POST[$buttonName]))
+      {
+        $accountApi = 'http://localhost/api/account/delete.php'; 
+  
+        $make_call = ApiCall('POST', $accountApi, json_encode(array("id_cont"=>$account['id_cont'])));
+
+        echo  $make_call;
+      }
+    }
   }
 
 ?>
@@ -182,10 +200,18 @@
 
   foreach($accounts['records'] as $account) { 
     echoAccount($account);
+  echo "</form>";
   }
+
+  //procesam si cererile de stergere pentru conturi:
+  isAnAccountSelectedToDelete($accounts['records']); 
+
+  //si cererile de stergere pentru categorii
+
+
   ?>
   
-  </div> <!--accounts-->
+  </div> <!--cloana 2 - accounts e gata-->
 </div> <!-- grid container -->
 
 </body>
