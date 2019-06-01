@@ -11,8 +11,7 @@
   function echoCategoryButton($category_name)
   {
     $buttonSettings = "<input type=\"submit\" name=\"$category_name\" value=\"$category_name\"
-    class=\"button middle innerButton\"><br>"; 
-    //onClick=\"document.location.href='./main_page.php'\"
+    class=\"button middle innerButton\"><br>";
     echo $buttonSettings;
   }
 
@@ -29,11 +28,16 @@
     $details = $details. "<h2>Add date: ". $account['data_adaugare'] . "</h2>"; 
     $details = $details. "<h2>Expire date: ". $account['data_expirare'] . "</h2>"; 
 
-    $details = $details. "<button onclick=\"location.href = 'edit_account.php';\" 
-                id=\"edit1\" class=\"button \"><b>Edit account info</b></button>";
+    $details = $details. "<form method=\"POST\"><input type=\"submit\" name=\"Showpassword".$account['id_cont']."\" value=\"Show password\" 
+                style=\"font-weight: bold;\" class=\"button\">" ;
 
-    $details = $details."<form method=\"POST\"><input type=\"submit\" name=\"deleteId".$account['id_cont']."\" value=\"Delete entry\" 
-                style=\"font-weight: bold;\" class=\"button \">" ; 
+    $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\" 
+                style=\"font-weight: bold;\" class=\"button\">" ;
+
+    $details = $details. "<input type=\"submit\" name=\"deleteId".$account['id_cont']."\" value=\"Delete entry\" 
+    style=\"font-weight: bold;\" class=\"button\">" ;
+
+     
     $details = $details. "</div>"; 
     echo $details; 
   }
@@ -54,11 +58,14 @@
       {
         if(isset($_POST[$key_category_name]))
         {
+          setcookie("selectedCategoryID", $value_category_id, time() + 3600, "/");
           return getAccountsByCategory($value_category_id);
         }
       }
     }
     //if($orderType == 'none')
+    setcookie("selectedCategoryID", null, -1, "/");
+
     $response['records'] = array();
 
     return $response;
@@ -73,20 +80,20 @@
     return json_decode($make_call, true);
   }
 
-  function isACategorySelected($allCategories) //sub forma de vector asociativ
-  {
-    foreach($allCategories as $key_category_name => $value_category_id) 
-    {
-      if(isset($_POST[$key_category_name]))
-      {
-        setcookie("selectedCategoryID", $value_category_id, time() + 3600, "/");
-        return true;
-      }
-    }
-    return false; 
-  }
+  // function isACategorySelected($allCategories) //sub forma de vector asociativ
+  // {
+  //   foreach($allCategories as $key_category_name => $value_category_id) 
+  //   {
+  //     if(isset($_POST[$key_category_name]))
+  //     {
+  //       setcookie("selectedCategoryID", $value_category_id, time() + 3600, "/");
+  //       return true;
+  //     }
+  //   }
+  //   return false; 
+  // }
 
-  function isAnAccountSelectedToDelete($allAccounts) //sub forma de id
+  function isAnAccountSelectedToDelete($allAccounts)
   {
     foreach($allAccounts as $account)
     {
@@ -99,7 +106,7 @@
   
         $make_call = ApiCall('POST', $accountApi, json_encode(array("id_cont"=>$account['id_cont'])));
 
-        echo  $make_call;
+        //echo  $make_call;
       }
     }
   }
@@ -122,7 +129,7 @@
     <li class="exportData">      <a style="color:#f6cd61; font-weight: bold;" href="export.php">                  Export data                                       </a></li>
     <li class="generatePassword"><a style="color:#f6cd61; font-weight: bold;" href="./generate_password.php">     Generate safe password                            </a></li>
     <li class="logout">          <a style="color:#f6cd61; font-weight: bold;" href="./account/logout.php">        Logout                                            </a></li>
-    </ul>
+  </ul>
 </nav>
 
 <div class="grid-container">
@@ -131,7 +138,6 @@
     <button onclick="location.href = 'new_category.php';" id="addCategory" type="button" class="buttonReversed middle innerButton"><b>Add new category</b></button>
     <button name="usageOrder"      type="submit" id="Usage"      class="buttonReversed middle innerButton"  style="margin-top:20px"><b>Accounts by usage</b></button>
     <button name="strengthOrder"   type="submit" id="Strength"   class="buttonReversed middle innerButton">                         <b>Accounts by password strength</b></button>
-    <!-- <button name="usageOrder"      type="submit"                 class="buttonReversed middle innerButton">                         <b>Accounts by usage</b></button> -->
     <button name="showCategories"  type="submit"                 class="buttonReversed middle innerButton">                         <b>Categories</b></button>
   </form>
 
@@ -172,35 +178,33 @@
 <!-- de aici incepe coloana a doua !!!!!!!!! -->
 <div class="center column" src="accounts.php">
   <?php 
+    if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['usageOrder']))
+    {
+      $accounts = getAccounts('usage');
+      setcookie("selectedCategoryID", null, -1, '/');
+    }
+    else if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['strengthOrder']))
+    {
+      $accounts = getAccounts('strength');
+      setcookie("selectedCategoryID", null, -1, '/');
+    }
+    else
+    {
+      $accounts = getAccounts('justSelectedCategory', $allCategories); 
+    }
+  
+  
   //verificam daca suntem in cadrul unei categorii si putem adauga butonul de adaugare a unui cont
-  if(isACategorySelected($allCategories))
+  if(isset($_COOKIE['selectedCategoryID']))//(isACategorySelected($allCategories))
   {
   ?>
-  <button onclick="location.href = 'new_account.php';" id="addSite" type="button" class="buttonReversed middle innerButton"><b>Add new account</b></button>
-  
+    <button onclick="location.href = 'new_account.php';" id="addSite" type="button" class="buttonReversed middle innerButton"><b>Add new account</b></button>
+    
   <?php
   ;}
-  
-  //in cazul in care s-a cerut, afisam conturile, filtrate corespunzator
-  if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['usageOrder']))
-  {
-    $_SESSION['canAddAccount'] = true; 
-    $accounts = getAccounts('usage');  
-  }
-  else if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['strengthOrder']))
-  {
-    $_SESSION['canAddAccount'] = true;
-    $accounts = getAccounts('strength');
-  }
-  else 
-  {
-    $_SESSION['canAddAccount'] = true; 
-    $accounts = getAccounts('justSelectedCategory', $allCategories); 
-  }
 
   foreach($accounts['records'] as $account) { 
     echoAccount($account);
-  echo "</form>";
   }
 
   //procesam si cererile de stergere pentru conturi:
