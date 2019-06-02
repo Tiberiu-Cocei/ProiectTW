@@ -53,7 +53,7 @@
 
     <form action="" method="POST">
         <div class=" text-center center">
-            <div><input name="fname" class="form-control dataField" placeholder="first name" id="firstName" style="margin-top:50px;"
+            <div><input name="fname" class="form-control dataField" placeholder="first name" id="firstName"
             ></div>
             <div><input name="lname"class="form-control dataField" placeholder="last name" id="lastName"
             ></div>
@@ -66,8 +66,10 @@
             <div><input name="passwordConfirm" type="password" class="form-control dataField" placeholder="confirm password" id="confirmPassword"
             ></div>
             <h3> <?php if($data !==null) echo $data; ?> </h3>
-            <button id="finishCreation" type="submit" style="margin-top:35px;" class="button middle innerButton">
-                    <b>Create account</b></button>
+            <button id="finishCreation" type="submit" class="button middle innerButton">
+                    <b>Sign in</b></button>
+            <button onclick="location.href = './Login.php';" type="button"     class="button middle innerButton"><b>Login</b></button>
+    
         </div>
     </form>
 

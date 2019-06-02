@@ -72,6 +72,8 @@
                     $response = json_decode($make_call, true);
 
                     echo "<h3>".$response['message']."</h3>"; 
+
+                    header("Location: ./main_page.php");
                 }
             }
         }

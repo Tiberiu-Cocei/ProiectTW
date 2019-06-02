@@ -12,10 +12,6 @@ function ApiCall($method, $url, $data = false){
 
     //Execute:
     $result = curl_exec($curl);
-    if(!$result)
-    {
-        die("Connection Failure");
-    }
 
     curl_close($curl);
 

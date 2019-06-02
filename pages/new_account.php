@@ -21,8 +21,8 @@
         <form action="./action_new_account.php" method="POST">
             <input type="text"    name="siteName" placeholder="site/application name"    class="form-control dataField" value="<?php if (isset($_COOKIE['siteName'])) echo $_COOKIE['siteName'];?>" >
             <input type="text"    name="username" placeholder="username"                 class="form-control dataField" value="<?php if (isset($_COOKIE['username'])) echo $_COOKIE['username'];?>" >
-            <input type="text"    name="password" placeholder="password"                 class="form-control dataField">
-            <input type="text"    name="passwordConfirm" placeholder="confirm password"  class="form-control dataField">
+            <input type="password"name="password" placeholder="password"                 class="form-control dataField">
+            <input type="password"name="passwordConfirm" placeholder="confirm password"  class="form-control dataField">
             <input type="text"    name="address"  placeholder="address"                  class="form-control dataField" value="<?php if (isset($_COOKIE['address']))  echo $_COOKIE['address'];?>" >
             <input type="text"    name="comments" placeholder="comments"                 class="form-control dataField" value="<?php if (isset($_COOKIE['comments'])) echo $_COOKIE['comments'];?>" >
             <input type="date"    name="reminderDate" placeholder="reminder date" class="form-control dataField"  value="<?php if (isset($_COOKIE['reminderDate'])) echo $_COOKIE['reminderDate'];?>" >

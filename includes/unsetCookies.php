@@ -9,5 +9,9 @@
         setcookie("response", null ,-1, '/');
     }
 
+    function unsetCookie($nameOfCookieToUnset)
+    {
+        setcookie($nameOfCookieToUnset, null, -1, '/');
+    }
 
 ?>

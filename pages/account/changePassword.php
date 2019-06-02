@@ -1,3 +1,7 @@
+<?php 
+    session_start(); 
+    include_once '../../includes/unsetCookies.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,22 +14,24 @@
 <body>
 <div class="outer middle inner">
     <h1 class="text-center"><u><b>Change password</b> </u></h1>
-    <div class="text-center">
-    </div>
     <div class=" text-center center">
-        <div><input type="password" class="form-control dataField" placeholder="current password" id="currentPassword"
-                    style="margin-top:125px;"
-        ></div>
-        <div><input type="password" class="form-control dataField" placeholder="new password" id="newPassword"
-        ></div>
-        <div><input type="password" class="form-control dataField" placeholder="confirm new password"
-                    id="confirmPassword"
-        ></div>
-        <button onclick="location.href = '../main_page.php';" id="resetPassword" type="button"
-                style="margin-top:35px;"
-                class="button middle innerButton"><b>Confirm new password</b></button>
-        <button onclick="location.href = '../main_page.php';" id="return" type="button"
-                class="button middle innerButton"><b>Cancel</b></button>
+        <form action="./action_change_password.php" method="POST">
+            <input  type="password"   name="oldPassword"         class="form-control dataField"    placeholder="old password"         >
+            <input  type="password"   name="newPassword"         class="form-control dataField"    placeholder="new password"         >
+            <input  type="password"   name="newPasswordConfirm"  class="form-control dataField"    placeholder="confirm new password" >
+            <button type="submit" name="tryToChangePassword" class="button middle innerButton"><b>Change it</b></button>
+            <button type="submit" name="returnToMainPage"    class="button middle innerButton"><b>Back to main page</b></button>
+            <h3>
+                <?php if (isset($_COOKIE['response'])) 
+                        {
+                            echo $_COOKIE['response'];
+                            if($_COOKIE['response'] == "return")
+                                header("Location: ../main_page.php");
+                            unsetCookie("response"); 
+                        }
+                     
+                ?></h3>
+        </form>
     </div>
 </div>
 

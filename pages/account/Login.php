@@ -17,10 +17,11 @@
         session_start();
         $_SESSION['username'] = $username;
         
-        //vom avea nevoie si de id-ul userului
+        //intr-un cookie vom avea id-ul + username-ul userului (pentru celelalte pagini)
         $make_call = ApiCall('GET', 'http://localhost/TWPM/api/user/get_by_name.php?username='.$username);
         $response = json_decode($make_call, true);
-        setcookie("userID", $response['id_utilizator'], time() + 3600, "/");
+        setcookie("userID",   $response['id_utilizator'], time() + 3600, "/");
+        setcookie("usernameConnected", $username, time() + 3600, "/");
 
         header("Location: ../main_page.php");
       }
@@ -53,7 +54,7 @@
     </form>
 
     <button onclick="location.href = 'accountCreation.php';" id="register" type="button"
-            class="button middle innerButton"><b>Create account</b></button>
+            class="button middle innerButton"><b>Sign in</b></button>
     </div>
 </div>
 </body>
