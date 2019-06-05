@@ -40,6 +40,28 @@ class Category{
       return false;
     }
 
+    function getByCategoryName(){
+        $sqlQuery = "SELECT id_categorie FROM categorii WHERE id_utilizator =:id_utilizator AND nume_categorie =:nume_categorie";
+
+        $statement = $this->connection->prepare($sqlQuery);
+
+        $this->id_utilizator=htmlspecialchars(strip_tags($this->id_utilizator));
+        $this->nume_categorie=htmlspecialchars(strip_tags($this->nume_categorie));
+        $statement->bindParam(':id_utilizator', $this->id_utilizator);
+        $statement->bindParam(':nume_categorie', $this->nume_categorie);
+
+        $statement->execute();
+
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        $id = $row['id_categorie'];
+        if($id === null) {
+          $this->create();
+          $id = $this->getByCategoryName();
+        }
+
+        return $id;
+    }
+
     function update(){
       $sqlQuery = "UPDATE categorii SET nume_categorie =:nume_categorie WHERE id_categorie = :id_categorie";
 

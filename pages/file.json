@@ -1,0 +1,16 @@
+[{
+                "nume_categorie" : "Games",
+                "username": "tiberiucocei",
+                "parola": "Parola123321",
+                "adresa_site": "www.steam.com",
+                "nume_site": "Steam",
+                "comentarii": "Ceva comentariu random"
+              },
+              {
+                "category_name" : "Social",
+                "username": "cocei",
+                "password": "Parola1321",
+                "adresa_site": "www.steamworks.com",
+                "nume_site": "Steamworks",
+                "comentarii": "Ceva comentariu random2"
+}]

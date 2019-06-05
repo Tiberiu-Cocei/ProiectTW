@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `categorii` (
   `id_utilizator` int(11) NOT NULL,
   `nume_categorie` varchar(64) NOT NULL,
   PRIMARY KEY (`id_categorie`),
+  UNIQUE KEY `user_categorie` (`id_utilizator`,`nume_categorie`),
   FOREIGN KEY (id_utilizator)
     REFERENCES utilizator(id_utilizator)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
@@ -64,4 +65,3 @@ INSERT INTO `conturi` (`id_cont`, `id_categorie`, `id_utilizator`, `username`, `
 (8, 5, 3, 'testname8', 'testpassword8', 'www.testsite8.com', 'nume site8', 'acesta este un test', '2020-09-08'),
 (9, 5, 3, 'testname9', 'testpassword9', 'www.testsite9.com', 'nume site9', 'acesta este un test', '2020-09-09'),
 (10, 6, 3, 'testname10', 'testpassword10', 'www.testsite10.com', 'nume site10', 'acesta este un test', '2020-09-10');
-

@@ -30,7 +30,7 @@ if(!empty($data->username) && !empty($data->parola)) {
     $user->login();
 
     if($user->email !== null){
-        http_response_code(201);
+        http_response_code(200);
         echo json_encode(array("message" => "Successfully logged in."));
     } else {
         http_response_code(401);

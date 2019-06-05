@@ -27,7 +27,7 @@ $data = json_decode(file_get_contents("php://input"));
 if(empty($data->username) && empty($data->parola)) {
     http_response_code(400);
     echo json_encode(array("message" => "Login failed. Missing username or password."));
-} 
+}
 else{
     $user->username = strtolower($data->username);
     $user->parola = $data->parola;
@@ -40,14 +40,14 @@ else{
             echo json_encode(array("message" => "Login failed. Incorrect password."));
         }
         else{
-            http_response_code(201);
+            http_response_code(200);
             echo json_encode(array("message" => "Successfully logged in."));
         }
-    } 
+    }
     else {
         http_response_code(401);
         echo json_encode(array("message" => "Login failed. Incorrect username-password combination."));
     }
 }
-    
+
 ?>
