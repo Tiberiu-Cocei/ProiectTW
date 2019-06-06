@@ -1,117 +1,15 @@
 <!DOCTYPE html>
 <?php
   include_once '../includes/apiCall.php';
+  include_once './main_page_functions.php';
   if(!isset($_SESSION))
   {
       session_start();
   }
-  if($_SESSION['username'] === null) header("Location:./Login.php");
-
-
-  function echoCategoryButton($category_name)
+  if($_SESSION['username'] === null) 
   {
-    $buttonSettings = "<input type=\"submit\" name=\"$category_name\" value=\"$category_name\" class=\"button middle innerButton\"
-    onClick=\"document.location.href='./main_page.php'\"><br>";
-    echo $buttonSettings;
+    header("Location:./Login.php");
   }
-
-  function echoAccount($account)
-  {
-    $details = "<div class=\"textWrapper\">"; 
-    $details = $details. "<h2>Username: ". $account['username'] . "</h2>";
-    $details = $details. "<h2>Password: ". $account['parola'] . "</h2>"; 
-    $details = $details. "<h2>Web adress: ". $account['adresa_site'] . "</h2>"; 
-    $details = $details. "<h2>Web adress: ". $account['nume_site'] . "</h2>"; 
-    $details = $details. "<h2>Comments: ". $account['comentarii'] . "</h2>"; 
-    $details = $details. "<h2>Password safety: ". $account['putere_parola'] . "</h2>"; 
-    $details = $details. "<h2>Reset reminder: None</h2>"; 
-    $details = $details. "<h2>Add date: ". $account['data_adaugare'] . "</h2>"; 
-    $details = $details. "<h2>Expire date: ". $account['data_expirare'] . "</h2>"; 
-
-    $details = $details. "<form method=\"POST\"><input type=\"submit\" name=\"Showpassword".$account['id_cont']."\" value=\"Show password\" 
-                style=\"font-weight: bold;\" class=\"button\">" ;
-
-    $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\" 
-                style=\"font-weight: bold;\" class=\"button\">" ;
-
-    $details = $details. "<input type=\"submit\" name=\"deleteId".$account['id_cont']."\" value=\"Delete entry\" 
-    style=\"font-weight: bold;\" class=\"button\">" ;
-
-     
-    $details = $details. "</div>"; 
-    echo $details; 
-  }
-
-  function getAccounts($orderType, $allCategories = array())
-  {
-    if($orderType == 'strength' || $orderType == 'usage')
-    {
-      //TODO: de ce aici da connection failure?!!?  
-      $accountsApi = 'http://localhost/TWPM/api/account/get_by_'.$orderType.'.php?id_utilizator='.$_SESSION['id_utilizator']."'"; 
-  
-      $make_call = ApiCall('GET', $accountsApi, json_encode($_SESSION['id_utilizator']));
-
-      return json_decode($make_call, true);
-    }
-    else if($orderType = 'justSelectedCategory')
-    {
-      foreach($allCategories as $key_category_name => $value_category_id) 
-      {
-        if(isset($_POST[$key_category_name]))
-        {
-          setcookie("selectedCategoryID", $value_category_id, time() + 3600, "/");
-          return getAccountsByCategory($value_category_id);
-        }
-      }
-    }
-    //if($orderType == 'none')
-    setcookie("selectedCategoryID", null, -1, "/");
-
-    $response['records'] = array();
-
-    return $response;
-  }
-
-  function getAccountsByCategory($id_categorie)
-  {
-    $accountsApi = 'http://localhost/api/account/get_by_category.php?id_categorie='.$id_categorie; 
-
-    $make_call = ApiCall('GET', $accountsApi, json_encode($id_categorie));
-
-    return json_decode($make_call, true);
-  }
-
-  // function isACategorySelected($allCategories) //sub forma de vector asociativ
-  // {
-  //   foreach($allCategories as $key_category_name => $value_category_id) 
-  //   {
-  //     if(isset($_POST[$key_category_name]))
-  //     {
-  //       setcookie("selectedCategoryID", $value_category_id, time() + 3600, "/");
-  //       return true;
-  //     }
-  //   }
-  //   return false; 
-  // }
-
-  function isAnAccountSelectedToDelete($allAccounts)
-  {
-    foreach($allAccounts as $account)
-    {
-      //echo $account['id_cont']."<BR>"; 
-      $buttonName = "deleteId". $account['id_cont'];
-      echo $buttonName; 
-      if(isset($_POST[$buttonName]))
-      {
-        $accountApi = 'http://localhost/api/account/delete.php'; 
-  
-        $make_call = ApiCall('POST', $accountApi, json_encode(array("id_cont"=>$account['id_cont'])));
-
-        //echo  $make_call;
-      }
-    }
-  }
-
 ?>
 
 <html lang="en-US">
@@ -167,7 +65,6 @@
 
     $allCategories = array(); 
 
-
     echo "<form method=\"POST\">";
     foreach($response['records'] as $category) {
       echoCategoryButton( $category['nume_categorie'] );                            //adaugam butonul categoriei 
@@ -183,12 +80,12 @@
     if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['usageOrder']))
     {
       $accounts = getAccounts('usage');
-      setcookie("selectedCategoryID", null, -1, '/');
+      unsetcookie("selectedCategoryID");
     }
     else if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['strengthOrder']))
     {
       $accounts = getAccounts('strength');
-      setcookie("selectedCategoryID", null, -1, '/');
+      unsetcookie("selectedCategoryID");
     }
     else
     {
@@ -200,13 +97,16 @@
   if(isset($_COOKIE['selectedCategoryID']))//(isACategorySelected($allCategories))
   {
   ?>
-    <button onclick="location.href = 'new_account.php';" id="addSite" type="button" class="buttonReversed middle innerButton"><b>Add new account</b></button>
-    
+    <button onclick="location.href = 'new_account.php';" id="addSite" type="button" class="buttonReversed middle innerButton">
+        <b>Add new account</b></button>
   <?php
   ;}
 
-  foreach($accounts['records'] as $account) { 
-    echoAccount($account);
+  if(isset($accounts) && isset($accounts['records']))
+  {
+    foreach($accounts['records'] as $account) { 
+      echoAccount($account);
+    }
   }
 
   //procesam si cererile de stergere pentru conturi:

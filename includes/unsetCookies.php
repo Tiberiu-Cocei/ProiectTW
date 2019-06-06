@@ -14,4 +14,11 @@
         setcookie($nameOfCookieToUnset, null, -1, '/');
     }
 
+    function unsetCookieForLogout()
+    {
+        setcookie('userID', null, -1, '/');
+        setcookie('usernameConnected', null, -1, '/');
+        setcookie('selectedCategoryID', null, -1, '/');
+    }
+
 ?>

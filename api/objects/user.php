@@ -69,6 +69,18 @@ class User{
     $this->email = $row['email'];
   }
 
+  function getKeyByIdUtilizator(){
+    $sqlQuery = "SELECT cheie_criptare FROM utilizator WHERE id_utilizator = ?";
+
+    $statement = $this->connection->prepare($sqlQuery);
+
+    $statement->bindParam(1, $this->id_utilizator);
+    $statement->execute();
+    $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+    $this->cheie_criptare = $row['cheie_criptare'];
+  }
+
   function update(){
     $sqlQuery = "UPDATE utilizator SET parola =:parola, nume =:nume, prenume =:prenume, email =:email WHERE username = :username";
 

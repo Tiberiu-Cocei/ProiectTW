@@ -54,7 +54,7 @@
     </form>
 
     <button onclick="location.href = 'accountCreation.php';" id="register" type="button"
-            class="button middle innerButton"><b>Sign in</b></button>
+            class="button middle innerButton"><b>Sign up</b></button>
     </div>
 </div>
 </body>
