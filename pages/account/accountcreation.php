@@ -67,8 +67,8 @@
             ></div>
             <h3> <?php if($data !==null) echo $data; ?> </h3>
             <button id="finishCreation" type="submit" class="button middle innerButton">
-                    <b>Sign in</b></button>
-            <button onclick="location.href = './Login.php';" type="button"     class="button middle innerButton"><b>Login</b></button>
+                    <b>Sign up</b></button>
+            <button onclick="location.href = './Login.php';" type="button"     class="button middle innerButton"><b>Cancel</b></button>
     
         </div>
     </form>

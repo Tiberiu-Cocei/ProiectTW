@@ -41,8 +41,6 @@
         elseif (empty($address))
             setResponseCookie("Enter address for your account.");
         elseif (empty($reminderDate))
-        //     setResponseCookie("Enter a reminder date for your account.");
-        // elseif (empty($password) )
             setResponseCookie("Enter password for your account.");
         elseif (empty($passwordConfirm))
             setResponseCookie("Confirm password.");
@@ -58,9 +56,6 @@
                 //apoi punem in BD, indiferent daca mai e existent un cont asemanator sau nu 
                 $accountCreateApi = 'http://localhost/TWPM/api/account/create.php'; 
 
-                $hashedePwd = password_hash($password, PASSWORD_DEFAULT);
-                //pentru extrgere:  $pwdCheck = password_verify($password, $$['pwdUsers']); - true/false
-                
                 $id_categorie  = $_COOKIE['selectedCategoryID']; 
                 $id_utilizator = $_COOKIE['userID'];
 
@@ -68,7 +63,7 @@
                     "id_categorie" => $id_categorie,
                     "id_utilizator" => $id_utilizator,
                     "username" =>  $username,
-                    "parola" =>  $hashedePwd,
+                    "parola" =>  $password,
                     "adresa_site" =>  $address,
                     "nume_site" => $siteName,
                     "comentarii" =>  $comments,

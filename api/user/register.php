@@ -24,6 +24,10 @@ include_once '../algorithms/reset_key.php';
 include_once '../algorithms/encryption_key.php';
 include_once '../algorithms/user_validation.php';
 
+use Defuse\Crypto\Crypto; 
+use Defuse\Crypto\Key; 
+require "../../vendor/autoload.php"; 
+
 $database = new Database();
 $db = $database->getConnection();
 
@@ -49,7 +53,9 @@ if($mesaj === "Valid"){
     $user->prenume = $data->prenume;
     $user->email = $data->email;
     $user->cod_resetare = generateResetKey();
-    $user->cheie_criptare = generateEncryptionKey($data->username);
+
+    $key = Key::createNewRandomKey();
+    $user->cheie_criptare = $key->saveToAsciiSafeString(); // generateEncryptionKey($data->username); //
 
     if($user->create()){
         http_response_code(201);
