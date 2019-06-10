@@ -20,8 +20,8 @@
         //intr-un cookie vom avea id-ul + username-ul userului (pentru celelalte pagini)
         $make_call = ApiCall('GET', 'http://localhost/TWPM/api/user/get_by_name.php?username='.$username);
         $response = json_decode($make_call, true);
-        setcookie("userID",   $response['id_utilizator'], time() + 3600, "/");
-        setcookie("usernameConnected", $username, time() + 3600, "/");
+        setcookie("userID",   $response['id_utilizator'], time() + 36000, "/");
+        setcookie("usernameConnected", $username, time() + 36000, "/");
 
         header("Location: ../main_page.php");
       }

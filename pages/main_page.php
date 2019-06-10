@@ -12,6 +12,7 @@
   }
 ?>
 
+
 <html lang="en-US">
 <head>
   <meta charset="utf-8">
@@ -31,6 +32,8 @@
   </ul>
 </nav>
 
+
+
 <div class="grid-container">
   <div class="center column" src="submain.php">
   <form action="main_page.php" method="post">
@@ -39,6 +42,8 @@
     <button name="strengthOrder"   type="submit" id="Strength"   class="buttonReversed middle innerButton">                         <b>Accounts by password strength</b></button>
     <button name="showCategories"  type="submit"                 class="buttonReversed middle innerButton">                         <b>Categories</b></button>
   </form>
+
+  
 
   <?php
 //in acest bloc de php extragem toate denumirile conturilor pentru utiizatorul conectat (pentru afisare a butoanelor de categorii - cu functionalitate)
@@ -101,21 +106,28 @@
         <b>Add new account</b></button>
   <?php
   ;}
-
-  if(isset($accounts) && isset($accounts['records']))
+ if(isset($accounts) && isset($accounts['records']))
   {
-    foreach($accounts['records'] as $account) { 
-      echoAccount($account);
-    }
-  }
+?>    
 
-  //procesam si cererile de stergere pentru conturi:
-  isAnAccountSelectedToDelete($accounts['records']); 
+<script type='text/javascript'>
 
-  //si cererile de stergere pentru categorii
+<?php
+  $php_array = $accounts;
+  $js_array = json_encode($php_array);
+  //echo "ASD"; 
+  echo "var javascript_accounts = ". $js_array . ";\n";
+?>
+</script>
 
+<?php
 
-  ?>
+foreach($accounts['records'] as $account) { 
+  echoAccount($account);
+}
+
+ }
+?>
   
   </div> <!--cloana 2 - accounts e gata-->
 </div> <!-- grid container -->

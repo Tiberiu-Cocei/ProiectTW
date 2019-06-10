@@ -55,6 +55,13 @@ function echoAccount($account, $showPassword = false)
   echo $details; 
 }
 
+function passwordShow()
+{
+  
+
+
+}
+
 function getAccounts($orderType, $allCategories = array())
   {
     if($orderType == 'strength' || $orderType == 'usage')
