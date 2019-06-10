@@ -43,15 +43,26 @@ function showCategoriesColumn()
 function showAccountColumn($accountsToShow = array()) 
 {
   //doar in cazul in care suntem in interiorul unei categorii se va pune la inceput si butonul de adaugare de cont, altfel nu (fiindca nu vom sti in ce categorie sa punem contul adaugat..)
-  tryShowAddAccountButton(); 
+  //tryShowAddAccountButton(); 
+
+  $details = getAccountsDetailsInString($accountsToShow); 
+
+  echo $details; 
+}
+
+function getAccountsDetailsInString($accountsToShow = array())
+{
+  $details = ""; 
 
   if(isset($accountsToShow) && isset($accountsToShow['records']))
   {
     foreach($accountsToShow['records'] as $account) 
     { 
-      echoAccount($account);
+      $details = $details. getSingleAccountDetailsInString($account);
     }
   }
+
+  return $details; 
 }
 
 //verifica daca e setata categoria si adauga un buton de adaugare de cont daca este setata
@@ -85,7 +96,7 @@ function functionSetCategoryCookie($name)
 
 function categoryButtonClick(category_name)
 {
-  <?php showAccountColumn(getAccountsByName("categoria1")); ?>
+  document.write(getAccountsDetailsInString(getAccountsByCategory(category_name))); 
 }
 </script>
 
@@ -97,8 +108,9 @@ function echoCategoryButton($category_name)
   echo $buttonSettings;
 }
 
-function echoAccount($account, $showPassword = false)
+function getSingleAccountDetailsInString($account, $showPassword = false)
 {
+  //<?php echo showAccountColumn(getAccountsByName("categoria1"));
   $plainPassword = getPasswordForContID($account['id_cont']); 
   $password = $plainPassword; 
 
@@ -137,7 +149,8 @@ function echoAccount($account, $showPassword = false)
 
    
   $details = $details. "</div>"; 
-  echo $details; 
+
+  return  $details; 
 }
 
 
