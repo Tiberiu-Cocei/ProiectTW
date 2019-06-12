@@ -1,7 +1,8 @@
 <?php
-
 include_once '../includes/unsetCookies.php';
 
+//afiseaza categoriile de conturi 
+//si o coloana cu cele 3 moduri de filtrare a conturilor. 
 function showCategoriesColumn()
 {
   //in acest bloc de php extragem toate denumirile conturilor pentru utiizatorul conectat (pentru afisare a butoanelor de categorii - cu functionalitate)
@@ -19,7 +20,6 @@ function showCategoriesColumn()
   }
   else
   {
-    $_SESSION['id_utilizator'] = $data; 
     $categoriesApi = 'http://localhost/TWPM/api/category/get_by_user_id.php?id_utilizator='.$data; 
 
     $make_call = ApiCall('GET', $categoriesApi);
@@ -28,26 +28,123 @@ function showCategoriesColumn()
 
     $allCategories = array(); 
 
-    // echo "<form method=\"POST\">";
+    echo "<form method=\"POST\">";
     foreach($response['records'] as $category) {
       echoCategoryButton( $category['nume_categorie'] );                            //adaugam butonul categoriei 
       $allCategories += [$category['nume_categorie'] => $category['id_categorie']]; //punem numele ( categoriei + id ) intr-o variabila
     }
+    echo "</form>"; 
 
-    setcookie("allCategoriesCookie", serialize($allCategories), time() + 3600);
+    //punem intr-un cookie toate categoriile disponibile 
+    setcookie("allCategoriesCookie", serialize($allCategories), time() + 3600);  
   }
 }
 
-//primeste un sir de conturi ( dupa forma arrayului din api, cu ['records'] ) pe care il va afisa
-//daca nu primeste parametru, inseamna ca nu se vor afisa conturi
-function showAccountColumn($accountsToShow = array()) 
+//afiseaza conturile din cookiul cu toate conturile disponibile de afisat pentru utilizatorul curent. 
+//si butoanele aditionale acestei coloane
+function showAccountColumn() 
 {
-  //doar in cazul in care suntem in interiorul unei categorii se va pune la inceput si butonul de adaugare de cont, altfel nu (fiindca nu vom sti in ce categorie sa punem contul adaugat..)
-  //tryShowAddAccountButton(); 
-
-  $details = getAccountsDetailsInString($accountsToShow); 
+  //vedem ce e de afisat. 
+  verificaDacaAmApasatUnButon(); 
+  
+  $details = ""; 
+  if(isset($_COOKIE['addAccountButton']))
+    $details = $details. "<button onclick=\"location.href = 'new_account.php';\" id=\"addSite\" type=\"button\" class=\"buttonReversed middle innerButton\">
+    <b>Add new account</b></button><br>"; 
+  
+  if(isset($_COOKIE['allAccountsToShowCookie']))
+    $accountsToShow = unserialize($_COOKIE['allAccountsToShowCookie'], ["allowed_classes" => false]);
+  else
+  {
+    $accountsToShow = array(); 
+    $accountsToShow['records'] = array();
+  }
+  $details = $details. getAccountsDetailsInString($accountsToShow); 
 
   echo $details; 
+}
+
+function verificaDacaAmApasatUnButon()
+{
+  //verificam daca e selectata o categorie -> punem in cookie ce conturi ii corespund ei 
+  if(isset($_COOKIE['selectedCategoryID']))
+  {
+    $allAcountsForThisCategory = getAccountsByCategory($_COOKIE['selectedCategoryID']); 
+    setcookie("allAccountsToShowCookie", serialize($allAcountsForThisCategory), time() + 3600, '/TWPM/pages');
+  }
+
+  if(isset($_COOKIE['allCategoriesCookie']))
+    $allCategories = unserialize($_COOKIE['allCategoriesCookie'], ["allowed_classes" => false]); //luam toate categoriile afisate pe pagina
+  else 
+  {
+    $allCategories = array(); 
+    $allCategories['records'] = array();
+  }
+
+  if(isset($_POST['usageOrder']) || isset($_POST['strengthOrder']) || isset($_POST['showCategories']))
+  {
+    setcookie("allAccountsToShowCookie", null, -1, '/TWPM/pages');
+    setcookie("addAccountButton", null, -1, '/TWPM/pages');
+
+    if(isset($_POST['usageOrder']))
+      $allAccountsToShow = getAccountsByType('usage'); 
+    else if (isset($_POST['strengthOrder']))
+      $allAccountsToShow = getAccountsByType('strength'); 
+    else
+      {
+        $allAccountsToShow = array();
+        $allAccountsToShow['records'] = array();
+      } 
+    setcookie("allAccountsToShowCookie", serialize($allAccountsToShow), time() + 3600, '/TWPM/pages');
+  }
+  else 
+  {
+    //pentru fiecare cont verificam daca a fost selectat 
+    foreach($allCategories as $nume_buton => $id_buton) 
+    {
+      //setcookie("allAccountsToShowCookie", null, -1, '/TWPM/pages');
+      //setcookie("addAccountButton", null, -1, '/TWPM/pages');
+
+      if(isset($_POST[$nume_buton]))
+        {
+          setcookie("allAccountsToShowCookie", serialize(getAccountsByCategory($id_buton)), time() + 3600);
+          setcookie("addAccountButton", 1, time() + 3600, '/TWPM/pages'); 
+        }
+    }
+
+  }
+
+
+
+}
+?>
+
+<script>
+function categoryButtonClick(category_name)
+{
+  allAcountsForThisCategory = getAccountsByName(category_name); 
+  setcookie("allAccountsToShowCookie", serialize($allAcountsForThisCategory), time() + 3600);
+  document.write(getAccountsDetailsInString(getAccountsByCategory(category_name))); 
+}
+</script>
+
+
+<?php
+//primeste un id de cont si returneaza parola corespunzatoare celui cont
+function getPasswordForContID($id_cont)
+{
+  $accountsApi = 'http://localhost/TWPM/api/account/show_password.php?id_cont='. $id_cont .'&id_utilizator=' . $_COOKIE['userID']; 
+  
+  $make_call = ApiCall('GET', $accountsApi);
+
+  return  $make_call; 
+}
+
+function echoCategoryButton($category_name)
+{
+  //$buttonSettings = "<button onclick=\"categoryButtonClick($category_name)\"   class=\"button middle innerButton\" > $category_name </button>"; 
+  $buttonSettings = "<input type=\"submit\" name=\"$category_name\" value=\"$category_name\" class=\"button middle innerButton\" onClick=\"document.location.href='./main_page.php'\"><br>";
+  echo $buttonSettings;
 }
 
 function getAccountsDetailsInString($accountsToShow = array())
@@ -62,55 +159,12 @@ function getAccountsDetailsInString($accountsToShow = array())
     }
   }
 
-  return $details; 
+  return $details;
 }
 
-//verifica daca e setata categoria si adauga un buton de adaugare de cont daca este setata
-function tryShowAddAccountButton()
-{
-  if(isset($_COOKIE['selectedCategoryID']))//(isACategorySelected($allCategories))
-  {
-     $localButton = "<button onclick=\"location.href = 'new_account.php';\" id=\"addSite\" type=\"button\" class=\"buttonReversed middle innerButton\">
-          <b>Add new account</b></button>"; 
-     echo $localButton; 
-  }
-}
-
-//primeste un id de cont si returneaza parola corespunzatoare celui cont
-function getPasswordForContID($id_cont)
-{
-  $accountsApi = 'http://localhost/TWPM/api/account/show_password.php?id_cont='. $id_cont .'&id_utilizator=' . $_COOKIE['userID']; 
-  
-  $make_call = ApiCall('GET', $accountsApi);
-
-  return  $make_call; 
-}
-
-function functionSetCategoryCookie($name)
-{
-  setcookie("selectedCategoryID", $name, time() + 3600, "/");
-}
-?>
-
-<script>
-
-function categoryButtonClick(category_name)
-{
-  document.write(getAccountsDetailsInString(getAccountsByCategory(category_name))); 
-}
-</script>
-
-<?php
-function echoCategoryButton($category_name)
-{
-  $buttonSettings = "<button onclick=\"categoryButtonClick($category_name)\"   class=\"button middle innerButton\" > $category_name </button>"; 
-  //$buttonSettings = "<input type=\"submit\" name=\"$category_name\" value=\"$category_name\" class=\"button middle innerButton\" onClick=\"document.location.href='./main_page.php'\"><br>";
-  echo $buttonSettings;
-}
 
 function getSingleAccountDetailsInString($account, $showPassword = false)
 {
-  //<?php echo showAccountColumn(getAccountsByName("categoria1"));
   $plainPassword = getPasswordForContID($account['id_cont']); 
   $password = $plainPassword; 
 
@@ -134,15 +188,20 @@ function getSingleAccountDetailsInString($account, $showPassword = false)
   $details = $details. "<h2>Add date: ". $account['data_adaugare'] . "</h2>\n"; 
   $details = $details. "<h2>Expire date: ". $account['data_expirare'] . "</h2>\n";
 
-  $details = $details. "<form method=\"POST\"><input type=\"submit\"  onclick=\"onclick=\"functiaDeAfisare( e," . $account['id_cont'] ." ) name=\"Showpassword".$account['id_cont']."\" value=\"Show password\" 
+  $details = $details. "<input type=\"submit\"  onclick=\"onclick=\"functiaDeAfisare( e," . $account['id_cont'] ." ) name=\"Showpassword".$account['id_cont']."\" value=\"Show password\" 
   style=\"font-weight: bold;\" class=\"button\">\n" ;
 
- $details = $details . "<button onclick=\"functiaDeAfisare( e," . $account['id_cont'] ." )\"> Show Password </button> \n";
+  $details = $details . "<button onclick=\"functiaDeAfisare( e," . $account['id_cont'] ." )\"> Show Password </button> \n";
  
- $details = $details . "<button onclick=\"myFunction( e, ".$plainPassword. ")\"> Copy Password </button>\n"; 
+  $details = $details . "<button onclick=\"myFunction( e, ".$plainPassword. ")\"> Copy Password </button>\n"; 
 
-  $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\" 
-              style=\"font-weight: bold;\" class=\"button\">\n" ;
+
+  $details = $details. "<button onclick=\"location.href = 'edit_account.php\?id_account_to_be_edited=". $account['id_cont'] ."'\" id=\"addSite\" class=\"button\">
+  <b>Edit account details</b></button><br>"; 
+
+  // $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\" 
+  //             style=\"font-weight: bold;\" class=\"button\">\n" ;
+  //\?id_account_to_be_edited=".$account['id_cont']. 
 
   $details = $details. "<input type=\"submit\" name=\"deleteId".$account['id_cont']."\" value=\"Delete entry\" 
   style=\"font-weight: bold;\" class=\"button\">\n" ;
@@ -158,9 +217,9 @@ function getAccountsByType($orderType)
 {
   if($orderType == 'strength' || $orderType == 'usage')
   {
-    $accountsApi = 'http://localhost/TWPM/api/account/get_by_'.$orderType.'.php?id_utilizator='.$_SESSION['id_utilizator']."'"; 
+    $accountsApi = 'http://localhost/TWPM/api/account/get_by_'.$orderType.'.php?id_utilizator='.$_COOKIE['userID']."'"; 
 
-    $make_call = ApiCall('GET', $accountsApi, json_encode($_SESSION['id_utilizator']));
+    $make_call = ApiCall('GET', $accountsApi, json_encode($_COOKIE['userID']));
 
     return json_decode($make_call, true);
   }
