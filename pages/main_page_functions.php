@@ -85,6 +85,7 @@ function verificaDacaAmApasatUnButon()
   {
     setcookie("allAccountsToShowCookie", null, -1, '/TWPM/pages');
     setcookie("addAccountButton", null, -1, '/TWPM/pages');
+    setcookie("selectedCategoryID", null, time() -1, '/');
 
     if(isset($_POST['usageOrder']))
       $allAccountsToShow = getAccountsByType('usage'); 
@@ -109,6 +110,7 @@ function verificaDacaAmApasatUnButon()
         {
           setcookie("allAccountsToShowCookie", serialize(getAccountsByCategory($id_buton)), time() + 3600);
           setcookie("addAccountButton", 1, time() + 3600, '/TWPM/pages'); 
+          setcookie("selectedCategoryID", $id_buton, time() + 3600, '/'); 
         }
     }
   }
@@ -164,12 +166,12 @@ function getSingleAccountDetailsInString($account, $showPassword = false)
   $plainPassword = getPasswordForContID($account['id_cont']); 
   $password = $plainPassword; 
 
-  if($showPassword == false)
-  {
-    $length = strlen($password);
-    $password = "";
-    $password = str_pad($password, $length, "*");
-  }
+  // if($showPassword == false)
+  // {
+  //   $length = strlen($password);
+  //   $password = "";
+  //   $password = str_pad($password, $length, "*");
+  //}
 
   $details = "<div class=\"textWrapper\">"; 
   $details = $details. "<h2>Username: ". $account['username'] . "</h2>\n";
@@ -191,9 +193,10 @@ function getSingleAccountDetailsInString($account, $showPassword = false)
   // $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\" style=\"font-weight: bold;\" class=\"button\">" ;
   // $details = $details. "<input type=\"submit\" name=\"deleteId".$account['id_cont']."\" value=\"Delete entry\" style=\"font-weight: bold;\" class=\"button\">" ;
   
-  $details = $details. "<button onclick=\"location.href = 'edit_account.php\?id_account_to_be_edited=". $account['id_cont'] ."'\" id=\"addSite\" class=\"button\"> <b>Edit account details</b></button><br>"; 
+  $details = $details. "<button onclick=\"location.href = 'delete_account.php\?id_account_to_be_deleted=". $account['id_cont'] ."'\" id=\"addSite\" class=\"button\"> <b>Delete account </b></button>"; 
+  $details = $details. "<button onclick=\"location.href = 'edit_account.php\?id_account_to_be_edited="   . $account['id_cont'] ."'\" id=\"addSite\" class=\"button\"> <b>Edit account details </b></button>"; 
 
-  $details = $details. "</div><br>";
+  $details = $details. "<br></div><br>";
   
   // $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\" 
   //             style=\"font-weight: bold;\" class=\"button\">\n" ;
@@ -227,6 +230,7 @@ function getAccountsByName($category_name)
     if($key_category_name == $category_name)
     {
       $accounts = getAccountsByCategory($value_category_id); 
+      $_COOKIE['selectedCategoryID'] = $value_category_id; 
     }
   }
   return $accounts; 
