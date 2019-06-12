@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <title>Passer</title>
+    <link href="scolarly-style.css" type="text/css" rel="stylesheet">
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <article>
+        <header><h1>Raport - Passer</h1></header>
+        <div role="contentinfo">
+            <ol role="directory">
+                <li><a href="#abstract">Abstract</a></li>
+                <li><a href="#introducere">Introducere</a></li>
+                <li><a href="#module">Module</a></li>
+                <ol role="directory">
+                    <li><a href="#loginRegister">Login/Register</a></li>
+                    <li><a href="#data">Gestionarea datelor</a></li>
+                    <li><a href="#importExport">Import si export</a></li>
+                    <li><a href="#safePassword">Generare parola sigura</a></li>
+                </ol>
+                <li><a href="#tehnologii">Tehnologii folosite</a></li>
+                <li><a href="#detalii">Detalii de inmplementare</a></li>
+                <ol role="directory">
+                    <li><a href="#usecase">Scenarii de utilizare</a></li>
+                    <li><a href=#bd>Baza de date</a></li>
+			<li><a href=#entities>Entitati</a></li>
+                </ol>
+		<li><a href="#progres">Progresul proiectului</a></li>
+		<li><a href="#git">Sistem management cod sursa</a></li>
+                <li><a href="#bibliografie">Referinte</a></li>
+            </ol>
+            <dt>Authors</dt>
+            <dd>Anichitoaie Beatrice-Roxana, Cocei Tiberiu</dd>
+        </div>
+        
+        <section id="abstract" typeof="sa:Abstract" role="doc-abstract">
+            <h2>1. Abstract</h2>
+            <p>Password Manager este o aplicatie ce va permite utilizatorului gestionarea cu usurinta a parolelor folosite in cadrul unor aplicatii/siteuri Web. In cadrul proiectului se va construi o aplicatie ce va implementa un sistem client-server ce va fi folosit pentru a afisa sub forma unui site web informatii despre conturile asociate unui utilizator.
+	    </p>
+        </section>
+        
+        <section id="introducere" role="doc-introduction">
+            <h2>2. Introducere</h2>
+            <p>Aplicatia web va permite utilizatorului sa se logheze sau inregistreze inainte de a avea acces la functionalitatea site-ului. Odata autentificat, utilizatorul va putea sa creeze categorii si conturi ce vor fi stocate pe o baza de date MySQL, parola fiind criptata. Parola poate fi afisata in urma apasarii butonului "Show password", fiind mai intai decriptata. Pe langa vizualizarea conturilor dupa categorii, vor putea fi afisate dupa puterea parolei si a frecventei de utilizare. Utilizatorul va putea sa isi importeze datele in format JSON si sa le exporteze in formatele JSON, CSV si XML. De asemenea, utilizatorul va putea genera parole sigure si edita/sterge conturi.
+            </p>
+        </section>
+        
+        <section id="module">
+            <h2>3. Module </h2>
+            <section id="loginRegister">
+                <h3>3.1 Login / Register</h3>
+                <p>Utilizatorii se vor putea autentifica sau inregistra. Logarea se face pe baza de username/parola iar inregistrarea implica introducerea de date valide pentru username, parola, nume, prenume si email. Puterea parolei va fi verificata de catre un algoritm, si daca este considerata prea slaba va returna un mesaj de eroare.                 
+                </p>
+            </section>
+            <section id="data">
+                <h3>3.2 Gestionarea datelor</h3>
+                <p>Odata autentificat, utilizatorul va putea sa creeze categorii si conturi ce vor fi stocate pe o baza de date MySQL, parola fiind criptata. Categoriile vor fi create folosind un nume unic pentru utilizator. Conturile vor detine mai multe campuri, dintre care comentariile si data de expirare fiind optionale. Username-ul, parola, numele siteului, adresa siteului vor fi necesare, in caz ca lipseste vreuna returnandu-se un mesaj de eroare. Daca data de expirare lipseste, parola va expira in trei luni. Conturile pot fi modificate sau sterse. Daca exista conturi ce au expirat, va fi afisat un mesaj pe pagina principala. Parola poate fi afisata in urma apasarii butonului "Show password", fiind mai intai decriptata. Pe langa vizualizarea conturilor dupa categorii, vor putea fi afisate dupa puterea parolei si a frecventei de utilizare. </p>
+            </section>
+            <section id="importExport">
+                <h3>3.3 Importare si exportare</h3>
+                <p>Utilizatorul va putea sa isi importeze datele in format JSON si sa le exporteze in formatele JSON, CSV si XML.</p>
+            </section>
+            <section id="safePassword">
+                <h3>3.4 Generare parola sigura</h3>
+                <p>Utilizatorul va putea genera parole sigure.</p>
+            </section>
+        </section>
+        
+        <section id="tehnologii">
+            <h2>4. Tehnologii folosite</h2>
+            
+            <ul>
+                <li>HTML5 si CSS3 pentru front-end.</li>
+                <li>JavaScript</li>
+                <li>MySQL</li>
+                <li>PHP</li>
+            </ul>
+        </section>
+        
+        <section id="detalii">
+            <h2>5. Detalii de implementare</h2>
+            <p>Pentru a implementa proiectul nostru, vom folosi tehnologiile mentionate anterior si paradigma REST(REpresentational State Transfer). REST este o cale simpla de a transmite si de a primi date intre client si server si nu are multe standarde definite. REST foloseste HTTP GET, POST si PUT pentru a realiza transferul de informatii. Datele pot fi trimise prin JSON, XML sau plain text. Pentru acest proiect entitatile vor fi in general de tipul JSON. Tipul aplicatiei este monolith deoarece: echipa noastra este mica, iar organizarea nu este o problema atat de mare; teoretic este mai usor sa pornesti de la o aplicatie de la acest gen si mai apoi sa o modularizezi, decat sa o faci din prima cu microservicii(mai ales cand nu ai experienta cu ele); pentru ca nu se merita sa faci microservicii fara frameworkuri, avand in vedere ca este destul de dificil de implementat si nu sunt prea multe avantaje la o aplicatie mica.  </p>
+            
+            <section id="usecase">
+                <h3>5.1 Scenarii de utilizare</h3>
+                <li>Clientul adauga o noua categorie: <br />
+Descriere: Se adauga o noua categorie de conturi <br />
+Pasi:  <br />
+-Userul logat va accesa pagina principala(cu meniul)<br />
+-Va apasa butonul 'Add new category'.<br />
+-Se va deschide un field nou ce va cere un sir de caractere.<br />
+-Sirul va fi validat de server si introdus in baza de date.  <br />
+Exceptii: Utilizatorul introduce un sir de caractere ce mai apare inca o data in baza de date -> se va afisa un mesaj de genul 'already exists'<br />
+Utilizatorul introduce un sir vid -> se va afisa mesajul 'invalid category name'. 
+</li>
+	<li>Clientul adauga un nou cont:<br />
+Descriere: Se adauga un nou cont, impreuna cu detaliile asociate.<br />
+Pasi:<br />
+-Userul logat va accesa pagina principala(cu meniul)<br />
+-Va apasa butonul 'Add new account', din cadrul unei categorii(se poate alege si categoria 'Others' in care vor fi puse conturile fara o categorie aume).<br />
+-Se va deschide o pagina de adaugare a contului ce va cere anumite informatii despre contul ce se doreste a fi adaugat..
+-Utilizatorul va introduce de la tastatura date.<br />
+-Serverul va valida si le va introduce in baza de date.   <br />
+Exceptii:<br />
+-Utilizatorul introduce un user pentru un cont ce mai apare inca o data in baza de date -> se va afisa un mesaj de genul 'already exists'<br />
+Utilizatorul introduce un sir vid in campuri obligatorii -> se va afisa mesajul 'invalid category name'. <br />
+</li>
+<li>Clientul se logheaza:<br />
+Descriere: se cere userul si parola. Daca se afla in baza de date, se face asocierea intre sesiunea de lucru si contul clientului. <br />
+Exceptii: daca userul sau parola este gresita, se va afisa un mesaj de eroare si se va resolicita autentificarea.
+</li>
+<li>
+Clientul se inregistreaza:<br />
+Descriere: se vor cere informatiile referitoare la cont si daca sunt valide se va realiza crearea contului<br />
+Exceptii: username-ul este deja in uz, caz in care se va cere alegerea altui username; e-mail-ul este deja in uz, caz in care se va cere alegerea altui e-mail; parola nu se potriveste cu reinsararea ei, caz in care se va atentiona clientul; exista campuri care lipsesc, caz in care se va atentiona clientul
+</li>
+<li>
+Clientul cere vizualizarea conturilor dupa frecventa utilizarii:<br />
+Pasi:<br />
+- Utilizatorul va apasa butonul 'Accounts by use frequency' pagina principala<br />
+- Se vor afisa in coloana a treia toate site-urile in functie de frecventa utilizarii. 
+</li>
+<li>
+Clientul cere vizualizarea conturilor dupa taria parolei:<br />
+Pasi:<br />
+- Utilizatorul va apasa butonul 'Accounts by use password strength' pagina principala<br />
+- Se vor afisa in coloana a treia toate site-urile in functie de frecventa utilizarii. 
+</li>
+<li>
+Clientul importa date:<br />
+Pasi: <br />
+-Utilizatorul logat selecteaza o sursa externa (url sau incarca un fisier)<br />
+-Serverul extrage datele si le parseaza pentru a le integra in baza de date. <br />
+-Serverul afiseaza datele rezultate. <br />
+-Utilizatorul va confirma corectitudinea si integrarea acestora in baza de date.  <br />
+Exceptii:<br />
+-Sursa externa este inaccesibila/ nu sunt drepturi de citire -> se va afisa un mesaj corespunzator<br />
+-Datele nu pot fi parsate de server sau sunt insuficiente cele extrase pentru a fi relevante- > se va afisa un mesaj corespunzator
+</li>
+<li>
+Clientul exporta date:<br />
+Descriere: clientul isi poate exporta datele in formatul XML, JSON sau CSV.<br />
+Pasi:<br />
+-Utilizatorul alege unul dintre cele trei formate<br />
+-Utilizatorul va primi un fisier cu datele sale in formatul ales
+</li>
+            </section>
+            <section id="bd">
+            <h2>5.2 Baza de date</h2>
+			<p>Primul tabel 'Utilizator' va contine id-ul utilizatorului, username, parola, nume, prenume, e-mail si cod resetare. Username-ul si parola vor fi folosite la momentul logarii cu scopul autentificarii. Codul de resetare va fi folosit atunci cand se doreste resetarea parolei. Odata ce a fost resetata parola, codul se va schimba. Cheia de criptare va fi folosita pentru criptarea parolelor utilizatorului. Cheia va fi diferita de la un utilizator la altul. Toate datele vor fi preluate la momentul inregistrarii, cu exceptia codului de resetare si a cheii de criptare care vor fi generate intr-un mod aleatoriu. Daca se doreste resetarea parolei, se va folosi e-mail-ul pentru a trimite codul de resetare. <br />
+Cu ajutorul id-ului se vor cauta si obtine categoriile ce apartin utilizatorului din tabelul 'Categorii'. Campul nume_categorie va fi folosit pentru a reda numele categoriilor odata ce sunt preluate. Datele din acest tabel vor fi obtinute din crearea de categorii de catre utilizatori si vor fi modificate atunci cand categoriile sunt modificate sau sterse.  <br />
+In al treilea tabel, 'Cont', vor fi stocate conturile utilizatorului cu toate datele lor. La momentul redarii conturilor dintr-o categorie, datele ce apartin acelui utilizator si acelei categorii vor fi preluate si redate dupa decriptare. Campul 'data_expirare_valabilitate' va contine data expirarii parolei. Dupa ce a trecut data respectiva, utilizatorul va fi anuntat cu scopul schimbarii aceseteia. Campul 'contor_utilizari' va fi incrementat de fiecare data cand este folosita parola respectiva (copied to clipboard) cu scopul sortarii dupa frecventa utilizarii. Campul 'putere_parola' va fi calculat folosind un algoritm aplicat pe parola si va fi folosit cu scopul sortarii dupa 'taria' parolei. Datele din acest tabel vor fi obtinute din crearea de conturi de catre utilizatori si vor fi modificate atunci cand conturile sunt modificate sau sterse.
+</p>
+	    </section>
+<section id="entities">
+            <h2>5.3 Entitati</h2>
+			<p>Entitate cont utilizator - este folosita pentru inregistrare, informatiile din entitate vor fi adaugate in baza de date. Va fi formata din id_utilizator, username, parola, nume, prenume, e-mail. <br />
+	Entitate nume-parola - este folosita pentru logare, informatiile din enitate vor fi comparate cu tabelul utilizatorilor cu scopul autentificarii. Va fi formata din username si parola. <br />
+	Entitate resetare parola - este folosita pentru resetarea parolei unui utilizator, informatiile din entitate vor fi comparate cu datele din tabelul de utilizator. Va fi formata din codul de resetare, username-ul si parola noua. <br />
+	Entitate categorie - este folosita pentru crearea si schimbarea unei categorii, informatiile din entitate vor fi adaugate sau comparate cu datele din tabelul de categorii. Va fi formata din id categorie, id utilizator si nume categorie. <br />
+	Entitate cont - este folosita pentru crearea si schimbarea unui cont. Informatiile vor fi adaugate sau comparate cu datele din tabelul de cont. Va fi formata din cele trei id-uri si informatiile legate de cont.
+
+</p>
+	    </section>
+        </section>
+        <section id="progres">
+            <h2>6. Progresul proiectului</h2>
+            <p>
+		Sarcini indeplinite de Cocei Tiberiu: realizarea API-urilor > ajutarea implementarii lor pe front > API+implementare Export si Import > documentatii <br />
+		Sarcini indeplinite de Anichitoaie Beatrice-Roxana: ajutarea realizarii API-urilor > implementarea API-urilor de gestiune a utilizatorului, categoriilor si conturilor > implementare criptare decriptare > documentatii
+	    </p>
+        </section>
+	<section id="git">
+            <h2>7. Sistem management cod sursa</h2>
+            <p>
+		Sistemul de management al codului sursa este github. A fost folosita aplicatia de desktop, branch-urile primind merge dupa un cod review de la cealalta persoana.
+	    </p>
+        </section>
+        <section id="bibliografie">
+            <h2>8. Referinte</h2>
+            <dl>
+                <dt id="ref-proiecte">Criptare/Decriptare</dt>
+                <dd property="schema:citation" typeof="schema:ScholarlyArticle">
+                    <cite propery="schema:name"><a href="https://github.com/defuse/php-encryption">Criptare/Decriptare PHP</a></cite>
+                </dd>
+            </dl>
+        </section>
+    </article>
+</body>
+
+</html>

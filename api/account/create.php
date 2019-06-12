@@ -66,16 +66,17 @@ if(!empty($data->id_categorie) && !empty($data->id_utilizator) && !empty($data->
       else $account->data_expirare = date('Y-m-d', strtotime($Date. ' + 3 months'));
     $account->contor_utilizari = 0;
     $account->putere_parola = determineStrength($data->parola);
-
-    if($account->create()){
+    $createResult = $account->create();
+    if($createResult === true){
         http_response_code(201);
         echo json_encode(array("message" => "Account successfully created."));
-    } else {
+    } else if($createResult === false) {
         http_response_code(503);
         echo json_encode(array("message" => "Unable to create account."));
+    } else {
+        http_response_code(400);
+        echo json_encode(array("message" => "Clone detected. Account will not be created."));
     }
-
-
 } else {
     http_response_code(400);
     echo json_encode(array("message" => "Missing information."));

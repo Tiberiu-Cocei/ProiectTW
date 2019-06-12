@@ -69,23 +69,46 @@ class Account{
         return false;
       }
 
+      function verifyClone(){
+        $sqlQuery = "SELECT id_cont FROM conturi WHERE id_categorie=:id_categorie AND id_utilizator=:id_utilizator AND username=:username AND
+         parola=:parola AND adresa_site=:adresa_site AND nume_site=:nume_site";
+
+         $statement = $this->connection->prepare($sqlQuery);
+
+         $this->id_categorie=htmlspecialchars(strip_tags($this->id_categorie));
+         $this->id_utilizator=htmlspecialchars(strip_tags($this->id_utilizator));
+         $this->username=htmlspecialchars(strip_tags($this->username));
+         $this->parola=htmlspecialchars(strip_tags($this->parola));
+         $this->adresa_site=htmlspecialchars(strip_tags($this->adresa_site));
+         $this->nume_site=htmlspecialchars(strip_tags($this->nume_site));
+         $this->comentarii=htmlspecialchars(strip_tags($this->comentarii));
+         $this->data_expirare=htmlspecialchars(strip_tags($this->data_expirare));
+         $this->contor_utilizari=htmlspecialchars(strip_tags($this->contor_utilizari));
+         $this->putere_parola=htmlspecialchars(strip_tags($this->putere_parola));
+
+         $statement->bindParam(":id_categorie", $this->id_categorie);
+         $statement->bindParam(":id_utilizator", $this->id_utilizator);
+         $statement->bindParam(":username", $this->username);
+         $statement->bindParam(":parola", $this->parola);
+         $statement->bindParam(":adresa_site", $this->adresa_site);
+         $statement->bindParam(":nume_site", $this->nume_site);
+         $statement->execute();
+
+         $row = $statement->fetch(PDO::FETCH_ASSOC);
+         $nr = $row['id_cont'];
+         if($nr!==null) return false;
+         return true;
+      }
+
       function create(){
+        $nr = $this->verifyClone();
+        if($nr == false) {return 2; die();}
+
         $sqlQuery = "INSERT INTO conturi SET id_categorie=:id_categorie, id_utilizator=:id_utilizator, username=:username,
          parola=:parola, adresa_site=:adresa_site, nume_site=:nume_site, comentarii=:comentarii, data_expirare=:data_expirare,
          contor_utilizari=:contor_utilizari, putere_parola=:putere_parola";
 
         $statement = $this->connection->prepare($sqlQuery);
-
-        $this->id_categorie=htmlspecialchars(strip_tags($this->id_categorie));
-        $this->id_utilizator=htmlspecialchars(strip_tags($this->id_utilizator));
-        $this->username=htmlspecialchars(strip_tags($this->username));
-        $this->parola=htmlspecialchars(strip_tags($this->parola));
-        $this->adresa_site=htmlspecialchars(strip_tags($this->adresa_site));
-        $this->nume_site=htmlspecialchars(strip_tags($this->nume_site));
-        $this->comentarii=htmlspecialchars(strip_tags($this->comentarii));
-        $this->data_expirare=htmlspecialchars(strip_tags($this->data_expirare));
-        $this->contor_utilizari=htmlspecialchars(strip_tags($this->contor_utilizari));
-        $this->putere_parola=htmlspecialchars(strip_tags($this->putere_parola));
 
         $statement->bindParam(":id_categorie", $this->id_categorie);
         $statement->bindParam(":id_utilizator", $this->id_utilizator);
