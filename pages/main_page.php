@@ -6,7 +6,7 @@
   {
       session_start();
   }
-  if($_SESSION['username'] === null) 
+  if($_SESSION['username'] === null)
   {
     header("Location:./Login.php");
   }
@@ -27,7 +27,8 @@
     <li class="myAccount">       <a style="color:#f6cd61; font-weight: bold;">                                    Signed in as: <?php echo $_SESSION['username']; ?></a></li>
     <li class="changePassword">  <a style="color:#f6cd61; font-weight: bold;" href="./account/changePassword.php">Change password                                   </a></li>
     <li class="exportData">      <a style="color:#f6cd61; font-weight: bold;" href="export.php">                  Export data                                       </a></li>
-    <li class="generatePassword"><a style="color:#f6cd61; font-weight: bold;" href="./generate_password.php">     Generate safe password                            </a></li>
+    <li class="importData">      <a style="color:#f6cd61; font-weight: bold;" href="import.php">                  Import data                                       </a></li>
+    <li class="generatePassword"><a style="color:#f6cd61; font-weight: bold; margin-left:100px;" href="./generate_password.php">     Generate safe password                            </a></li>
     <li class="logout">          <a style="color:#f6cd61; font-weight: bold;" href="./account/logout.php">        Logout                                            </a></li>
   </ul>
 </nav>
@@ -43,11 +44,11 @@
     <button name="showCategories"  type="submit"                 class="buttonReversed middle innerButton">                         <b>Categories</b></button>
   </form>
 
-  
+
 
   <?php
 //in acest bloc de php extragem toate denumirile conturilor pentru utiizatorul conectat (pentru afisare a butoanelor de categorii - cu functionalitate)
-  $userApi = 'http://localhost/TWPM/api/user/get_by_name.php?username='.$_SESSION['username']; 
+  $userApi = 'http://localhost/TWPM/api/user/get_by_name.php?username='.$_SESSION['username'];
 
   $make_call = ApiCall('GET', $userApi, json_encode($_SESSION['username']));
 
@@ -61,18 +62,18 @@
   }
   else
   {
-    $_SESSION['id_utilizator'] = $data; 
-    $categoriesApi = 'http://localhost/TWPM/api/category/get_by_user_id.php?id_utilizator='.$data; 
+    $_SESSION['id_utilizator'] = $data;
+    $categoriesApi = 'http://localhost/TWPM/api/category/get_by_user_id.php?id_utilizator='.$data;
 
     $make_call = ApiCall('GET', $categoriesApi);
 
     $response = json_decode($make_call, true);
 
-    $allCategories = array(); 
+    $allCategories = array();
 
     echo "<form method=\"POST\">";
     foreach($response['records'] as $category) {
-      echoCategoryButton( $category['nume_categorie'] );                            //adaugam butonul categoriei 
+      echoCategoryButton( $category['nume_categorie'] );                            //adaugam butonul categoriei
       $allCategories += [$category['nume_categorie'] => $category['id_categorie']]; //punem numele ( categoriei + id ) intr-o variabila
     }
   }
@@ -81,7 +82,7 @@
 
 <!-- de aici incepe coloana a doua !!!!!!!!! -->
 <div class="center column" src="accounts.php">
-  <?php 
+  <?php
     if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['usageOrder']))
     {
       $accounts = getAccounts('usage');
@@ -94,10 +95,10 @@
     }
     else
     {
-      $accounts = getAccounts('justSelectedCategory', $allCategories); 
+      $accounts = getAccounts('justSelectedCategory', $allCategories);
     }
-  
-  
+
+
   //verificam daca suntem in cadrul unei categorii si putem adauga butonul de adaugare a unui cont
   if(isset($_COOKIE['selectedCategoryID']))//(isACategorySelected($allCategories))
   {
@@ -108,27 +109,26 @@
   ;}
  if(isset($accounts) && isset($accounts['records']))
   {
-?>    
+?>
 
 <script type='text/javascript'>
 
 <?php
   $php_array = $accounts;
   $js_array = json_encode($php_array);
-  //echo "ASD"; 
+  //echo "ASD";
   echo "var javascript_accounts = ". $js_array . ";\n";
 ?>
 </script>
 
 <?php
-
-foreach($accounts['records'] as $account) { 
+foreach($accounts['records'] as $account) {
   echoAccount($account);
 }
 
  }
 ?>
-  
+
   </div> <!--cloana 2 - accounts e gata-->
 </div> <!-- grid container -->
 
