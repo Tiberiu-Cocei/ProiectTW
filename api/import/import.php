@@ -86,7 +86,6 @@ if($error == 0) {
     $encrypt   = Crypto::encrypt($accountAux->parola, $key);
 
     $accountAux->parola = $encrypt;
-
     //----------------------------------------------------------------------------------------------
 
     if(isset($someArray[$i]['nume_categorie'])) $categoryAux->nume_categorie = $someArray[$i]['nume_categorie'];

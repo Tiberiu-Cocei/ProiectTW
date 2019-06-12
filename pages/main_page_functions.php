@@ -164,12 +164,12 @@ function getSingleAccountDetailsInString($account, $showPassword = false)
   $plainPassword = getPasswordForContID($account['id_cont']); 
   $password = $plainPassword; 
 
-  if($showPassword == false)
-  {
-    $length = strlen($password);
-    $password = "";
-    $password = str_pad($password, $length, "*");
-  }
+  // if($showPassword == false)
+  // {
+  //   $length = strlen($password);
+  //   $password = "";
+  //   $password = str_pad($password, $length, "*");
+  //}
 
   $details = "<div class=\"textWrapper\">"; 
   $details = $details. "<h2>Username: ". $account['username'] . "</h2>\n";
