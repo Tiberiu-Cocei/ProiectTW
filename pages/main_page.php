@@ -33,7 +33,7 @@
   </ul>
 </nav>
 
-
+<h3 style="color: red;"> <?php verifyExpired();?> </h3>
 
 <div class="grid-container">
   <div class="center column" src="submain.php">
@@ -52,7 +52,7 @@
     <div>
       <?php
         showAccountColumn(); //afiseaza conturile corespunzatoare categoriei selectate in a doua coloana
-      ?> 
+      ?>
     </div> <!--cloana 2 - accounts e gata-->
 
   </div> <!-- grid container -->
