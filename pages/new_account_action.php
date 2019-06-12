@@ -62,7 +62,8 @@
 
             if(!empty( $response['message']))
                 setResponseCookie( $response['message'] );
-              //  setResponseCookie( "Account successfully created.");
+            else 
+                setResponseCookie( "Account successfully created.");
         }
         header("Location: ./new_account.php");
     }

@@ -1,7 +1,7 @@
 <?php
     session_start(); 
     include_once '../../includes/unsetCookies.php';
-    unsetCookieForLogout(); 
+    unsetCookiesForLogout(); 
     session_destroy();
     header("Location:./Login.php");
 ?>
