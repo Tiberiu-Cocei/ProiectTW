@@ -111,11 +111,7 @@ function verificaDacaAmApasatUnButon()
           setcookie("addAccountButton", 1, time() + 3600, '/TWPM/pages'); 
         }
     }
-
   }
-
-
-
 }
 ?>
 
@@ -138,6 +134,7 @@ function getPasswordForContID($id_cont)
   $make_call = ApiCall('GET', $accountsApi);
 
   return  $make_call; 
+}
 
 
 function echoCategoryButton($category_name)
@@ -187,60 +184,23 @@ function getSingleAccountDetailsInString($account, $showPassword = false)
   $details = $details. "<h2>Add date: ". $account['data_adaugare'] . "</h2>\n"; 
   $details = $details. "<h2>Expire date: ". $account['data_expirare'] . "</h2>\n";
 
-  $details = $details. "<input type=\"submit\"  onclick=\"onclick=\"functiaDeAfisare( e," . $account['id_cont'] ." ) name=\"Showpassword".$account['id_cont']."\" value=\"Show password\" 
-  style=\"font-weight: bold;\" class=\"button\">\n" ;
-
-  $details = $details . "<button onclick=\"functiaDeAfisare( e," . $account['id_cont'] ." )\"> Show Password </button> \n";
- 
-  $details = $details . "<button onclick=\"myFunction( e, ".$plainPassword. ")\"> Copy Password </button>\n"; 
-
-  $details = $details. "<form method=\"POST\"><input type=\"submit\" name=\"Showpassword".$account['id_cont']."\" value=\"Show password\"
-              style=\"font-weight: bold;\" class=\"button\">" ;
-
-  $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\"
-              style=\"font-weight: bold;\" class=\"button\">" ;
-
-  $details = $details. "<input type=\"submit\" name=\"deleteId".$account['id_cont']."\" value=\"Delete entry\"
-  style=\"font-weight: bold;\" class=\"button\">" ;
+  // $details = $details. "<input type=\"submit\"  onclick=\"onclick=\"functiaDeAfisare( e," . $account['id_cont'] ." ) name=\"Showpassword".$account['id_cont']."\" value=\"Show password\"  style=\"font-weight: bold;\" class=\"button\">\n" ;
+  // $details = $details . "<button onclick=\"functiaDeAfisare( e," . $account['id_cont'] ." )\"> Show Password </button> \n";
+  // $details = $details . "<button onclick=\"myFunction( e, ".$plainPassword. ")\"> Copy Password </button>\n"; 
+  // $details = $details. "<form method=\"POST\"><input type=\"submit\" name=\"Showpassword".$account['id_cont']."\" value=\"Show password\" style=\"font-weight: bold;\" class=\"button\">" ;
+  // $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\" style=\"font-weight: bold;\" class=\"button\">" ;
+  // $details = $details. "<input type=\"submit\" name=\"deleteId".$account['id_cont']."\" value=\"Delete entry\" style=\"font-weight: bold;\" class=\"button\">" ;
   
-   $details = $details. "<button onclick=\"location.href = 'edit_account.php\?id_account_to_be_edited=". $account['id_cont'] ."'\" id=\"addSite\" class=\"button\">
-  <b>Edit account details</b></button><br>"; 
+  $details = $details. "<button onclick=\"location.href = 'edit_account.php\?id_account_to_be_edited=". $account['id_cont'] ."'\" id=\"addSite\" class=\"button\"> <b>Edit account details</b></button><br>"; 
 
-  $details = $details. "</div>";
+  $details = $details. "</div><br>";
   
-    // $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\" 
+  // $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\" 
   //             style=\"font-weight: bold;\" class=\"button\">\n" ;
   //\?id_account_to_be_edited=".$account['id_cont']. 
   
   echo $details; 
 }
-
-function getAccounts($orderType, $allCategories = array())
-  {
-    if($orderType == 'strength' || $orderType == 'usage')
-    {
-      $accountsApi = 'http://localhost/TWPM/api/account/get_by_'.$orderType.'.php?id_utilizator='.$_SESSION['id_utilizator']."'";
-
-      $make_call = ApiCall('GET', $accountsApi, json_encode($_SESSION['id_utilizator']));
-
-      return json_decode($make_call, true);
-    }
-    if($orderType = 'justSelectedCategory')
-    {
-      foreach($allCategories as $key_category_name => $value_category_id)
-      {
-        if(isset($_POST[$key_category_name]))
-        {
-          setcookie("selectedCategoryID", $value_category_id, time() + 3600, "/");
-          return getAccountsByCategory($value_category_id);
-        }
-      }
-    }
-    //if($orderType == 'none')
-    unsetcookie("selectedCategoryID");
-  return  $details; 
-}
-
 
 function getAccountsByType($orderType)
 {
@@ -269,7 +229,6 @@ function getAccountsByName($category_name)
       $accounts = getAccountsByCategory($value_category_id); 
     }
   }
-
   return $accounts; 
 }
 

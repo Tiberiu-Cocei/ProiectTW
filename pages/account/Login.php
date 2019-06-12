@@ -15,13 +15,14 @@
       $data     = $response['message'];
       if($data === "Successfully logged in." || $data === null) {
         session_start();
-        $_SESSION['username'] = $username;
-        
         //intr-un cookie vom avea id-ul + username-ul userului (pentru celelalte pagini)
         $make_call = ApiCall('GET', 'http://localhost/TWPM/api/user/get_by_name.php?username='.$username);
         $response = json_decode($make_call, true);
         setcookie("userID",   $response['id_utilizator'], time() + 36000, "/");
         setcookie("usernameConnected", $username, time() + 36000, "/");
+
+        $_SESSION['username'] = $username;
+        $_SESSION['id_utilizator'] = $response['id_utilizator'];
 
         header("Location: ../main_page.php");
       }
