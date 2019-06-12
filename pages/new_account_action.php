@@ -10,20 +10,20 @@
 
     if(isset($_POST['returnToMainPage']))
     {
-        unsetCookiesForAddNewAccount(); 
+        unsetCookiesForAddNewAccount();
         header("Location: ./main_page.php");
     }
     else if(isset($_POST['tryToCreateAccount']))
     {
         setcookie("response","", time() + 360, "/");
 
-        $siteName        = $_POST['siteName']; 
-        $username        = $_POST['username']; 
+        $siteName        = $_POST['siteName'];
+        $username        = $_POST['username'];
         $password        = $_POST['password'];
         $address         = $_POST['address'];
         $comments        = $_POST['comments'];
         $reminderDate    = $_POST['reminderDate'];
-        
+
         setcookie("siteName", $_POST['siteName'], time() + 360, "/"); //6 minute
         setcookie("username", $_POST['username'], time() + 360, "/");
         setcookie("address",  $_POST['address'],  time() + 360, "/");
@@ -32,17 +32,17 @@
 
         //prima data verificam sa fie toate campurile completate
         if(empty($siteName))
-            setResponseCookie("Enter a name for your site"); 
+            setResponseCookie("Enter a name for your site");
         elseif (empty($username))
-            setResponseCookie("Enter username for your account.");  
+            setResponseCookie("Enter username for your account.");
         elseif (empty($address))
             setResponseCookie("Enter address for your account.");
         else
         {
             //apoi apelam apiul ce ar trebui sa creeze entitatea. El va face si validarile necesare
-            $accountCreateApi = 'http://localhost/TWPM/api/account/create.php'; 
+            $accountCreateApi = 'http://localhost/TWPM/api/account/create.php';
 
-            $id_categorie  = $_COOKIE['selectedCategoryID']; 
+            $id_categorie  = $_COOKIE['selectedCategoryID'];
             $id_utilizator = $_COOKIE['userID'];
 
             $account_array =  array(
@@ -55,14 +55,14 @@
                 "comentarii" =>  $comments,
                 "data_expirare" => $reminderDate
             );
-    
+
             $make_call = ApiCall('POST', $accountCreateApi, json_encode($account_array));
-            
+
             $response = json_decode($make_call, true);
 
             if(!empty( $response['message']))
                 setResponseCookie( $response['message'] );
-                setResponseCookie( "Account successfully created.");
+              //  setResponseCookie( "Account successfully created.");
         }
         header("Location: ./new_account.php");
     }

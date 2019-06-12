@@ -25,8 +25,8 @@ include_once '../objects/account.php';
 include_once '../algorithms/password_strength.php';
 include_once '../../includes/apiCall.php';
 
-use Defuse\Crypto\Crypto; 
-use Defuse\Crypto\Key; 
+use Defuse\Crypto\Crypto;
+use Defuse\Crypto\Key;
 require "../../vendor/autoload.php";
 
 
@@ -45,19 +45,19 @@ if(!empty($data->id_categorie) && !empty($data->id_utilizator) && !empty($data->
     $account->username = $data->username;
 
     //criptare aici --
-    $stringApi = 'http://localhost/TWPM/api/user/get_encryption_key.php?id_utilizator='. $account->id_utilizator; 
+    $stringApi = 'http://localhost/TWPM/api/user/get_encryption_key.php?id_utilizator='. $account->id_utilizator;
 
     $make_call = ApiCall('GET', $stringApi, json_encode($account->id_utilizator));
 
     $response  = json_decode($make_call, true);
 
     $stringKey = $response['message'];
-    
+
     $key       = Key::loadFromAsciiSafeString( $stringKey );
     $encrypt   = Crypto::encrypt($data->parola, $key);
-    
+
     $account->parola = $encrypt;
-    
+
     $account->adresa_site = $data->adresa_site;
     $account->nume_site = $data->nume_site;
     if(!empty($data->comentarii)) $account->comentarii = $data->comentarii;
@@ -75,7 +75,7 @@ if(!empty($data->id_categorie) && !empty($data->id_utilizator) && !empty($data->
         echo json_encode(array("message" => "Unable to create account."));
     }
 
-    
+
 } else {
     http_response_code(400);
     echo json_encode(array("message" => "Missing information."));

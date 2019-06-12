@@ -5,7 +5,7 @@
   si corpul json:
   {
    "id_utilizator" : idUtilizatorDinSession,
-   "nume_fisier" : numeleFisierului //va avea extensia .json, .csv sau .xml - EXEMPLU: file.json
+   "nume_fisier" : numeleFisierului //va avea extensia .json - EXEMPLU: file.json
   }
 */
 header("Access-Control-Allow-Origin: *");
