@@ -190,7 +190,7 @@ class Account{
       }
 
       function getForExport(){
-          $sqlQuery = "SELECT nume_categorie, nume_site, adresa_site, username, parola, comentarii, data_adaugare, data_expirare
+          $sqlQuery = "SELECT nume_categorie, nume_site, adresa_site, username, parola, comentarii, data_adaugare, data_expirare, id_cont
                               FROM categorii NATURAL JOIN conturi WHERE conturi.id_utilizator = ?";
 
           $statement = $this->connection->prepare($sqlQuery);

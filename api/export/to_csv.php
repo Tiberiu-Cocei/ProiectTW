@@ -11,6 +11,7 @@ header('Content-Type: application/json');
 
 include_once '../config/database.php';
 include_once '../objects/account.php';
+include_once '../../includes/apiCall.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -29,6 +30,13 @@ if($nr > 0){
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         extract($row);
+
+        $accountsApi = 'http://localhost/TWPM/api/account/show_password.php?id_cont='. $id_cont .'&id_utilizator=' . $account->id_utilizator;
+
+        $make_call = ApiCall('GET', $accountsApi);
+
+        $parola = substr($make_call, 1, -1); //limina glilimeaua si slesul de la inceput si apoi cele de la urma
+
         $return_string = $return_string . $nume_categorie . "," . $nume_site . "," . $adresa_site . "," . $username . "," .
                          $parola . "," . $comentarii . "," . $data_adaugare . "," . $data_expirare . "\n";
 }

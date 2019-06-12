@@ -18,6 +18,12 @@ include_once '../config/database.php';
 include_once '../objects/account.php';
 include_once '../objects/category.php';
 include_once '../algorithms/password_strength.php';
+include_once '../../includes/apiCall.php';
+
+
+use Defuse\Crypto\Crypto;
+use Defuse\Crypto\Key;
+require "../../vendor/autoload.php";
 
 $data = json_decode(file_get_contents("php://input"));
 
@@ -66,6 +72,21 @@ if($error == 0) {
     if(isset($someArray[$i]['parola'])) $accountAux->parola = $someArray[$i]['parola'];
     else if(isset($someArray[$i]['password'])) $accountAux->parola = $someArray[$i]['password'];
     else continue;
+
+    //$accountAux->parola este in clar, noi o vom cripta si apoi trimite mai departe. 
+    $stringApiForGetEncryptionKey = 'http://localhost/TWPM/api/user/get_encryption_key.php?id_utilizator='.$accountAux->id_utilizator; 
+
+    $make_call_get_key = ApiCall('GET', $stringApiForGetEncryptionKey, json_encode($accountAux->id_utilizator));
+
+    $response_get_key = json_decode($make_call_get_key, true);
+
+    $stringKey = $response_get_key['message'];
+
+    $key       = Key::loadFromAsciiSafeString( $stringKey );
+    $encrypt   = Crypto::encrypt($accountAux->parola, $key);
+
+    $accountAux->parola = $encrypt;
+
     //----------------------------------------------------------------------------------------------
 
     if(isset($someArray[$i]['nume_categorie'])) $categoryAux->nume_categorie = $someArray[$i]['nume_categorie'];
