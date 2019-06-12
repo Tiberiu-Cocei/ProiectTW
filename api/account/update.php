@@ -60,21 +60,22 @@ if($data->parola !== null)
 { 
   $account->putere_parola = determineStrength($data->parola); 
   $account->parola = $data->parola;
-  $id_utilizator   = $data->$id_utilizator; 
 
-  $stringApi = 'http://localhost/TWPM/api/user/get_encryption_key.php?id_utilizator='.$id_utilizator;
+  $id_utilizator   = $data->id_utilizator; 
 
-  $make_call = ApiCall('GET', $stringApi, json_encode($id_utilizator));
+   $stringApi = 'http://localhost/TWPM/api/user/get_encryption_key.php?id_utilizator='.$id_utilizator;
 
-  $response  = json_decode($make_call, true);
+   $make_call = ApiCall('GET', $stringApi, json_encode($id_utilizator));
 
-  $stringKey = $response['message'];
-   //"def00000e243a7a6a469a7b29f97882c451d92cda12adf5865a9bf441a784c0b65945cc72d99ed63f722496d639ca69a2141a2c0195419404c8fe94a1b1efd76614ef4d1"; 
+   $response  = json_decode($make_call, true);
 
-  $key       = Key::loadFromAsciiSafeString( $stringKey );
-  $encrypt   = Crypto::encrypt( "asdh".$data->$id_utilizator, $key); //account->parola
+   $stringKey = $response['message'];
 
-  $account->parola = $encrypt; 
+   $key       = Key::loadFromAsciiSafeString( $stringKey );
+   
+   $encrypt   = Crypto::encrypt($data->parola, $key); //account->parola
+
+   $account->parola = $encrypt; 
 }
 else 
 { $account->parola = $accountAux->parola; 

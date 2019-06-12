@@ -46,7 +46,7 @@ else if(isset($_POST['tryToEdit']))
     if(empty($reminderDate)) $reminderDate = null; 
 
     $account_array =  array(
-        "id_utilizator" => 15,
+        "id_utilizator" => $_COOKIE['userID'],
         "id_cont" => $id_cont,
         "username"  => $username,
         "parola"  => $password,
