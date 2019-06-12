@@ -133,12 +133,12 @@ function categoryButtonClick(category_name)
 //primeste un id de cont si returneaza parola corespunzatoare celui cont
 function getPasswordForContID($id_cont)
 {
-  $accountsApi = 'http://localhost/TWPM/api/account/show_password.php?id_cont='. $id_cont .'&id_utilizator=' . $_COOKIE['userID']; 
-  
+  $accountsApi = 'http://localhost/TWPM/api/account/show_password.php?id_cont='. $id_cont .'&id_utilizator=' . $_COOKIE['userID'];
+
   $make_call = ApiCall('GET', $accountsApi);
 
   return  $make_call; 
-}
+
 
 function echoCategoryButton($category_name)
 {
@@ -158,7 +158,6 @@ function getAccountsDetailsInString($accountsToShow = array())
       $details = $details. getSingleAccountDetailsInString($account);
     }
   }
-
   return $details;
 }
 
@@ -170,8 +169,8 @@ function getSingleAccountDetailsInString($account, $showPassword = false)
 
   if($showPassword == false)
   {
-    $length = strlen($password); 
-    $password = ""; 
+    $length = strlen($password);
+    $password = "";
     $password = str_pad($password, $length, "*");
   }
 
@@ -195,20 +194,50 @@ function getSingleAccountDetailsInString($account, $showPassword = false)
  
   $details = $details . "<button onclick=\"myFunction( e, ".$plainPassword. ")\"> Copy Password </button>\n"; 
 
+  $details = $details. "<form method=\"POST\"><input type=\"submit\" name=\"Showpassword".$account['id_cont']."\" value=\"Show password\"
+              style=\"font-weight: bold;\" class=\"button\">" ;
 
-  $details = $details. "<button onclick=\"location.href = 'edit_account.php\?id_account_to_be_edited=". $account['id_cont'] ."'\" id=\"addSite\" class=\"button\">
+  $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\"
+              style=\"font-weight: bold;\" class=\"button\">" ;
+
+  $details = $details. "<input type=\"submit\" name=\"deleteId".$account['id_cont']."\" value=\"Delete entry\"
+  style=\"font-weight: bold;\" class=\"button\">" ;
+  
+   $details = $details. "<button onclick=\"location.href = 'edit_account.php\?id_account_to_be_edited=". $account['id_cont'] ."'\" id=\"addSite\" class=\"button\">
   <b>Edit account details</b></button><br>"; 
 
-  // $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\" 
+  $details = $details. "</div>";
+  
+    // $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\" 
   //             style=\"font-weight: bold;\" class=\"button\">\n" ;
   //\?id_account_to_be_edited=".$account['id_cont']. 
+  
+  echo $details; 
+}
 
-  $details = $details. "<input type=\"submit\" name=\"deleteId".$account['id_cont']."\" value=\"Delete entry\" 
-  style=\"font-weight: bold;\" class=\"button\">\n" ;
+function getAccounts($orderType, $allCategories = array())
+  {
+    if($orderType == 'strength' || $orderType == 'usage')
+    {
+      $accountsApi = 'http://localhost/TWPM/api/account/get_by_'.$orderType.'.php?id_utilizator='.$_SESSION['id_utilizator']."'";
 
-   
-  $details = $details. "</div>"; 
+      $make_call = ApiCall('GET', $accountsApi, json_encode($_SESSION['id_utilizator']));
 
+      return json_decode($make_call, true);
+    }
+    if($orderType = 'justSelectedCategory')
+    {
+      foreach($allCategories as $key_category_name => $value_category_id)
+      {
+        if(isset($_POST[$key_category_name]))
+        {
+          setcookie("selectedCategoryID", $value_category_id, time() + 3600, "/");
+          return getAccountsByCategory($value_category_id);
+        }
+      }
+    }
+    //if($orderType == 'none')
+    unsetcookie("selectedCategoryID");
   return  $details; 
 }
 

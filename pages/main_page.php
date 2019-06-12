@@ -6,7 +6,7 @@
   {
       session_start();
   }
-  if($_SESSION['username'] === null) 
+  if($_SESSION['username'] === null)
   {
     header("Location:./Login.php");
   }
@@ -27,7 +27,8 @@
     <li class="myAccount">       <a style="color:#f6cd61; font-weight: bold;">                                    Signed in as: <?php echo $_SESSION['username']; ?></a></li>
     <li class="changePassword">  <a style="color:#f6cd61; font-weight: bold;" href="./account/changePassword.php">Change password                                   </a></li>
     <li class="exportData">      <a style="color:#f6cd61; font-weight: bold;" href="export.php">                  Export data                                       </a></li>
-    <li class="generatePassword"><a style="color:#f6cd61; font-weight: bold;" href="./generate_password.php">     Generate safe password                            </a></li>
+    <li class="importData">      <a style="color:#f6cd61; font-weight: bold;" href="import.php">                  Import data                                       </a></li>
+    <li class="generatePassword"><a style="color:#f6cd61; font-weight: bold; margin-left:100px;" href="./generate_password.php">     Generate safe password                            </a></li>
     <li class="logout">          <a style="color:#f6cd61; font-weight: bold;" href="./account/logout.php">        Logout                                            </a></li>
   </ul>
 </nav>
@@ -42,6 +43,7 @@
     <button name="strengthOrder"   type="submit" id="Strength"   class="buttonReversed middle innerButton">                         <b>Accounts by password strength</b></button>
     <button name="showCategories"  type="submit"                 class="buttonReversed middle innerButton">                         <b>Categories</b></button>
   </form>
+
       <?php
       showCategoriesColumn(); //afiseaza toate categoriile acelui user in prima coloana
       ?>
