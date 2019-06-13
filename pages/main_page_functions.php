@@ -49,7 +49,7 @@ function showAccountColumn()
 
   $details = ""; 
   if(isset($_COOKIE['addAccountButton']))
-    $details = $details. "<button onclick=\"location.href = 'new_account.php';\" id=\"addSite\" type=\"button\" class=\"buttonReversed middle innerButton\">
+   echo "<button onclick=\"location.href = 'new_account.php';\" id=\"addSite\" type=\"button\" class=\"buttonReversed middle innerButton\">
     <b>Add new account</b></button><br>"; 
   
   if(isset($_COOKIE['allAccountsToShowCookie']))
@@ -195,7 +195,13 @@ function getSingleAccountDetailsInString($account, $showPassword = false)
   $details = $details. "<h2>Comments: "  . $account['comentarii'] . "</h2>\n"; 
   $details = $details. "<h2>Password safety: ". $account['putere_parola'] . "</h2>\n";  
   $details = $details. "<h2>Add date: ". $account['data_adaugare'] . "</h2>\n"; 
-  $details = $details. "<h2>Expire date: ". $account['data_expirare'] . "</h2>\n";
+
+  $currentDate = date('Y-m-d');
+  
+  if($currentDate > $account['data_expirare'])
+    $details = $details. "<h2 style=\"color: red;\">Expire date: ". $account['data_expirare'] . "</h2>\n";
+  else
+    $details = $details. "<h2>Expire date: ". $account['data_expirare'] . "</h2>\n";
 
   $details = $details. "<button onclick=\"location.href = 'see_password.php\?"
                           ."id_utilizator=".$_COOKIE['userID']."&username=".$account['username']."&password=". $passwordCripted. "&contor_utilizari=" . $account['contor_utilizari']."&id_cont=" . $account['id_cont'] 
