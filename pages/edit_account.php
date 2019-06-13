@@ -28,7 +28,7 @@
                     <input type="text"    name="addressEdited"  placeholder="Web adress for site"   class="form-control dataField"  value="<?php if (isset($_COOKIE['addressEdit']))      echo $_COOKIE['addressEdited'];?>" >
                     <input type="text"    name="commentsEdited" placeholder="comments"              class="form-control dataField"  value="<?php if (isset($_COOKIE['commentsEdit']))     echo $_COOKIE['commentsEdited'];?>" >
                     <input type="date"    name="reminderDateEdited" placeholder="reminder date"     class="form-control dataField"  value="<?php if (isset($_COOKIE['reminderDateEdit'])) echo $_COOKIE['reminderDateEdited'];?>" >
-                    <button type="submit" name="tryToEdit"          class="button middle innerButton">  <b>Create new account</b></button>
+                    <button type="submit" name="tryToEdit"          class="button middle innerButton">  <b>Edit this informations</b></button>
                     <button type="submit" name="returnToMainPage"   class="button middle innerButton">  <b>Return to main page</b></button>
                     <h3>
                         <?php if (isset($_COOKIE['response'])) 

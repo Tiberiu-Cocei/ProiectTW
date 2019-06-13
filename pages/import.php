@@ -52,9 +52,9 @@
     </div>
     <div class=" text-center center">
       <form action="import.php" method="post" enctype="multipart/form-data">
-        <input style="margin-top:100px;" type="file" name="fileToUpload" id="fileToUpload">
+        <input style="margin-top:100px;" type="file" name="fileToUpload" style="font-weight: bold" id="fileToUpload"  class="button" >
         <h3> <?php if($data !==null) echo $data; ?> </h3>
-        <input type="submit" value="Upload File" name="submit">
+        <input type="submit" value="Upload File" name="submit" style="font-weight: bold" class="button middle innerButton">
         <button onclick="location.href = 'main_page.php';" id="resetPassword" type="button"
                 class="button middle innerButton"><b>Return</b></button>
       </form>
