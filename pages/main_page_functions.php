@@ -67,11 +67,11 @@ function showAccountColumn()
 function verificaDacaAmApasatUnButon()
 {
   //verificam daca e selectata o categorie -> punem in cookie ce conturi ii corespund ei 
-  if(isset($_COOKIE['selectedCategoryID']))
-  {
-    $allAcountsForThisCategory = getAccountsByCategory($_COOKIE['selectedCategoryID']); 
-    setcookie("allAccountsToShowCookie", serialize($allAcountsForThisCategory), time() + 3600, '/TWPM/pages');
-  }
+  // if(isset($_COOKIE['selectedCategoryID']))
+  // {
+  //   $allAcountsForThisCategory = getAccountsByCategory($_COOKIE['selectedCategoryID']); 
+  //   setcookie("allAccountsToShowCookie", serialize($allAcountsForThisCategory), time() + 3600, '/TWPM/pages');
+  // }
 
   if(isset($_COOKIE['allCategoriesCookie']))
     $allCategories = unserialize($_COOKIE['allCategoriesCookie'], ["allowed_classes" => false]); //luam toate categoriile afisate pe pagina
@@ -82,21 +82,22 @@ function verificaDacaAmApasatUnButon()
   }
 
   if(isset($_POST['usageOrder']) || isset($_POST['strengthOrder']) || isset($_POST['showCategories']))
-  {
+  { 
     setcookie("allAccountsToShowCookie", null, -1, '/TWPM/pages');
     setcookie("addAccountButton", null, -1, '/TWPM/pages');
     setcookie("selectedCategoryID", null, time() -1, '/');
 
+    $allAccountsToShow = array();
+    $allAccountsToShow['records'] = array();
     if(isset($_POST['usageOrder']))
-      $allAccountsToShow = getAccountsByType('usage'); 
+    {
+      $allAccountsToShow = getAccountsByType('usage');
+    }
     else if (isset($_POST['strengthOrder']))
-      $allAccountsToShow = getAccountsByType('strength'); 
-    else
-      {
-        $allAccountsToShow = array();
-        $allAccountsToShow['records'] = array();
-      } 
-    setcookie("allAccountsToShowCookie", serialize($allAccountsToShow), time() + 3600, '/TWPM/pages');
+    {
+      $allAccountsToShow = getAccountsByType('strength');
+    }
+    setcookie("allAccountsToShowCookie", serialize($allAccountsToShow), time() + 3600);
   }
   else 
   {
@@ -115,27 +116,36 @@ function verificaDacaAmApasatUnButon()
     }
   }
 }
-?>
-
-<script>
-function categoryButtonClick(category_name)
-{
-  allAcountsForThisCategory = getAccountsByName(category_name); 
-  setcookie("allAccountsToShowCookie", serialize($allAcountsForThisCategory), time() + 3600);
-  document.write(getAccountsDetailsInString(getAccountsByCategory(category_name))); 
-}
-</script>
 
 
-<?php
-//primeste un id de cont si returneaza parola corespunzatoare celui cont
-function getPasswordForContID($id_cont)
+//primeste un id de cont si returneaza stelute pentru parola corespunzatoare acelui cont
+function getPasswordDecryptedForContID($id_cont)
 {
   $accountsApi = 'http://localhost/TWPM/api/account/show_password.php?id_cont='. $id_cont .'&id_utilizator=' . $_COOKIE['userID'];
 
   $make_call = ApiCall('GET', $accountsApi);
 
-  return  $make_call; 
+  $password = substr($make_call, 1, -1); //eliminam ghilimelele
+
+  $length = strlen($password);
+
+  $password = "";
+
+  $password = str_pad($password, $length, "*");
+
+  return  $password; 
+}
+
+//primeste un id de cont si returneaza stelute pentru parola corespunzatoare acelui cont
+function getPasswordEcryptedForContID($id_cont)
+{
+  $accountsApi = 'http://localhost/TWPM/api/account/show_password_encrypted.php?id_cont='. $id_cont .'&id_utilizator=' . $_COOKIE['userID'];
+
+  $make_call = ApiCall('GET', $accountsApi);
+
+  $password = substr($make_call, 1, -1); //eliminam ghilimelele
+
+  return  $password; 
 }
 
 
@@ -163,57 +173,43 @@ function getAccountsDetailsInString($accountsToShow = array())
 
 function getSingleAccountDetailsInString($account, $showPassword = false)
 {
-  $plainPassword = getPasswordForContID($account['id_cont']); 
-  $password = $plainPassword; 
-
-  // if($showPassword == false)
-  // {
-  //   $length = strlen($password);
-  //   $password = "";
-  //   $password = str_pad($password, $length, "*");
-  //}
+  $password = getPasswordDecryptedForContID($account['id_cont']); 
+  $passwordCripted = getPasswordEcryptedForContID($account['id_cont']);
 
   $details = "<div class=\"textWrapper\">"; 
   $details = $details. "<h2>Username: ". $account['username'] . "</h2>\n";
-  $details = $details. "<h2>Password: ". $password. "</h2>\n"; 
-  $details = $details. "<input type=\"text\" id=\"passwordField\"><br><br>\n";  
-
+  $details = $details. "<h2>Password: ". $password. "</h2>\n";
   $details = $details. "<h2>Web adress: ". $account['adresa_site'] . "</h2>\n"; 
-  $details = $details. "<h2>Web adress: ". $account['nume_site'] . "</h2>\n"; 
-  $details = $details. "<h2>Comments: ". $account['comentarii'] . "</h2>\n"; 
-  $details = $details. "<h2>Password safety: ". $account['putere_parola'] . "</h2>\n"; 
-  $details = $details. "<h2>Reset reminder: None</h2>\n"; 
+  $details = $details. "<h2>Site name: " . $account['nume_site'] . "</h2>\n"; 
+  $details = $details. "<h2>Comments: "  . $account['comentarii'] . "</h2>\n"; 
+  $details = $details. "<h2>Password safety: ". $account['putere_parola'] . "</h2>\n";  
   $details = $details. "<h2>Add date: ". $account['data_adaugare'] . "</h2>\n"; 
   $details = $details. "<h2>Expire date: ". $account['data_expirare'] . "</h2>\n";
 
-  // $details = $details. "<input type=\"submit\"  onclick=\"onclick=\"functiaDeAfisare( e," . $account['id_cont'] ." ) name=\"Showpassword".$account['id_cont']."\" value=\"Show password\"  style=\"font-weight: bold;\" class=\"button\">\n" ;
-  // $details = $details . "<button onclick=\"functiaDeAfisare( e," . $account['id_cont'] ." )\"> Show Password </button> \n";
-  // $details = $details . "<button onclick=\"myFunction( e, ".$plainPassword. ")\"> Copy Password </button>\n"; 
-  // $details = $details. "<form method=\"POST\"><input type=\"submit\" name=\"Showpassword".$account['id_cont']."\" value=\"Show password\" style=\"font-weight: bold;\" class=\"button\">" ;
-  // $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\" style=\"font-weight: bold;\" class=\"button\">" ;
-  // $details = $details. "<input type=\"submit\" name=\"deleteId".$account['id_cont']."\" value=\"Delete entry\" style=\"font-weight: bold;\" class=\"button\">" ;
-  
+  $details = $details. "<button onclick=\"location.href = 'see_password.php\?"
+                          ."id_utilizator=".$_COOKIE['userID']."&username=".$account['username']."&password=". $passwordCripted. "&contor_utilizari=" . $account['contor_utilizari'] 
+                          ."'\" id=\"addSite\" class=\"button\"> <b>See password </b></button>"; 
   $details = $details. "<button onclick=\"location.href = 'delete_account.php\?id_account_to_be_deleted=". $account['id_cont'] ."'\" id=\"addSite\" class=\"button\"> <b>Delete account </b></button>"; 
   $details = $details. "<button onclick=\"location.href = 'edit_account.php\?id_account_to_be_edited="   . $account['id_cont'] ."'\" id=\"addSite\" class=\"button\"> <b>Edit account details </b></button>"; 
 
   $details = $details. "<br></div><br>";
-  
-  // $details = $details. "<form method=\"POST\" action=\"#\"><input type=\"submit\" name=\"editAccountInfo".$account['id_cont']."\" value=\"Edit account info\" 
-  //             style=\"font-weight: bold;\" class=\"button\">\n" ;
-  //\?id_account_to_be_edited=".$account['id_cont']. 
-  
-  echo $details; 
+
+  echo $details;
 }
 
 function getAccountsByType($orderType)
 {
   if($orderType == 'strength' || $orderType == 'usage')
   {
-    $accountsApi = 'http://localhost/TWPM/api/account/get_by_'.$orderType.'.php?id_utilizator='.$_COOKIE['userID']."'"; 
+    $accountsApi = 'http://localhost/TWPM/api/account/get_by_'.$orderType.'.php?id_utilizator='.$_COOKIE['userID']; 
 
     $make_call = ApiCall('GET', $accountsApi, json_encode($_COOKIE['userID']));
 
-    return json_decode($make_call, true);
+    $accounts =  json_decode($make_call, true);
+
+    echo getAccountsDetailsInString($accounts); 
+
+    return $accounts;
   }
 
   $response['records'] = array();
