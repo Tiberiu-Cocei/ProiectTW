@@ -37,7 +37,7 @@
 
 <div class="grid-container">
   <div class="center column" src="submain.php">
-  <form action="./main_page.php" method="post">
+  <form action="main_page.php" method="post">
     <button onclick="location.href = 'new_category.php';" id="addCategory" type="button" class="buttonReversed middle innerButton"><b>Add new category</b></button>
     <button name="usageOrder"      type="submit" id="Usage"      class="buttonReversed middle innerButton"  style="margin-top:20px"><b>Accounts by usage</b></button>
     <button name="strengthOrder"   type="submit" id="Strength"   class="buttonReversed middle innerButton">                         <b>Accounts by password strength</b></button>
@@ -52,7 +52,7 @@
     <div>
       <?php
         showAccountColumn(); //afiseaza conturile corespunzatoare categoriei selectate in a doua coloana
-      ?>
+      ?> 
     </div> <!--cloana 2 - accounts e gata-->
 
   </div> <!-- grid container -->
