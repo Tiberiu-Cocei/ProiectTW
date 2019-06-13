@@ -13,10 +13,10 @@
 <body>
 
 <?php 
-    if( isset($_GET['id_utilizator']) && isset($_GET['username']) && isset($_GET['password']) && isset($_GET['contor_utilizari']))
+    if( isset($_GET['id_utilizator']) && isset($_GET['username']) && isset($_GET['password']) && isset($_GET['contor_utilizari']) && isset($_GET['id_cont']))
     {
         $stringApi = 'http://localhost/TWPM/api/account/password_decrypt.php/?password='
-                    . $_GET['password'] . "&id_utilizator=". $_GET['id_utilizator']; 
+                    . $_GET['password'] . "&id_utilizator=". $_GET['id_utilizator']. "&id_cont=". $_GET['id_cont']; 
 
         $make_call = ApiCall('GET', $stringApi);
   
@@ -34,9 +34,7 @@
 
                     <h2>Password: <?php echo $password ?></h2><br>
 
-                    <h2>You used it for <?php echo $_GET['contor_utilizari'] ?> times</h2><br>
-
-
+                    <h2>You used it for <?php echo $_GET['contor_utilizari']+1 ?> times</h2><br>
 
                     <button type="submit" name="returnToMainPage"   class="button middle innerButton">  <b>Return to main page</b></button>
                 </form>

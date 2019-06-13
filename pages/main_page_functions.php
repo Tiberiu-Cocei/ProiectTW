@@ -187,7 +187,7 @@ function getSingleAccountDetailsInString($account, $showPassword = false)
   $details = $details. "<h2>Expire date: ". $account['data_expirare'] . "</h2>\n";
 
   $details = $details. "<button onclick=\"location.href = 'see_password.php\?"
-                          ."id_utilizator=".$_COOKIE['userID']."&username=".$account['username']."&password=". $passwordCripted. "&contor_utilizari=" . $account['contor_utilizari'] 
+                          ."id_utilizator=".$_COOKIE['userID']."&username=".$account['username']."&password=". $passwordCripted. "&contor_utilizari=" . $account['contor_utilizari']."&id_cont=" . $account['id_cont'] 
                           ."'\" id=\"addSite\" class=\"button\"> <b>See password </b></button>"; 
   $details = $details. "<button onclick=\"location.href = 'delete_account.php\?id_account_to_be_deleted=". $account['id_cont'] ."'\" id=\"addSite\" class=\"button\"> <b>Delete account </b></button>"; 
   $details = $details. "<button onclick=\"location.href = 'edit_account.php\?id_account_to_be_edited="   . $account['id_cont'] ."'\" id=\"addSite\" class=\"button\"> <b>Edit account details </b></button>"; 
