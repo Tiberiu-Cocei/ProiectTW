@@ -1,4 +1,4 @@
-<?php 
+<?php
     session_start();
     include_once '../includes/apiCall.php';
  
@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<?php 
+<?php
     if(isset($_GET['id_account_to_be_deleted']))
     {
         ?>
@@ -27,8 +27,8 @@
                 </form>
             </div>
         </div>
-        
-        <?php 
+
+        <?php
 
         if(isset($_POST['returnToMainPage']))
         {
@@ -38,14 +38,14 @@
         {
             $deteleAccountApi = 'http://localhost/TWPM/api/account/delete.php';
 
-            $deleteAccountArray = array(); 
+            $deleteAccountArray = array();
             $deleteAccountArray['id_cont'] = $_GET['id_account_to_be_deleted'];
 
             $make_call = ApiCall('POST', $deteleAccountApi, json_encode($deleteAccountArray));
 
             $response = json_decode($make_call, true);
 
-            echo $response; 
+            echo $response;
 
             header("Location: ./main_page.php");
         }
