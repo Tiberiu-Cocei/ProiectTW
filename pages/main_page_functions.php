@@ -46,7 +46,7 @@ function showAccountColumn()
 {
   //vedem ce e de afisat. 
   verificaDacaAmApasatUnButon(); 
-  
+
   $details = ""; 
   if(isset($_COOKIE['addAccountButton']))
     $details = $details. "<button onclick=\"location.href = 'new_account.php';\" id=\"addSite\" type=\"button\" class=\"buttonReversed middle innerButton\">
@@ -58,6 +58,10 @@ function showAccountColumn()
   {
     $accountsToShow = array(); 
     $accountsToShow['records'] = array();
+
+    if(isset($_SESSION['show']))
+      $accountsToShow = $_SESSION['show']; 
+
   }
   $details = $details. getAccountsDetailsInString($accountsToShow); 
 
@@ -80,6 +84,7 @@ function verificaDacaAmApasatUnButon()
     $allCategories = array(); 
     $allCategories['records'] = array();
   }
+  unset ($_SESSION['show']);
 
   if(isset($_POST['usageOrder']) || isset($_POST['strengthOrder']) || isset($_POST['showCategories']))
   { 
@@ -91,17 +96,13 @@ function verificaDacaAmApasatUnButon()
     if(isset($_POST['usageOrder']))
     {
       $allAccountsToShow = getAccountsByType('usage');
-      // foreach($allAccountsToShow['records'] as $x => $x_value) {
-      //   echo "Key=" . $x . ", Value=" . $x_value;
-      //   echo "<br>";
-      // }
+      $_SESSION['show'] = $allAccountsToShow; 
     }
     else if (isset($_POST['strengthOrder']))
     {
       $allAccountsToShow = getAccountsByType('strength');
+      $_SESSION['show'] = $allAccountsToShow; 
     }
-    setcookie("allAccountsToShowCookieAUX", "DA", time() + 3600, '/TWPM/pages');
-  
     setcookie("allAccountsToShowCookieAUX", serialize($allAccountsToShow), time() + 3600, '/TWPM/pages');
   }
   else 
