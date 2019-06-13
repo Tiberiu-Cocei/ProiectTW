@@ -47,6 +47,11 @@
 
             echo $response;
 
+            setcookie('selectedCategoryID', null, -1, '/');
+            setcookie('addAccountButton', null, -1, '/TWPM/pages');;
+            setcookie('allAccountsToShowCookie', null, -1, '/TWPM/pages');
+            setcookie('response', null, -1, '/');
+
             header("Location: ./main_page.php");
         }
     }

@@ -103,7 +103,7 @@ function verificaDacaAmApasatUnButon()
       $allAccountsToShow = getAccountsByType('strength');
       $_SESSION['show'] = $allAccountsToShow; 
     }
-    setcookie("allAccountsToShowCookieAUX", serialize($allAccountsToShow), time() + 3600, '/TWPM/pages');
+    setcookie("allAccountsToShowCookie", serialize($allAccountsToShow), time() + 3600, '/TWPM/pages');
   }
   else 
   {

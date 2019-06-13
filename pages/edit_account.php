@@ -33,7 +33,10 @@
                     <h3>
                         <?php if (isset($_COOKIE['response'])) 
                                 {
-                                    echo $_COOKIE['response'];
+                                    setcookie('selectedCategoryID', null, -1, '/');
+                                    setcookie('addAccountButton', null, -1, '/TWPM/pages');;
+                                    setcookie('allAccountsToShowCookie', null, -1, '/TWPM/pages');
+                                    setcookie('response', null, -1, '/');
                                     setcookie("response", null, -1, "/");
                                 }
                             else
