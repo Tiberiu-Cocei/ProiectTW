@@ -249,6 +249,7 @@ function getAccountsByCategory($id_categorie)
 }
 
 function verifyExpired(){
+  error_reporting(0);
   $expired = ApiCall('GET', 'http://localhost/TWPM/api/account/detect_expired.php?id_utilizator='.$_SESSION['id_utilizator']);
   $expired = explode('"message":"', $expired);
   $msgExpired = $expired[1];
