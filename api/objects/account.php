@@ -118,8 +118,8 @@ class Account{
           return $nr;
       }
 
-      function increment(){
-          $sqlQuery = "UPDATE conturi SET contor_utilizari = contor_utilizari + 1 WHERE id_cont = ?";
+      function increment($number){
+          $sqlQuery = "UPDATE conturi SET contor_utilizari = contor_utilizari + $number WHERE id_cont = ?";
           $statement = $this->connection->prepare($sqlQuery);
           $this->id_cont=htmlspecialchars(strip_tags($this->id_cont));
           $statement->bindParam(1, $this->id_cont);

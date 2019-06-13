@@ -46,6 +46,8 @@
             $response = json_decode($make_call, true);
 
             echo $response; 
+
+            header("Location: ./main_page.php");
         }
     }
     ?>

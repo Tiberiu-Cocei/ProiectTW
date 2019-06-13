@@ -1,7 +1,7 @@
 <?php
-//fisierul asta returneaza parola decriptata a contului respectiv
+//fisierul asta returneaza parola criptata a contului respectiv
 /*
-  Cum se foloseste api-ul asta: metoda GET, link-ul http://localhost/TWPM/api/account/show_password.php?id_cont=PLACEHOLDER&id_utilizator=PLACEHOLDER
+  Cum se foloseste api-ul asta: metoda GET, link-ul http://localhost/TWPM/api/account/show_password_encrypted.php?id_cont=PLACEHOLDER&id_utilizator=PLACEHOLDER
 */
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
@@ -35,20 +35,8 @@ if($account->increment(0)){
     if($parola !== NULL) {
       $ok = 1;
 
-      //decriptare aici --
-      $stringApi = 'http://localhost/TWPM/api/user/get_encryption_key.php?id_utilizator='. $account->id_utilizator; 
-
-      $make_call = ApiCall('GET', $stringApi, json_encode($account->id_utilizator));
-
-      $response  = json_decode($make_call, true);
-
-      $stringKey = $response['message'];
-      
-      $key       = Key::loadFromAsciiSafeString( $stringKey );
-      $decrypt   = Crypto::decrypt( $parola, $key);
-
       http_response_code(200);
-      echo json_encode( $decrypt );
+      echo json_encode( $parola );
     }
 }
 
