@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    include_once '../../includes/apiCall.php';
+    include_once '../includes/apiCall.php';
  
 ?>
 

@@ -85,19 +85,24 @@ function verificaDacaAmApasatUnButon()
   { 
     setcookie("allAccountsToShowCookie", null, -1, '/TWPM/pages');
     setcookie("addAccountButton", null, -1, '/TWPM/pages');
-    setcookie("selectedCategoryID", null, time() -1, '/');
 
     $allAccountsToShow = array();
     $allAccountsToShow['records'] = array();
     if(isset($_POST['usageOrder']))
     {
       $allAccountsToShow = getAccountsByType('usage');
+      // foreach($allAccountsToShow['records'] as $x => $x_value) {
+      //   echo "Key=" . $x . ", Value=" . $x_value;
+      //   echo "<br>";
+      // }
     }
     else if (isset($_POST['strengthOrder']))
     {
       $allAccountsToShow = getAccountsByType('strength');
     }
-    setcookie("allAccountsToShowCookie", serialize($allAccountsToShow), time() + 3600);
+    setcookie("allAccountsToShowCookieAUX", "DA", time() + 3600, '/TWPM/pages');
+  
+    setcookie("allAccountsToShowCookieAUX", serialize($allAccountsToShow), time() + 3600, '/TWPM/pages');
   }
   else 
   {
@@ -110,6 +115,11 @@ function verificaDacaAmApasatUnButon()
       if(isset($_POST[$nume_buton]))
         {
           setcookie("allAccountsToShowCookie", serialize(getAccountsByCategory($id_buton)), time() + 3600);
+        //   $allAccountsToShow = getAccountsByCategory($id_buton);
+        //   foreach($allAccountsToShow['records'] as $x => $x_value) {
+        //     echo "Key=" . $x . ", Value=" . $x_value;
+        //     echo "<br>";
+        // }
           setcookie("addAccountButton", 1, time() + 3600, '/TWPM/pages'); 
           setcookie("selectedCategoryID", $id_buton, time() + 3600, '/'); 
         }
@@ -201,19 +211,15 @@ function getAccountsByType($orderType)
 {
   if($orderType == 'strength' || $orderType == 'usage')
   {
-    $accountsApi = 'http://localhost/TWPM/api/account/get_by_'.$orderType.'.php?id_utilizator='.$_COOKIE['userID']; 
-
+    $accountsApi = 'http://localhost/TWPM/api/account/get_by_'.$orderType.'.php?id_utilizator='.$_COOKIE['userID']."'"; 
+    
     $make_call = ApiCall('GET', $accountsApi, json_encode($_COOKIE['userID']));
-
-    $accounts =  json_decode($make_call, true);
-
-    echo getAccountsDetailsInString($accounts); 
-
-    return $accounts;
+    
+    return json_decode($make_call, true);
   }
-
+  
   $response['records'] = array();
-
+  
   return $response;
 }
 
