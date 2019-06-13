@@ -1,7 +1,7 @@
 <?php
 //fisierul asta returneaza parola decriptata a contului respectiv -> adica utilizatorul utilizeaza parola
 /*
-  Cum se foloseste api-ul asta: metoda GET, link-ul http://localhost/TWPM/api/account/password_decrypt.php?password=PLACEHOLDER&id_utilizator=PLACEHOLDER
+  Cum se foloseste api-ul asta: metoda GET, link-ul http://localhost/TWPM/api/account/password_decrypt.php?password=PLACEHOLDER&id_utilizator=PLACEHOLDER&id_cont=PLACEHOLDER
 */
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
@@ -22,11 +22,12 @@ $db = $database->getConnection();
 
 $account = new Account($db);
 
-if(isset($_GET['password']) && isset($_GET['id_utilizator']))
-  {
-    $account->password      = $_GET['password'];
-    $account->id_utilizator = $_GET['id_utilizator']; 
-  }
+if(isset($_GET['password']) && isset($_GET['id_utilizator']) && isset($_GET['id_cont']))
+{
+  $account->id_cont       = $_GET['id_cont'];
+  $account->password      = $_GET['password'];
+  $account->id_utilizator = $_GET['id_utilizator']; 
+}
 else die();
 
 $ok = 0;
