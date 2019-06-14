@@ -1,12 +1,12 @@
 CREATE TABLE IF NOT EXISTS `utilizator` (
   `id_utilizator` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL,
-  `parola` varchar(64) NOT NULL,
+  `parola` varchar(300) NOT NULL,
   `nume` varchar(64) NOT NULL,
   `prenume` varchar(64) NOT NULL,
   `email` varchar(64) NOT NULL,
   `cod_resetare` varchar(64) NOT NULL,
-  `cheie_criptare` varchar(64) NOT NULL,
+  `cheie_criptare` varchar(300) NOT NULL,
   PRIMARY KEY (`id_utilizator`),
   UNIQUE(`username`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `conturi` (
   `id_categorie` int(11) NOT NULL,
   `id_utilizator` int(11) NOT NULL,
   `username` varchar(64) NOT NULL,
-  `parola` varchar(64) NOT NULL,
+  `parola` varchar(300) NOT NULL,
   `adresa_site` varchar(128) NOT NULL,
   `nume_site` varchar(64) NOT NULL,
   `comentarii` varchar(512),
